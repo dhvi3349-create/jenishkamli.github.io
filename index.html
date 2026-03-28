@@ -1,1263 +1,1144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jenish Kamli — E-Commerce Growth Architect</title>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=Outfit:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-  :root {
-    --gold: #C9A84C;
-    --gold-light: #E8C97A;
-    --gold-dark: #8B6914;
-    --gold-glow: rgba(201,168,76,0.18);
-    --black: #080808;
-    --black-2: #111111;
-    --black-3: #181818;
-    --black-4: #222222;
-    --white: #F5F0E8;
-    --white-dim: rgba(245,240,232,0.6);
-    --white-faint: rgba(245,240,232,0.12);
-    --font-display: 'Unbounded', sans-serif;
-    --font-body: 'Outfit', sans-serif;
-    --font-serif: 'Instrument Serif', serif;
-    --transition: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --border-gold: 1px solid rgba(201,168,76,0.25);
-    --radius: 4px;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenish Kamli | Premium E-Commerce Growth</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600&family=Unbounded:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <style>
+        /* --- DESIGN SYSTEM: BLACK + GOLD --- */
+        :root {
+            --bg-base: #030303;
+            --bg-surface: #0a0a0c;
+            --bg-card: #111114;
+            --gold-primary: #D4AF37;
+            --gold-light: #F3E5AB;
+            --gold-dark: #997A15;
+            --gold-glow: rgba(212, 175, 55, 0.15);
+            --gold-glow-strong: rgba(212, 175, 55, 0.4);
+            --text-main: #F5F5F7;
+            --text-muted: #8A8A93;
+            --border-subtle: rgba(212, 175, 55, 0.1);
+            
+            --font-display: 'Instrument Serif', serif;
+            --font-ui: 'Unbounded', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+            
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-  html { scroll-behavior: smooth; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
 
-  body {
-    background: var(--black);
-    color: var(--white);
-    font-family: var(--font-body);
-    font-weight: 300;
-    cursor: none;
-    overflow-x: hidden;
-    line-height: 1.6;
-  }
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            cursor: none;
+            line-height: 1.6;
+        }
 
-  /* ── CUSTOM CURSOR ───────────────────────── */
-  #cursor-dot {
-    position: fixed; width: 8px; height: 8px;
-    background: var(--gold); border-radius: 50%;
-    pointer-events: none; z-index: 9999;
-    transform: translate(-50%,-50%);
-    transition: transform 0.1s ease, background 0.3s ease;
-  }
-  #cursor-ring {
-    position: fixed; width: 36px; height: 36px;
-    border: 1px solid rgba(201,168,76,0.5); border-radius: 50%;
-    pointer-events: none; z-index: 9998;
-    transform: translate(-50%,-50%);
-    transition: transform 0.18s var(--transition), width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
-  }
-  body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring {
-    width: 56px; height: 56px; border-color: var(--gold);
-  }
+        /* --- CUSTOM CURSOR --- */
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--gold-light);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s;
+        }
 
-  /* ── NOISE OVERLAY ───────────────────────── */
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 9000; opacity: 0.35;
-  }
+        .cursor-ring {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--gold-primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s;
+        }
 
-  /* ── SCROLLBAR ───────────────────────────── */
-  ::-webkit-scrollbar { width: 2px; }
-  ::-webkit-scrollbar-track { background: var(--black); }
-  ::-webkit-scrollbar-thumb { background: var(--gold-dark); }
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4, h5 { color: var(--text-main); }
+        .display-text {
+            font-family: var(--font-display);
+            font-size: clamp(4rem, 8vw, 8rem);
+            line-height: 1;
+            font-weight: 400;
+        }
+        .display-text i { color: var(--gold-primary); font-style: italic; }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 5vw, 5rem);
+            margin-bottom: 1rem;
+            color: var(--gold-light);
+        }
+        .section-subtitle {
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold-primary);
+            margin-bottom: 3rem;
+            display: block;
+        }
 
-  /* ── TYPOGRAPHY ──────────────────────────── */
-  h1, h2, h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
-  .serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; }
-  .gold { color: var(--gold); }
-  .dim { color: var(--white-dim); }
+        /* --- LAYOUT UTILS --- */
+        section { padding: 8rem 5%; position: relative; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
 
-  /* ── SECTION LABELS ──────────────────────── */
-  .section-label {
-    font-family: var(--font-display); font-size: 10px; font-weight: 600;
-    letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
-    display: flex; align-items: center; gap: 12px; margin-bottom: 56px;
-  }
-  .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--gold); opacity: 0.4; }
+        /* --- COMPONENTS --- */
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 2.5rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at top right, var(--gold-glow-strong), transparent 60%);
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+        .glass-card:hover {
+            border-color: var(--gold-primary);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px var(--gold-glow);
+        }
+        .glass-card:hover::before { opacity: 1; }
 
-  /* ── BUTTONS ─────────────────────────────── */
-  .btn-gold {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 14px 32px; border: 1px solid var(--gold);
-    background: transparent; color: var(--gold);
-    font-family: var(--font-display); font-size: 11px; font-weight: 600;
-    letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none;
-    cursor: none; position: relative; overflow: hidden;
-    transition: color 0.4s ease, box-shadow 0.4s ease;
-  }
-  .btn-gold::before {
-    content: ''; position: absolute; inset: 0;
-    background: var(--gold); transform: translateX(-101%);
-    transition: transform 0.4s var(--transition);
-  }
-  .btn-gold:hover { color: var(--black); box-shadow: 0 0 32px rgba(201,168,76,0.3); }
-  .btn-gold:hover::before { transform: translateX(0); }
-  .btn-gold span { position: relative; z-index: 1; }
+        /* Buttons & Magnetic Effect */
+        .btn {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+            cursor: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            /* Magnetic structural setup */
+            transform: translate(0px, 0px);
+        }
+        .btn-gold {
+            background: var(--gold-primary);
+            color: #000;
+            font-weight: 600;
+            border: 1px solid var(--gold-light);
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+        .btn-gold:hover {
+            box-shadow: 0 0 40px var(--gold-glow-strong);
+            background: var(--gold-light);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--gold-primary);
+            border: 1px solid var(--gold-primary);
+        }
+        .btn-outline:hover {
+            background: var(--gold-glow);
+            color: var(--gold-light);
+            border-color: var(--gold-light);
+        }
 
-  .btn-outline {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 28px; border: 1px solid rgba(201,168,76,0.3);
-    background: transparent; color: var(--white-dim);
-    font-family: var(--font-body); font-size: 13px; font-weight: 400;
-    text-decoration: none; cursor: none;
-    transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
-    border-radius: var(--radius);
-  }
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 20px var(--gold-glow); }
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            background-color: rgba(255, 255, 255, 0.4);
+            pointer-events: none;
+        }
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
 
-  /* ── NAV ─────────────────────────────────── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 800;
-    padding: 24px 60px;
-    display: flex; justify-content: space-between; align-items: center;
-    background: linear-gradient(to bottom, rgba(8,8,8,0.95) 0%, transparent 100%);
-    backdrop-filter: blur(4px);
-  }
-  .nav-logo { font-family: var(--font-display); font-size: 13px; font-weight: 700; letter-spacing: 0.15em; color: var(--gold); text-decoration: none; }
-  .nav-links { display: flex; gap: 40px; list-style: none; }
-  .nav-links a { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white-dim); text-decoration: none; transition: color 0.3s; }
-  .nav-links a:hover { color: var(--gold); }
-  .nav-cta { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--black); background: var(--gold); border: none; padding: 12px 28px; cursor: none; transition: box-shadow 0.3s; text-decoration: none; }
-  .nav-cta:hover { box-shadow: 0 0 32px rgba(201,168,76,0.5); }
+        /* --- NAVBAR --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(3,3,3,0.9) 0%, transparent 100%);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        .logo {
+            font-family: var(--font-ui);
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .logo span { color: var(--gold-primary); }
+        .nav-links { display: flex; gap: 3rem; list-style: none; }
+        .nav-links a {
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: none;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0; height: 1px;
+            bottom: -5px; left: 0;
+            background-color: var(--gold-primary);
+            transition: var(--transition);
+        }
+        .nav-links a:hover { color: var(--gold-primary); }
+        .nav-links a:hover::after { width: 100%; }
 
-  /* ── HERO ─────────────────────────────────── */
-  #hero {
-    min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 0 60px 80px; position: relative; overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(201,168,76,0.07) 0%, transparent 70%),
-                radial-gradient(ellipse 40% 50% at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 60%),
-                var(--black);
-  }
-  .hero-grid {
-    position: absolute; inset: 0;
-    background-image: linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
-    background-size: 80px 80px;
-    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
-  }
-  .hero-content { position: relative; z-index: 2; max-width: 900px; }
-  .hero-tag { font-size: 11px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; display: flex; align-items: center; gap: 16px; }
-  .hero-tag::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
-  .hero-h1 { font-size: clamp(48px, 8vw, 112px); font-weight: 900; line-height: 0.92; letter-spacing: -0.04em; margin-bottom: 40px; }
-  .hero-h1 em { font-style: normal; color: var(--gold); }
-  .hero-sub { font-size: 17px; font-weight: 300; color: var(--white-dim); max-width: 480px; margin-bottom: 56px; line-height: 1.7; }
-  .hero-actions { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-  .hero-scroll {
-    position: absolute; right: 60px; bottom: 80px;
-    writing-mode: vertical-rl; font-size: 10px; letter-spacing: 0.25em;
-    text-transform: uppercase; color: var(--white-dim);
-    display: flex; align-items: center; gap: 16px;
-  }
-  .hero-scroll::after { content: ''; width: 1px; height: 60px; background: linear-gradient(to bottom, var(--gold), transparent); }
-  .hero-stats { display: flex; gap: 60px; margin-top: 80px; padding-top: 40px; border-top: var(--border-gold); }
-  .hero-stat-num { font-family: var(--font-display); font-size: 36px; font-weight: 700; color: var(--gold); }
-  .hero-stat-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white-dim); margin-top: 4px; }
+        /* --- HERO --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 6rem;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; right: 0; width: 60vw; height: 100vh;
+            background: radial-gradient(circle at center, var(--gold-glow-strong) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(40px);
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; }
+        .hero-subtitle {
+            font-family: var(--font-ui);
+            color: var(--gold-primary);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            display: block;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 2rem 0 3rem;
+            font-weight: 300;
+        }
+        .hero-actions { display: flex; gap: 1.5rem; flex-wrap: wrap; }
 
-  /* ── TICKER ──────────────────────────────── */
-  .ticker-wrap { overflow: hidden; background: var(--black-3); border-top: var(--border-gold); border-bottom: var(--border-gold); padding: 18px 0; }
-  .ticker-inner { display: flex; gap: 60px; animation: ticker 28s linear infinite; white-space: nowrap; }
-  .ticker-item { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); opacity: 0.6; display: flex; align-items: center; gap: 20px; flex-shrink: 0; }
-  .ticker-item::after { content: '◆'; font-size: 7px; }
-  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        /* --- TICKER --- */
+        .ticker-wrap {
+            width: 100%; overflow: hidden;
+            background: var(--gold-primary);
+            padding: 1rem 0;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+        .ticker {
+            display: flex; white-space: nowrap;
+            animation: ticker 20s linear infinite;
+        }
+        .ticker-item {
+            font-family: var(--font-ui); font-size: 0.9rem; font-weight: 600;
+            color: #000; text-transform: uppercase; letter-spacing: 2px; padding: 0 2rem;
+        }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-  /* ── SECTIONS ────────────────────────────── */
-  section { padding: 120px 60px; position: relative; }
-  section:nth-child(odd) { background: var(--black); }
-  section:nth-child(even) { background: var(--black-2); }
+        /* --- PLATFORMS --- */
+        .platform-category {
+            font-family: var(--font-ui);
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin: 3rem 0 1.5rem;
+            display: flex; align-items: center; gap: 15px;
+        }
+        .platform-category::after {
+            content: ''; flex: 1; height: 1px; background: var(--border-subtle);
+        }
+        
+        @keyframes floatAnim {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
 
-  /* ── PLATFORMS ───────────────────────────── */
-  #platforms { padding: 100px 60px; }
-  .platforms-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 80px; }
-  .platforms-title { font-size: clamp(36px, 5vw, 64px); max-width: 500px; }
-  .platforms-desc { font-size: 15px; color: var(--white-dim); max-width: 320px; line-height: 1.8; }
-  .platform-group-label { font-size: 10px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; margin-top: 48px; }
-  .platform-group-label:first-of-type { margin-top: 0; }
-  .platform-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
-  .platform-card {
-    border: var(--border-gold); background: var(--black-3);
-    padding: 24px 16px; display: flex; flex-direction: column; align-items: center; gap: 14px;
-    cursor: none; position: relative; overflow: hidden;
-    transition: border-color 0.4s, box-shadow 0.4s, transform 0.3s;
-    border-radius: var(--radius);
-  }
-  .platform-card::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(circle at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 70%);
-    opacity: 0; transition: opacity 0.4s;
-  }
-  .platform-card:hover { border-color: var(--gold); box-shadow: 0 0 30px rgba(201,168,76,0.18), inset 0 0 30px rgba(201,168,76,0.04); transform: translateY(-4px); }
-  .platform-card:hover::before { opacity: 1; }
-  .platform-logo {
-    width: 52px; height: 52px; background: var(--black-4);
-    border: var(--border-gold); border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; position: relative; z-index: 1;
-  }
-  .platform-name { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--white-dim); text-align: center; position: relative; z-index: 1; transition: color 0.3s; }
-  .platform-card:hover .platform-name { color: var(--gold); }
+        .platform-card {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 3rem 1.5rem; text-align: center; aspect-ratio: 1;
+            position: relative;
+        }
+        
+        .platform-card:hover {
+            animation: floatAnim 2s ease-in-out infinite;
+        }
 
-  /* ── GROWTH DASHBOARD ────────────────────── */
-  #dashboard { background: var(--black-2) !important; }
-  .dashboard-top { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 80px; }
-  .dashboard-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .kpi-card {
-    border: var(--border-gold); background: var(--black-3); padding: 28px 24px;
-    border-radius: var(--radius); position: relative; overflow: hidden;
-    transition: box-shadow 0.4s;
-  }
-  .kpi-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity 0.4s; }
-  .kpi-card:hover { box-shadow: 0 0 40px rgba(201,168,76,0.1); }
-  .kpi-card:hover::after { opacity: 1; }
-  .kpi-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white-dim); margin-bottom: 12px; }
-  .kpi-value { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: var(--gold); }
-  .kpi-sub { font-size: 12px; color: var(--white-dim); margin-top: 6px; }
-  .kpi-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: #4ade80; background: rgba(74,222,128,0.1); padding: 3px 10px; border-radius: 100px; margin-top: 10px; }
+        /* Tooltip */
+        .platform-card::after {
+            content: 'Managed & Optimized';
+            position: absolute;
+            top: -15px;
+            background: var(--gold-primary);
+            color: #000;
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: var(--transition);
+            font-weight: 600;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .platform-card:hover::after {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-  .chart-container { position: relative; }
-  .chart-title { font-family: var(--font-display); font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: var(--white); margin-bottom: 24px; }
-  .chart-wrapper { background: var(--black-3); border: var(--border-gold); border-radius: var(--radius); padding: 32px; }
-  canvas#growthChart { max-height: 280px; }
+        .platform-logo-box {
+            width: 60px; height: 60px;
+            border: 1px solid var(--border-subtle); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.5rem; font-size: 1.5rem; color: var(--gold-primary);
+            transition: var(--transition);
+        }
+        .platform-card:hover .platform-logo-box {
+            background: var(--gold-glow); border-color: var(--gold-primary);
+            transform: scale(1.15); box-shadow: 0 0 30px var(--gold-glow-strong);
+        }
+        .platform-name { font-family: var(--font-ui); font-size: 0.9rem; letter-spacing: 1px; }
 
-  /* ── SERVICES ────────────────────────────── */
-  #services {}
-  .services-header { margin-bottom: 80px; }
-  .services-title { font-size: clamp(36px, 5vw, 64px); margin-bottom: 20px; }
-  .services-subtitle { font-size: 15px; color: var(--white-dim); max-width: 500px; line-height: 1.8; }
-  .services-categories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-  .service-category { }
-  .service-category-name {
-    font-size: 10px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
-    padding-bottom: 16px; margin-bottom: 20px; border-bottom: var(--border-gold);
-  }
-  .service-cards { display: flex; flex-direction: column; gap: 12px; }
-  .service-card {
-    border: var(--border-gold); background: var(--black-3); padding: 20px 24px;
-    display: flex; align-items: center; gap: 16px;
-    cursor: none; border-radius: var(--radius);
-    transition: border-color 0.35s, box-shadow 0.35s, transform 0.25s, background 0.35s;
-    position: relative; overflow: hidden;
-  }
-  .service-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--gold); transform: scaleY(0); transition: transform 0.3s var(--transition); }
-  .service-card:hover { border-color: rgba(201,168,76,0.5); box-shadow: 0 0 24px rgba(201,168,76,0.12); transform: translateX(4px); background: rgba(201,168,76,0.03); }
-  .service-card:hover::before { transform: scaleY(1); }
-  .service-icon { width: 36px; height: 36px; background: rgba(201,168,76,0.08); border: var(--border-gold); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-  .service-name { font-size: 13px; font-weight: 500; color: var(--white); transition: color 0.3s; }
-  .service-card:hover .service-name { color: var(--gold); }
+        /* --- DASHBOARD --- */
+        .dashboard-layout {
+            display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;
+        }
+        .dash-metric-group {
+            display: flex; flex-direction: column; gap: 1.5rem;
+        }
+        .dash-metric {
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; border-color: var(--border-subtle);
+            background: linear-gradient(145deg, var(--bg-card), #1a1811);
+            padding: 2rem;
+        }
+        .dash-metric:hover { border-color: var(--gold-primary); }
+        .metric-value {
+            font-family: var(--font-display); font-size: 4.5rem; line-height: 1;
+            color: var(--gold-primary); margin-bottom: 0.5rem;
+            text-shadow: 0 0 30px var(--gold-glow);
+        }
+        .metric-label { font-family: var(--font-ui); color: var(--text-muted); font-size: 0.9rem; }
+        .chart-wrapper { height: 100%; min-height: 400px; width: 100%; position: relative; }
 
-  /* ── PROJECTS ────────────────────────────── */
-  #projects {}
-  .projects-header { margin-bottom: 80px; }
-  .projects-title { font-size: clamp(36px, 5vw, 64px); margin-bottom: 20px; }
-  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .project-card {
-    border: var(--border-gold); background: var(--black-3);
-    overflow: hidden; border-radius: var(--radius);
-    cursor: none; position: relative;
-    transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
-    display: flex; flex-direction: column;
-  }
-  .project-card:hover { border-color: var(--gold); box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(201,168,76,0.15); transform: translateY(-8px); }
-  .project-img {
-    width: 100%; height: 180px; background: var(--black-4);
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-  }
-  .project-img-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 40px; background: linear-gradient(135deg, var(--black-3), var(--black-4)); }
-  .project-img::after { content: 'Screenshot Placeholder'; position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(201,168,76,0.4); white-space: nowrap; }
-  .project-img-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity 0.4s; }
-  .project-card:hover .project-img-bar { opacity: 1; }
-  .project-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
-  .project-tag { font-size: 9px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-  .project-title { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 10px; line-height: 1.3; }
-  .project-desc { font-size: 13px; color: var(--white-dim); line-height: 1.7; flex: 1; }
-  .project-arrow { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); opacity: 0; transform: translateX(-8px); transition: opacity 0.3s, transform 0.3s; }
-  .project-card:hover .project-arrow { opacity: 1; transform: translateX(0); }
+        /* --- SERVICES --- */
+        .service-group h3 {
+            font-family: var(--font-display); font-size: 2.5rem; color: var(--text-main); margin-bottom: 2rem;
+        }
+        .service-list { display: flex; flex-direction: column; gap: 1rem; }
+        .service-item {
+            padding: 1.5rem; background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-subtle); border-radius: 8px;
+            display: flex; align-items: center; gap: 1.5rem; transition: var(--transition);
+        }
+        .service-item i { color: var(--gold-primary); font-size: 1.5rem; transition: var(--transition); }
+        .service-item:hover {
+            background: var(--bg-card); border-color: var(--gold-primary);
+            transform: translateX(10px); box-shadow: -5px 5px 20px var(--gold-glow);
+        }
+        .service-item:hover i { transform: scale(1.2); text-shadow: 0 0 15px var(--gold-glow); }
+        .service-item h4 { font-family: var(--font-ui); font-size: 1rem; margin-bottom: 0.3rem; }
+        .service-item p { font-size: 0.9rem; color: var(--text-muted); }
 
-  /* ── AMAZON CASE STUDY ───────────────────── */
-  #amazon-case {}
-  .amazon-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-  .amazon-badge { display: inline-flex; align-items: center; gap: 10px; border: var(--border-gold); padding: 8px 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; border-radius: 100px; }
-  .amazon-badge-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.4)} }
-  .amazon-title { font-size: clamp(32px, 4vw, 52px); margin-bottom: 24px; }
-  .amazon-body { font-size: 15px; color: var(--white-dim); line-height: 1.8; margin-bottom: 32px; }
-  .amazon-results { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
-  .amazon-result-item { border: var(--border-gold); background: var(--black-3); padding: 20px; border-radius: var(--radius); }
-  .amazon-result-num { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--gold); }
-  .amazon-result-label { font-size: 11px; color: var(--white-dim); margin-top: 4px; letter-spacing: 0.08em; }
-  .amazon-visual { display: flex; flex-direction: column; gap: 20px; }
-  .amazon-highlight-card { border: 1px solid var(--gold); background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02)); padding: 40px; border-radius: var(--radius); position: relative; overflow: hidden; }
-  .amazon-highlight-card::before { content: ''; position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 60%); }
-  .amazon-store-icon { font-size: 64px; margin-bottom: 16px; }
-  .amazon-highlight-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
-  .amazon-highlight-sub { font-size: 13px; color: var(--white-dim); margin-bottom: 28px; line-height: 1.6; }
+        /* --- PROJECTS --- */
+        .project-card { padding: 0; border: none; background: transparent; cursor: none; }
+        .project-img-wrapper {
+            width: 100%; aspect-ratio: 4/3; background: var(--bg-card);
+            border: 1px solid var(--border-subtle); border-radius: 12px;
+            overflow: hidden; position: relative; margin-bottom: 1.5rem;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .project-img-wrapper i { font-size: 3rem; color: var(--border-subtle); transition: var(--transition); }
+        
+        .project-overlay {
+            position: absolute; inset: 0; background: rgba(3, 3, 3, 0.8);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: var(--transition); backdrop-filter: blur(3px);
+            z-index: 2;
+        }
+        .project-overlay span {
+            font-family: var(--font-ui); color: var(--gold-primary);
+            font-size: 1rem; text-transform: uppercase; letter-spacing: 2px;
+            border: 1px solid var(--gold-primary); padding: 10px 20px; border-radius: 30px;
+            transform: translateY(20px); transition: var(--transition);
+        }
 
-  /* ── ABOUT / WHO ─────────────────────────── */
-  #about {}
-  .about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
-  .about-title { font-size: clamp(36px, 5vw, 64px); margin-bottom: 32px; }
-  .about-body { font-size: 16px; color: var(--white-dim); line-height: 1.9; margin-bottom: 32px; }
-  .about-list { display: flex; flex-direction: column; gap: 12px; list-style: none; }
-  .about-list li { display: flex; align-items: center; gap: 14px; font-size: 14px; color: var(--white-dim); }
-  .about-list li::before { content: '◆'; color: var(--gold); font-size: 8px; flex-shrink: 0; }
-  .about-visual { position: relative; display: flex; align-items: center; justify-content: center; }
-  .about-frame { width: 320px; height: 400px; border: var(--border-gold); background: var(--black-3); display: flex; align-items: center; justify-content: center; font-size: 80px; position: relative; border-radius: var(--radius); }
-  .about-frame-deco { position: absolute; width: 320px; height: 400px; border: 1px solid rgba(201,168,76,0.1); transform: translate(20px, 20px); border-radius: var(--radius); }
-  .about-frame-deco2 { position: absolute; width: 320px; height: 400px; border: 1px solid rgba(201,168,76,0.05); transform: translate(40px, 40px); border-radius: var(--radius); }
+        .project-img-wrapper::after {
+            content: ''; position: absolute; inset: 0; background: var(--gold-primary);
+            opacity: 0; mix-blend-mode: overlay; transition: var(--transition); z-index: 1;
+        }
 
-  /* ── TESTIMONIALS ────────────────────────── */
-  #testimonials {}
-  .testimonials-title { font-size: clamp(32px, 4vw, 52px); margin-bottom: 60px; }
-  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .testi-card { border: var(--border-gold); background: var(--black-3); padding: 36px 28px; border-radius: var(--radius); transition: box-shadow 0.4s, border-color 0.4s; position: relative; overflow: hidden; }
-  .testi-card::before { content: '"'; position: absolute; top: -10px; left: 24px; font-family: var(--font-serif); font-size: 120px; color: var(--gold); opacity: 0.06; line-height: 1; }
-  .testi-card:hover { border-color: rgba(201,168,76,0.5); box-shadow: 0 0 40px rgba(201,168,76,0.1); }
-  .testi-stars { color: var(--gold); font-size: 14px; margin-bottom: 20px; letter-spacing: 3px; }
-  .testi-text { font-size: 14px; color: var(--white-dim); line-height: 1.8; margin-bottom: 28px; }
-  .testi-author { display: flex; align-items: center; gap: 14px; }
-  .testi-avatar { width: 44px; height: 44px; background: rgba(201,168,76,0.1); border: var(--border-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-  .testi-name { font-weight: 600; font-size: 14px; color: var(--white); }
-  .testi-role { font-size: 11px; color: var(--gold); }
+        .project-card:hover .project-img-wrapper { border-color: var(--gold-primary); box-shadow: 0 10px 30px var(--gold-glow); }
+        .project-card:hover .project-img-wrapper i { transform: scale(1.5) rotate(5deg); color: var(--gold-primary); }
+        .project-card:hover .project-overlay { opacity: 1; }
+        .project-card:hover .project-overlay span { transform: translateY(0); }
+        
+        .project-title { font-family: var(--font-ui); font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-main); transition: var(--transition); }
+        .project-card:hover .project-title { color: var(--gold-primary); }
+        .project-desc { color: var(--text-muted); font-size: 0.95rem; }
 
-  /* ── CONTACT ─────────────────────────────── */
-  #contact {}
-  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; }
-  .contact-title { font-size: clamp(36px, 5vw, 64px); margin-bottom: 24px; }
-  .contact-sub { font-size: 16px; color: var(--white-dim); max-width: 400px; line-height: 1.8; margin-bottom: 48px; }
-  .contact-channels { display: flex; flex-direction: column; gap: 16px; }
-  .contact-channel { display: flex; align-items: center; gap: 20px; padding: 20px 24px; border: var(--border-gold); background: var(--black-3); border-radius: var(--radius); text-decoration: none; transition: border-color 0.3s, box-shadow 0.3s; }
-  .contact-channel:hover { border-color: var(--gold); box-shadow: 0 0 24px rgba(201,168,76,0.12); }
-  .contact-channel-icon { width: 44px; height: 44px; background: rgba(201,168,76,0.08); border: var(--border-gold); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-  .contact-channel-info { flex: 1; }
-  .contact-channel-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
-  .contact-channel-value { font-size: 14px; color: var(--white); margin-top: 3px; }
-  .contact-form { display: flex; flex-direction: column; gap: 20px; }
-  .form-group { display: flex; flex-direction: column; gap: 8px; }
-  .form-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
-  .form-input, .form-textarea {
-    background: var(--black-3); border: var(--border-gold); color: var(--white);
-    font-family: var(--font-body); font-size: 14px; font-weight: 300;
-    padding: 16px 20px; outline: none; border-radius: var(--radius);
-    transition: border-color 0.3s, box-shadow 0.3s;
-    resize: none;
-  }
-  .form-input:focus, .form-textarea:focus { border-color: var(--gold); box-shadow: 0 0 20px rgba(201,168,76,0.1); }
-  .form-input::placeholder, .form-textarea::placeholder { color: rgba(245,240,232,0.25); }
+        /* --- BRAND STORE --- */
+        .brand-store-banner {
+            background: linear-gradient(135deg, #0a0a0c 0%, #1a1811 100%);
+            border: 1px solid var(--gold-primary); padding: 5rem 3rem; text-align: center;
+            border-radius: 20px; box-shadow: 0 20px 50px var(--gold-glow);
+            position: relative; overflow: hidden;
+        }
+        .brand-store-banner::before {
+            content: '\f270'; font-family: 'Font Awesome 6 Brands'; position: absolute;
+            font-size: 20rem; color: var(--gold-glow); top: -50px; left: -50px;
+            transform: rotate(-15deg); pointer-events: none;
+        }
+        .brand-store-banner h2 {
+            font-family: var(--font-display); font-size: 4rem; color: var(--gold-light);
+            margin-bottom: 1rem; position: relative; z-index: 2;
+        }
+        .brand-store-banner p {
+            color: var(--text-muted); font-size: 1.2rem; max-width: 600px;
+            margin: 0 auto 3rem; position: relative; z-index: 2;
+        }
 
-  /* ── SOCIAL BUTTONS ──────────────────────── */
-  .social-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
-  .btn-linkedin { background: #0A66C2; color: white; border: none; padding: 12px 24px; font-family: var(--font-body); font-size: 13px; font-weight: 500; cursor: none; border-radius: var(--radius); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: opacity 0.3s, box-shadow 0.3s; }
-  .btn-linkedin:hover { opacity: 0.9; box-shadow: 0 0 24px rgba(10,102,194,0.4); }
-  .btn-whatsapp { background: #25D366; color: white; border: none; padding: 12px 24px; font-family: var(--font-body); font-size: 13px; font-weight: 500; cursor: none; border-radius: var(--radius); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: opacity 0.3s, box-shadow 0.3s; }
-  .btn-whatsapp:hover { opacity: 0.9; box-shadow: 0 0 24px rgba(37,211,102,0.4); }
+        /* --- CONTACT --- */
+        .contact-wrap { text-align: center; max-width: 800px; margin: 0 auto; }
+        .contact-methods { display: flex; justify-content: center; gap: 2rem; margin-bottom: 4rem; flex-wrap: wrap; }
+        .contact-item {
+            display: flex; align-items: center; gap: 15px; font-family: var(--font-ui);
+            font-size: 1.1rem; color: var(--text-main); transition: var(--transition);
+        }
+        .contact-item:hover { color: var(--gold-primary); transform: translateY(-3px); }
+        .contact-item i { color: var(--gold-primary); font-size: 1.5rem; }
 
-  /* ── FOOTER ──────────────────────────────── */
-  footer { padding: 48px 60px; border-top: var(--border-gold); display: flex; justify-content: space-between; align-items: center; background: var(--black); }
-  .footer-logo { font-family: var(--font-display); font-size: 13px; font-weight: 700; letter-spacing: 0.15em; color: var(--gold); }
-  .footer-copy { font-size: 12px; color: var(--white-dim); }
-  .footer-links { display: flex; gap: 32px; }
-  .footer-links a { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white-dim); text-decoration: none; transition: color 0.3s; }
-  .footer-links a:hover { color: var(--gold); }
+        /* --- FLOATING ELEMENTS --- */
+        .float-wa {
+            position: fixed; bottom: 30px; left: 30px; width: 60px; height: 60px;
+            background: #25D366; color: #fff; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+            z-index: 999; text-decoration: none; transition: var(--transition);
+        }
+        .float-wa:hover { transform: scale(1.15) rotate(10deg); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6); }
 
-  /* ── FLOATING WHATSAPP ───────────────────── */
-  .float-whatsapp {
-    position: fixed; bottom: 100px; right: 28px; z-index: 850;
-    width: 54px; height: 54px; background: #25D366;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 26px; text-decoration: none; cursor: none;
-    box-shadow: 0 4px 24px rgba(37,211,102,0.35);
-    transition: transform 0.3s, box-shadow 0.3s;
-    animation: floatBounce 3s ease-in-out infinite;
-  }
-  .float-whatsapp:hover { transform: scale(1.1); box-shadow: 0 8px 36px rgba(37,211,102,0.5); }
-  @keyframes floatBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-  .float-whatsapp-tooltip { position: absolute; right: 66px; background: var(--black-3); border: var(--border-gold); color: var(--white); font-size: 12px; padding: 6px 14px; border-radius: var(--radius); white-space: nowrap; opacity: 0; transform: translateX(8px); transition: opacity 0.3s, transform 0.3s; pointer-events: none; }
-  .float-whatsapp:hover .float-whatsapp-tooltip { opacity: 1; transform: translateX(0); }
+        /* AI Chat */
+        .chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
+        .chat-toggle {
+            width: 60px; height: 60px; background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: #000; border: none; cursor: none;
+            box-shadow: 0 10px 30px var(--gold-glow-strong); transition: var(--transition);
+        }
+        .chat-toggle:hover { transform: scale(1.15); box-shadow: 0 15px 40px var(--gold-glow-strong); }
+        .chat-box {
+            position: absolute; bottom: 80px; right: 0; width: 360px;
+            background: var(--bg-card); border: 1px solid var(--gold-primary);
+            border-radius: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            display: none; flex-direction: column; transform-origin: bottom right;
+            opacity: 0; transform: scale(0.8); transition: var(--transition); overflow: hidden;
+        }
+        .chat-box.active { display: flex; opacity: 1; transform: scale(1); }
+        .chat-header {
+            padding: 1.2rem; background: rgba(212, 175, 55, 0.1); border-bottom: 1px solid var(--border-subtle);
+            font-family: var(--font-ui); font-size: 0.9rem; color: var(--gold-light);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .chat-body {
+            height: 320px; padding: 1.2rem; overflow-y: auto; display: flex; flex-direction: column; gap: 15px;
+            scroll-behavior: smooth;
+        }
+        .msg { padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; max-width: 85%; line-height: 1.5; white-space: pre-wrap; }
+        .msg.bot {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle);
+            align-self: flex-start; border-bottom-left-radius: 0; color: var(--text-main);
+        }
+        .msg.bot a { color: var(--gold-light); font-weight: bold; text-decoration: none; border-bottom: 1px solid var(--gold-primary); }
+        .msg.bot a:hover { color: var(--gold-primary); }
+        .msg.user {
+            background: var(--gold-primary); color: #000;
+            align-self: flex-end; border-bottom-right-radius: 0; font-weight: 500;
+        }
+        .chat-input { display: flex; border-top: 1px solid var(--border-subtle); background: var(--bg-surface); }
+        .chat-input input {
+            flex: 1; padding: 16px; background: transparent; border: none;
+            color: var(--text-main); font-family: var(--font-body); outline: none; cursor: none;
+        }
+        .chat-input button {
+            padding: 0 20px; background: transparent; border: none;
+            color: var(--gold-primary); font-size: 1.2rem; cursor: none; transition: var(--transition);
+        }
+        .chat-input button:hover { color: var(--gold-light); transform: scale(1.1); }
 
-  /* ── AI CHAT WIDGET ──────────────────────── */
-  #chat-widget {
-    position: fixed; bottom: 28px; right: 28px; z-index: 860;
-  }
-  .chat-toggle {
-    width: 54px; height: 54px; background: var(--gold);
-    border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 22px; cursor: none; box-shadow: 0 4px 24px rgba(201,168,76,0.4);
-    transition: transform 0.3s, box-shadow 0.3s; position: relative;
-  }
-  .chat-toggle:hover { transform: scale(1.08); box-shadow: 0 8px 40px rgba(201,168,76,0.55); }
-  .chat-toggle-dot { position: absolute; top: 8px; right: 8px; width: 10px; height: 10px; background: #4ade80; border-radius: 50%; border: 2px solid var(--black); animation: pulse 2s infinite; }
-  .chat-window {
-    position: absolute; bottom: 68px; right: 0;
-    width: 340px; background: var(--black-2); border: var(--border-gold);
-    border-radius: 12px; overflow: hidden;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 40px rgba(201,168,76,0.1);
-    display: none; flex-direction: column;
-    max-height: 480px;
-  }
-  .chat-window.open { display: flex; animation: chatOpen 0.3s var(--transition); }
-  @keyframes chatOpen { from{opacity:0;transform:translateY(12px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
-  .chat-header { padding: 18px 20px; border-bottom: var(--border-gold); background: var(--black-3); display: flex; align-items: center; gap: 12px; }
-  .chat-avatar { width: 36px; height: 36px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--black); font-weight: 700; font-family: var(--font-display); font-size: 14px; }
-  .chat-info { flex: 1; }
-  .chat-name { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--white); }
-  .chat-status { font-size: 11px; color: #4ade80; display: flex; align-items: center; gap: 5px; }
-  .chat-status::before { content: ''; width: 6px; height: 6px; background: #4ade80; border-radius: 50%; }
-  .chat-close { background: none; border: none; color: var(--white-dim); font-size: 18px; cursor: none; padding: 0; line-height: 1; transition: color 0.2s; }
-  .chat-close:hover { color: var(--gold); }
-  .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
-  .chat-messages::-webkit-scrollbar { width: 2px; }
-  .chat-messages::-webkit-scrollbar-thumb { background: var(--gold-dark); }
-  .msg { max-width: 85%; }
-  .msg-bot { align-self: flex-start; }
-  .msg-user { align-self: flex-end; }
-  .msg-bubble { padding: 12px 16px; border-radius: 12px; font-size: 13px; line-height: 1.6; }
-  .msg-bot .msg-bubble { background: var(--black-3); border: var(--border-gold); color: var(--white-dim); border-bottom-left-radius: 4px; }
-  .msg-user .msg-bubble { background: var(--gold); color: var(--black); font-weight: 500; border-bottom-right-radius: 4px; }
-  .chat-suggestions { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 20px 12px; }
-  .chat-suggestion { background: transparent; border: var(--border-gold); color: var(--gold); font-family: var(--font-body); font-size: 11px; font-weight: 500; padding: 6px 12px; border-radius: 100px; cursor: none; transition: background 0.25s, color 0.25s; }
-  .chat-suggestion:hover { background: var(--gold); color: var(--black); }
-  .chat-input-row { display: flex; gap: 0; border-top: var(--border-gold); }
-  .chat-input { flex: 1; background: var(--black-3); border: none; color: var(--white); font-family: var(--font-body); font-size: 13px; padding: 14px 16px; outline: none; }
-  .chat-input::placeholder { color: rgba(245,240,232,0.25); }
-  .chat-send { background: var(--gold); border: none; color: var(--black); padding: 14px 18px; font-size: 16px; cursor: none; transition: opacity 0.2s; }
-  .chat-send:hover { opacity: 0.85; }
+        /* Typing Indicator */
+        .typing { display: flex; gap: 4px; align-items: center; padding: 12px 16px; }
+        .typing span {
+            width: 6px; height: 6px; background: var(--gold-primary); border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .typing span:nth-child(1) { animation-delay: -0.32s; }
+        .typing span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
-  /* ── REVEAL ANIMATIONS ───────────────────── */
-  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s var(--transition), transform 0.8s var(--transition); }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
-
-  /* ── GOLD LINE DIVIDER ───────────────────── */
-  .gold-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.2; }
-
-  /* ── RESPONSIVE ──────────────────────────── */
-  @media (max-width: 1024px) {
-    nav { padding: 20px 30px; }
-    section, #hero, #platforms { padding-left: 30px; padding-right: 30px; }
-    .hero-stats { gap: 32px; }
-    .dashboard-top { grid-template-columns: 1fr; gap: 48px; }
-    .services-categories { grid-template-columns: 1fr 1fr; }
-    .projects-grid { grid-template-columns: 1fr 1fr; }
-    .amazon-layout { grid-template-columns: 1fr; gap: 48px; }
-    .about-layout { grid-template-columns: 1fr; gap: 48px; }
-    .contact-layout { grid-template-columns: 1fr; gap: 60px; }
-    .testimonials-grid { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 24px; text-align: center; }
-  }
-  @media (max-width: 640px) {
-    .nav-links { display: none; }
-    .hero-h1 { font-size: 44px; }
-    .services-categories { grid-template-columns: 1fr; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .dashboard-kpi-grid { grid-template-columns: 1fr; }
-    .platforms-header { flex-direction: column; gap: 24px; align-items: flex-start; }
-    .hero-stats { flex-wrap: wrap; gap: 24px; }
-    .amazon-results { grid-template-columns: 1fr; }
-    .chat-window { width: 300px; }
-  }
-</style>
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            section { padding: 5rem 5%; }
+            .dashboard-layout { grid-template-columns: 1fr; }
+            .cursor-dot, .cursor-ring { display: none; }
+            body, .btn, a, input, button { cursor: auto !important; }
+            .brand-store-banner h2 { font-size: 2.5rem; }
+            .chat-box { width: 300px; right: -15px; bottom: 70px; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- CURSOR -->
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
 
-<!-- NAV -->
-<nav>
-  <a href="#hero" class="nav-logo">JK</a>
-  <ul class="nav-links">
-    <li><a href="#platforms">Platforms</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#dashboard">Growth</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="#contact" class="nav-cta">Hire Me</a>
-</nav>
+    <nav id="navbar">
+        <a href="#home" class="logo magnetic">JENISH<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="#platforms" class="magnetic">Platforms</a></li>
+            <li><a href="#growth" class="magnetic">Dashboard</a></li>
+            <li><a href="#services" class="magnetic">Services</a></li>
+            <li><a href="#projects" class="magnetic">Projects</a></li>
+            <li><a href="#contact" class="magnetic">Contact</a></li>
+        </ul>
+    </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-scroll">Scroll</div>
-  <div class="hero-content">
-    <div class="hero-tag">E-Commerce Growth Architect</div>
-    <h1 class="hero-h1">
-      Scale Your<br/>
-      Brand <em>Beyond</em><br/>
-      Limits
-    </h1>
-    <p class="hero-sub">I help brands dominate marketplaces — from listing to launch, from visibility to velocity. 30+ Crore impressions delivered.</p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn-gold"><span>Start a Project</span></a>
-      <a href="#projects" class="btn-outline">View Work →</a>
-    </div>
-    <div class="hero-stats">
-      <div>
-        <div class="hero-stat-num" data-count="30" data-suffix="Cr+">0</div>
-        <div class="hero-stat-label">Total Impressions</div>
-      </div>
-      <div>
-        <div class="hero-stat-num" data-count="10" data-suffix="+">0</div>
-        <div class="hero-stat-label">Platforms Managed</div>
-      </div>
-      <div>
-        <div class="hero-stat-num" data-count="50" data-suffix="+">0</div>
-        <div class="hero-stat-label">Projects Delivered</div>
-      </div>
-      <div>
-        <div class="hero-stat-num" data-count="3" data-suffix="x">0</div>
-        <div class="hero-stat-label">Avg. Growth Multiplier</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker-inner" id="ticker">
-    <span class="ticker-item">Marketplace Management</span>
-    <span class="ticker-item">Listing SEO</span>
-    <span class="ticker-item">Performance Marketing</span>
-    <span class="ticker-item">Amazon FBA Setup</span>
-    <span class="ticker-item">Flipkart FBF</span>
-    <span class="ticker-item">Quick Commerce</span>
-    <span class="ticker-item">Brand Store</span>
-    <span class="ticker-item">A+ Content</span>
-    <span class="ticker-item">GS1 UPC Setup</span>
-    <span class="ticker-item">Growth Strategy</span>
-    <span class="ticker-item">Catalog Management</span>
-    <span class="ticker-item">Marketplace Management</span>
-    <span class="ticker-item">Listing SEO</span>
-    <span class="ticker-item">Performance Marketing</span>
-    <span class="ticker-item">Amazon FBA Setup</span>
-    <span class="ticker-item">Flipkart FBF</span>
-    <span class="ticker-item">Quick Commerce</span>
-    <span class="ticker-item">Brand Store</span>
-    <span class="ticker-item">A+ Content</span>
-    <span class="ticker-item">GS1 UPC Setup</span>
-    <span class="ticker-item">Growth Strategy</span>
-    <span class="ticker-item">Catalog Management</span>
-  </div>
-</div>
-
-<!-- PLATFORMS -->
-<section id="platforms">
-  <div class="section-label reveal">Ecosystem</div>
-  <div class="platforms-header reveal">
-    <h2 class="platforms-title">Every Major <span class="gold">Platform.</span><br/>One Expert.</h2>
-    <p class="platforms-desc">Comprehensive presence across India's top marketplaces and quick commerce platforms.</p>
-  </div>
-
-  <p class="platform-group-label reveal">Marketplace Platforms</p>
-  <div class="platform-grid reveal">
-    <div class="platform-card">
-      <div class="platform-logo">🛒</div>
-      <div class="platform-name">Amazon</div>
-    </div>
-    <div class="platform-card">
-      <div class="platform-logo">🏪</div>
-      <div class="platform-name">Flipkart</div>
-    </div>
-    <div class="platform-card">
-      <div class="platform-logo">🛍</div>
-      <div class="platform-name">Meesho</div>
-    </div>
-    <div class="platform-card">
-      <div class="platform-logo">🛕</div>
-      <div class="platform-name">JioMart</div>
-    </div>
-    <div class="platform-card">
-      <div class="platform-logo">👗</div>
-      <div class="platform-name">Myntra</div>
-    </div>
-    <div class="platform-card">
-      <div class="platform-logo">✨</div>
-      <div class="platform-name">Ajio</div>
-    </div>
-    <div class="platform-card">
-      <div class="platform-logo">🏷</div>
-      <div class="platform-name">Snapdeal</div>
-    </div>
-  </div>
-
-  <p class="platform-group-label reveal" style="margin-top:48px">Quick Commerce</p>
-  <div class="platform-grid reveal">
-    <div class="platform-card">
-      <div class="platform-logo">⚡</div>
-      <div class="platform-name">Blinkit</div>
-    </div>
-    <div class="platform-card">
-      <div class="platform-logo">🚀</div>
-      <div class="platform-name">Zepto</div>
-    </div>
-    <div class="platform-card">
-      <div class="platform-logo">🌀</div>
-      <div class="platform-name">Swiggy Instamart</div>
-    </div>
-  </div>
-</section>
-
-<!-- GROWTH DASHBOARD -->
-<section id="dashboard">
-  <div class="section-label reveal">Performance</div>
-  <h2 style="font-size:clamp(36px,5vw,64px);margin-bottom:16px;" class="reveal">Growth <span class="gold">Dashboard</span></h2>
-  <p style="color:var(--white-dim);font-size:15px;margin-bottom:72px;max-width:480px;line-height:1.8;" class="reveal">Real numbers. Real impact. Every month, we push the ceiling higher.</p>
-
-  <div class="dashboard-top">
-    <div class="dashboard-kpi-grid">
-      <div class="kpi-card reveal">
-        <div class="kpi-label">Total Impressions</div>
-        <div class="kpi-value" data-count="30" data-suffix="Cr+">0</div>
-        <div class="kpi-sub">Across all platforms</div>
-        <div class="kpi-badge">↑ All Time</div>
-      </div>
-      <div class="kpi-card reveal reveal-delay-1">
-        <div class="kpi-label">Peak Monthly</div>
-        <div class="kpi-value" data-count="20.2" data-suffix="L">0</div>
-        <div class="kpi-sub">July 2024</div>
-        <div class="kpi-badge">↑ 7x Growth</div>
-      </div>
-      <div class="kpi-card reveal reveal-delay-2">
-        <div class="kpi-label">Active Platforms</div>
-        <div class="kpi-value" data-count="10" data-suffix="+">0</div>
-        <div class="kpi-sub">Marketplaces managed</div>
-        <div class="kpi-badge">↑ Expanding</div>
-      </div>
-      <div class="kpi-card reveal reveal-delay-3">
-        <div class="kpi-label">Growth Rate</div>
-        <div class="kpi-value" data-count="620" data-suffix="%">0</div>
-        <div class="kpi-sub">March → July</div>
-        <div class="kpi-badge">↑ Exponential</div>
-      </div>
-    </div>
-    <div class="chart-container reveal">
-      <div class="chart-title">Monthly Impression Growth (Lakhs)</div>
-      <div class="chart-wrapper">
-        <canvas id="growthChart"></canvas>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section id="services">
-  <div class="section-label reveal">What I Do</div>
-  <div class="services-header reveal">
-    <h2 class="services-title">Premium <span class="gold">Services</span><br/>Suite</h2>
-    <p class="services-subtitle">End-to-end marketplace expertise — from first listing to scaling dominance.</p>
-  </div>
-
-  <div class="services-categories">
-    <div class="service-category reveal">
-      <div class="service-category-name">Core Operations</div>
-      <div class="service-cards">
-        <div class="service-card">
-          <div class="service-icon">🏪</div>
-          <div class="service-name">Marketplace Management</div>
+    <section class="hero" id="home">
+        <div class="hero-bg gs-parallax"></div>
+        <div class="container hero-content">
+            <span class="hero-subtitle gs-reveal">God Mode E-Commerce Scaling</span>
+            <h1 class="display-text gs-reveal">I Scale <br><i>E-Commerce</i> Brands.</h1>
+            <p class="gs-reveal">Architecting exponential GMV growth across Amazon, Flipkart, Meesho, and the Quick Commerce ecosystem through data-driven precision.</p>
+            <div class="hero-actions gs-reveal">
+                <a href="#growth" class="btn btn-gold btn-ripple magnetic">View Dashboard</a>
+                <a href="#projects" class="btn btn-outline btn-ripple magnetic">Explore Projects</a>
+            </div>
         </div>
-        <div class="service-card">
-          <div class="service-icon">🔧</div>
-          <div class="service-name">Backend Issue Resolution</div>
+    </section>
+
+    <div class="ticker-wrap gs-reveal">
+        <div class="ticker">
+            <div class="ticker-item">Amazon FBA</div><div class="ticker-item">•</div>
+            <div class="ticker-item">Flipkart Growth</div><div class="ticker-item">•</div>
+            <div class="ticker-item">Meesho Optimization</div><div class="ticker-item">•</div>
+            <div class="ticker-item">Blinkit Setup</div><div class="ticker-item">•</div>
+            <div class="ticker-item">Zepto Scaling</div><div class="ticker-item">•</div>
+            <div class="ticker-item">Swiggy Instamart</div><div class="ticker-item">•</div>
+            <div class="ticker-item">JioMart</div><div class="ticker-item">•</div>
+            <div class="ticker-item">Myntra & Ajio</div><div class="ticker-item">•</div>
+            <div class="ticker-item">Amazon FBA</div><div class="ticker-item">•</div>
+            <div class="ticker-item">Flipkart Growth</div><div class="ticker-item">•</div>
+            <div class="ticker-item">Meesho Optimization</div><div class="ticker-item">•</div>
+            <div class="ticker-item">Blinkit Setup</div><div class="ticker-item">•</div>
         </div>
-        <div class="service-card">
-          <div class="service-icon">📋</div>
-          <div class="service-name">Catalog Management</div>
-        </div>
-      </div>
     </div>
 
-    <div class="service-category reveal reveal-delay-1">
-      <div class="service-category-name">Growth</div>
-      <div class="service-cards">
-        <div class="service-card">
-          <div class="service-icon">🔍</div>
-          <div class="service-name">Listing SEO Optimization</div>
+    <section id="platforms">
+        <div class="container">
+            <span class="section-subtitle gs-reveal">Ecosystem Domination</span>
+            <h2 class="section-title gs-reveal">Platforms Mastered</h2>
+
+            <h3 class="platform-category gs-reveal"><i class="fas fa-shopping-bag"></i> Marketplaces</h3>
+            <div class="grid-4 gs-stagger">
+                <div class="glass-card platform-card">
+                    <div class="platform-logo-box"><i class="fab fa-amazon"></i></div>
+                    <span class="platform-name">Amazon</span>
+                </div>
+                <div class="glass-card platform-card">
+                    <div class="platform-logo-box"><i class="fas fa-shopping-cart"></i></div>
+                    <span class="platform-name">Flipkart</span>
+                </div>
+                <div class="glass-card platform-card">
+                    <div class="platform-logo-box"><i class="fas fa-store"></i></div>
+                    <span class="platform-name">Meesho</span>
+                </div>
+                <div class="glass-card platform-card">
+                    <div class="platform-logo-box"><i class="fas fa-tag"></i></div>
+                    <span class="platform-name">JioMart</span>
+                </div>
+                <div class="glass-card platform-card">
+                    <div class="platform-logo-box"><i class="fas fa-tshirt"></i></div>
+                    <span class="platform-name">Myntra</span>
+                </div>
+                <div class="glass-card platform-card">
+                    <div class="platform-logo-box"><i class="fas fa-gem"></i></div>
+                    <span class="platform-name">Ajio</span>
+                </div>
+                <div class="glass-card platform-card">
+                    <div class="platform-logo-box"><i class="fas fa-box"></i></div>
+                    <span class="platform-name">Snapdeal</span>
+                </div>
+            </div>
+
+            <h3 class="platform-category gs-reveal"><i class="fas fa-bolt"></i> Quick Commerce</h3>
+            <div class="grid-3 gs-stagger">
+                <div class="glass-card platform-card">
+                    <div class="platform-logo-box"><i class="fas fa-stopwatch"></i></div>
+                    <span class="platform-name">Blinkit</span>
+                </div>
+                <div class="glass-card platform-card">
+                    <div class="platform-logo-box"><i class="fas fa-motorcycle"></i></div>
+                    <span class="platform-name">Zepto</span>
+                </div>
+                <div class="glass-card platform-card">
+                    <div class="platform-logo-box"><i class="fas fa-hamburger"></i></div>
+                    <span class="platform-name">Swiggy Instamart</span>
+                </div>
+            </div>
         </div>
-        <div class="service-card">
-          <div class="service-icon">📈</div>
-          <div class="service-name">Performance Marketing</div>
+    </section>
+
+    <section id="growth">
+        <div class="container">
+            <span class="section-subtitle gs-reveal">Data & Performance</span>
+            <h2 class="section-title gs-reveal">Advanced Dashboard</h2>
+            
+            <div class="dashboard-layout mt-4">
+                <div class="dash-metric-group gs-stagger">
+                    <div class="glass-card dash-metric">
+                        <h4 class="metric-label">Total Impressions</h4>
+                        <div class="metric-value"><span class="count-up" data-target="30">0</span>+</div>
+                        <p style="color: var(--gold-primary); font-size: 1.1rem; font-weight: 500;">Crores</p>
+                    </div>
+                    <div class="glass-card dash-metric">
+                        <h4 class="metric-label">Avg. Orders Growth</h4>
+                        <div class="metric-value"><span class="count-up" data-target="350">0</span>%</div>
+                        <p style="color: var(--gold-primary); font-size: 1.1rem; font-weight: 500;">YOY Scaling</p>
+                    </div>
+                    <div class="glass-card dash-metric">
+                        <h4 class="metric-label">Revenue Estimate</h4>
+                        <div class="metric-value"><span class="count-up" data-target="7">0</span>x</div>
+                        <p style="color: var(--gold-primary); font-size: 1.1rem; font-weight: 500;">Multiplier</p>
+                    </div>
+                </div>
+                
+                <div class="glass-card gs-reveal chart-container">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+                        <h4 style="font-family: var(--font-ui);">Monthly Growth</h4>
+                        <span style="color: var(--gold-primary); font-size: 0.9rem;">Figures in Lakhs (₹)</span>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="service-card">
-          <div class="service-icon">🧭</div>
-          <div class="service-name">Growth Strategy</div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <span class="section-subtitle gs-reveal">Expertise</span>
+            <h2 class="section-title gs-reveal">Service Architecture</h2>
+
+            <div class="grid-3 gs-stagger" style="margin-top: 4rem;">
+                <div class="service-group">
+                    <h3>01. Core</h3>
+                    <div class="service-list">
+                        <div class="service-item glass-card">
+                            <i class="fas fa-tasks"></i>
+                            <div>
+                                <h4>Marketplace Mgmt.</h4>
+                                <p>End-to-end operational control.</p>
+                            </div>
+                        </div>
+                        <div class="service-item glass-card">
+                            <i class="fas fa-tools"></i>
+                            <div>
+                                <h4>Backend Resolution</h4>
+                                <p>Fixing complex technical issues.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-group">
+                    <h3>02. Growth</h3>
+                    <div class="service-list">
+                        <div class="service-item glass-card">
+                            <i class="fas fa-search"></i>
+                            <div>
+                                <h4>Listing SEO</h4>
+                                <p>Algorithm-driven optimization.</p>
+                            </div>
+                        </div>
+                        <div class="service-item glass-card">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h4>Performance Mkt.</h4>
+                                <p>High-ROAS ad campaigns.</p>
+                            </div>
+                        </div>
+                        <div class="service-item glass-card">
+                            <i class="fas fa-chess-knight"></i>
+                            <div>
+                                <h4>Growth Strategy</h4>
+                                <p>Pricing & competitor mapping.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-group">
+                    <h3>03. Advanced</h3>
+                    <div class="service-list">
+                        <div class="service-item glass-card">
+                            <i class="fas fa-truck-loading"></i>
+                            <div>
+                                <h4>FBA / FBF Setup</h4>
+                                <p>Warehouse & fulfillment logistics.</p>
+                            </div>
+                        </div>
+                        <div class="service-item glass-card">
+                            <i class="fas fa-barcode"></i>
+                            <div>
+                                <h4>GS1 UPC Setup</h4>
+                                <p>Global compliance & barcodes.</p>
+                            </div>
+                        </div>
+                        <div class="service-item glass-card">
+                            <i class="fas fa-box-open"></i>
+                            <div>
+                                <h4>Packaging Compl.</h4>
+                                <p>Resolving structural complaints.</p>
+                            </div>
+                        </div>
+                        <div class="service-item glass-card">
+                            <i class="fas fa-tachometer-fast"></i>
+                            <div>
+                                <h4>Q-Commerce Setup</h4>
+                                <p>Blinkit/Zepto onboarding.</p>
+                            </div>
+                        </div>
+                        <div class="service-item glass-card">
+                            <i class="fas fa-star"></i>
+                            <div>
+                                <h4>Brand Store & A+</h4>
+                                <p>Premium visual presentation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <span class="section-subtitle gs-reveal">Portfolio</span>
+            <h2 class="section-title gs-reveal">Selected Work</h2>
+
+            <div class="grid-3 gs-stagger" style="margin-top: 3rem;">
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <i class="fas fa-chart-bar"></i>
+                        <div class="project-overlay"><span>View Details</span></div>
+                    </div>
+                    <h4 class="project-title">Flipkart Growth Optimization</h4>
+                    <p class="project-desc">Scaled visibility & GMV through targeted campaigns.</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <i class="fas fa-search-dollar"></i>
+                        <div class="project-overlay"><span>View Details</span></div>
+                    </div>
+                    <h4 class="project-title">Amazon SEO Optimization</h4>
+                    <p class="project-desc">Revamped titles, bullets & backend terms for top ranking.</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <i class="fas fa-barcode"></i>
+                        <div class="project-overlay"><span>View Details</span></div>
+                    </div>
+                    <h4 class="project-title">GS1 UPC Onboarding</h4>
+                    <p class="project-desc">Global barcode registration and compliance integration.</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <i class="fas fa-box"></i>
+                        <div class="project-overlay"><span>View Details</span></div>
+                    </div>
+                    <h4 class="project-title">Flipkart FBF Setup</h4>
+                    <p class="project-desc">Seamless inventory transition to Smart Fulfillment.</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <i class="fab fa-amazon"></i>
+                        <div class="project-overlay"><span>View Details</span></div>
+                    </div>
+                    <h4 class="project-title">Amazon FBA Setup</h4>
+                    <p class="project-desc">Prime-enabled brand catalog via FBA integration.</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <i class="fas fa-box-open"></i>
+                        <div class="project-overlay"><span>View Details</span></div>
+                    </div>
+                    <h4 class="project-title">Packaging Resolution</h4>
+                    <p class="project-desc">Upgraded materials reducing return rates drastically.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="store">
+        <div class="container gs-reveal">
+            <div class="brand-store-banner glass-card">
+                <h2>Amazon Brand Store</h2>
+                <p>Experience a masterclass in A+ Content, rich storytelling, and optimized conversion funnels built exclusively for premium brands.</p>
+                <a href="https://www.amazon.in/stores/OneLife/page/6EDAF642-1877-4AF9-B0CE-A9476C9520D1" target="_blank" class="btn btn-gold btn-ripple magnetic" style="position: relative; z-index: 2;">
+                    View Amazon Store <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="padding-bottom: 12rem;">
+        <div class="container">
+            <div class="contact-wrap gs-reveal">
+                <span class="section-subtitle" style="margin-bottom: 1rem;">Initiate Protocol</span>
+                <h2 class="display-text" style="font-size: clamp(3rem, 6vw, 6rem); margin-bottom: 3rem;">Let's Build <i>Empires.</i></h2>
+                
+                <div class="contact-methods">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i> jeniish.kamli@gmail.com
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i> +91 9624736282
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="https://wa.me/917567250343" target="_blank" class="btn btn-gold btn-ripple magnetic"><i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> WhatsApp</a>
+                    <a href="https://www.linkedin.com/in/jenish-kamli-47b787253" target="_blank" class="btn btn-outline btn-ripple magnetic"><i class="fab fa-linkedin" style="font-size: 1.2rem;"></i> LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <a href="https://wa.me/917567250343" target="_blank" class="float-wa magnetic">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <div class="chat-widget">
+        <button class="chat-toggle magnetic" id="chatToggle"><i class="fas fa-robot"></i></button>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">
+                <i class="fas fa-robot"></i> System Assistant
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="msg bot">Hello! I am the AI assistant for Jenish Kamli, E-commerce Growth Manager and Marketplace Specialist 🚀<br><br>I am fully set up and ready to help. You can ask me about Jenish's growth strategies, his services across Amazon and Flipkart, or how to collaborate with him.<br><br>How can we scale your brand today?</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Enter query...">
+                <button id="sendBtn" class="magnetic"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
     </div>
 
-    <div class="service-category reveal reveal-delay-2">
-      <div class="service-category-name">Advanced</div>
-      <div class="service-cards">
-        <div class="service-card">
-          <div class="service-icon">📦</div>
-          <div class="service-name">FBA / FBF Setup</div>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🏷</div>
-          <div class="service-name">GS1 UPC Setup</div>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">📐</div>
-          <div class="service-name">Packaging Compliance</div>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">⚡</div>
-          <div class="service-name">Quick Commerce Setup</div>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">✨</div>
-          <div class="service-name">Brand Store & A+ Content</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    <script>
+        // --- PERFORMANCE OPTIMIZED GSAP & LOGIC ---
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            gsap.registerPlugin(ScrollTrigger);
 
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-label reveal">Portfolio</div>
-  <div class="projects-header">
-    <h2 class="projects-title reveal">Selected <span class="gold">Projects</span></h2>
-    <p style="color:var(--white-dim);font-size:15px;max-width:500px;line-height:1.8;" class="reveal">Real client work. Real results. Each project represents a brand transformed.</p>
-  </div>
-  <div class="projects-grid">
+            // Custom Cursor Logic
+            const cursorDot = document.getElementById('cursor-dot');
+            const cursorRing = document.getElementById('cursor-ring');
+            
+            if(window.innerWidth > 768) {
+                let mouseX = 0, mouseY = 0;
+                let ringX = 0, ringY = 0;
 
-    <div class="project-card reveal">
-      <div class="project-img">
-        <div class="project-img-inner">📊</div>
-        <div class="project-img-bar"></div>
-      </div>
-      <div class="project-body">
-        <div class="project-tag">Flipkart</div>
-        <div class="project-title">Flipkart Growth Optimization</div>
-        <p class="project-desc">Scaled monthly impressions from 2.8L to 20.2L within 5 months through systematic listing improvements, ad strategy, and keyword dominance.</p>
-        <div class="project-arrow">View Case →</div>
-      </div>
-    </div>
+                document.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX; mouseY = e.clientY;
+                    cursorDot.style.top = mouseY + 'px';
+                    cursorDot.style.left = mouseX + 'px';
+                });
 
-    <div class="project-card reveal reveal-delay-1">
-      <div class="project-img">
-        <div class="project-img-inner">🔍</div>
-        <div class="project-img-bar"></div>
-      </div>
-      <div class="project-body">
-        <div class="project-tag">Amazon</div>
-        <div class="project-title">Amazon SEO Optimization</div>
-        <p class="project-desc">Full-funnel listing audit and optimization — titles, bullets, backend keywords — driving 3x organic visibility uplift.</p>
-        <div class="project-arrow">View Case →</div>
-      </div>
-    </div>
+                // Smooth ring animation loop
+                const renderRing = () => {
+                    ringX += (mouseX - ringX) * 0.2;
+                    ringY += (mouseY - ringY) * 0.2;
+                    cursorRing.style.transform = `translate(-50%, -50%) translate(${ringX}px, ${ringY}px)`;
+                    requestAnimationFrame(renderRing);
+                };
+                requestAnimationFrame(renderRing);
+                
+                // Cursor Hovers
+                const interactables = document.querySelectorAll('a, button, .glass-card, .project-card, input');
+                interactables.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        cursorRing.style.width = '70px'; cursorRing.style.height = '70px';
+                        cursorRing.style.background = 'rgba(212, 175, 55, 0.1)';
+                        cursorRing.style.borderColor = 'transparent';
+                        cursorDot.style.transform = 'translate(-50%, -50%) scale(0)';
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        cursorRing.style.width = '40px'; cursorRing.style.height = '40px';
+                        cursorRing.style.background = 'transparent';
+                        cursorRing.style.borderColor = 'var(--gold-primary)';
+                        cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+                    });
+                });
 
-    <div class="project-card reveal reveal-delay-2">
-      <div class="project-img">
-        <div class="project-img-inner">🏷</div>
-        <div class="project-img-bar"></div>
-      </div>
-      <div class="project-body">
-        <div class="project-tag">Compliance</div>
-        <div class="project-title">GS1 UPC Onboarding</div>
-        <p class="project-desc">End-to-end GS1 barcode registration and catalog mapping for smooth multi-platform onboarding without listing rejections.</p>
-        <div class="project-arrow">View Case →</div>
-      </div>
-    </div>
+                // Magnetic Buttons
+                const magneticElements = document.querySelectorAll('.magnetic');
+                magneticElements.forEach(el => {
+                    el.addEventListener('mousemove', (e) => {
+                        const rect = el.getBoundingClientRect();
+                        const x = e.clientX - rect.left - rect.width / 2;
+                        const y = e.clientY - rect.top - rect.height / 2;
+                        gsap.to(el, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+                    });
+                });
+            }
 
-    <div class="project-card reveal">
-      <div class="project-img">
-        <div class="project-img-inner">📦</div>
-        <div class="project-img-bar"></div>
-      </div>
-      <div class="project-body">
-        <div class="project-tag">Flipkart</div>
-        <div class="project-title">Flipkart FBF Setup</div>
-        <p class="project-desc">Complete Flipkart Fulfilled by Flipkart (FBF) onboarding — warehouse integration, inventory sync, and SLA compliance.</p>
-        <div class="project-arrow">View Case →</div>
-      </div>
-    </div>
+            // Ripple Effect
+            document.querySelectorAll('.btn-ripple').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
 
-    <div class="project-card reveal reveal-delay-1">
-      <div class="project-img">
-        <div class="project-img-inner">🚀</div>
-        <div class="project-img-bar"></div>
-      </div>
-      <div class="project-body">
-        <div class="project-tag">Amazon</div>
-        <div class="project-title">Amazon FBA Setup</div>
-        <p class="project-desc">Full FBA enrollment from ASIN creation to first inventory shipment — enabling Prime eligibility and conversion uplift.</p>
-        <div class="project-arrow">View Case →</div>
-      </div>
-    </div>
+            // GSAP Animations
+            // Parallax Hero
+            gsap.to(".gs-parallax", {
+                scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 },
+                y: 300, opacity: 0
+            });
 
-    <div class="project-card reveal reveal-delay-2">
-      <div class="project-img">
-        <div class="project-img-inner">📐</div>
-        <div class="project-img-bar"></div>
-      </div>
-      <div class="project-body">
-        <div class="project-tag">Compliance</div>
-        <div class="project-title">Packaging Complaint Resolution</div>
-        <p class="project-desc">Diagnosed and resolved repeated packaging non-compliance flags across Amazon and Flipkart — zero repeat violations after intervention.</p>
-        <div class="project-arrow">View Case →</div>
-      </div>
-    </div>
+            // Scroll Reveals
+            document.querySelectorAll('.gs-reveal').forEach((elem) => {
+                gsap.from(elem, {
+                    scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" },
+                    y: 40, opacity: 0, duration: 0.8, ease: "power3.out"
+                });
+            });
 
-    <div class="project-card reveal" style="grid-column: span 1;">
-      <div class="project-img">
-        <div class="project-img-inner">🗂</div>
-        <div class="project-img-bar"></div>
-      </div>
-      <div class="project-body">
-        <div class="project-tag">Operations</div>
-        <div class="project-title">Catalog Management</div>
-        <p class="project-desc">Large-scale product catalog cleanup, deduplication, and enrichment across 500+ SKUs for uniform brand presentation.</p>
-        <div class="project-arrow">View Case →</div>
-      </div>
-    </div>
+            // Stagger Grids
+            document.querySelectorAll('.gs-stagger').forEach((grid) => {
+                gsap.from(grid.children, {
+                    scrollTrigger: { trigger: grid, start: "top 85%" },
+                    y: 50, opacity: 0, duration: 0.6, stagger: 0.15, ease: "power2.out"
+                });
+            });
 
-  </div>
-</section>
+            // Count Up Animation
+            document.querySelectorAll('.count-up').forEach(counter => {
+                ScrollTrigger.create({
+                    trigger: counter,
+                    start: "top 90%",
+                    once: true,
+                    onEnter: () => {
+                        const target = +counter.getAttribute('data-target');
+                        gsap.to(counter, {
+                            innerHTML: target, duration: 2.5, snap: { innerHTML: 1 }, ease: "power3.out",
+                            onUpdate: function() { counter.innerHTML = Math.round(this.targets()[0].innerHTML); }
+                        });
+                    }
+                });
+            });
 
-<!-- AMAZON BRAND STORE CASE STUDY -->
-<section id="amazon-case" style="background: var(--black-2);">
-  <div class="section-label reveal">Case Study</div>
-  <div class="amazon-layout">
-    <div class="reveal">
-      <div class="amazon-badge"><span class="amazon-badge-dot"></span>Live Store</div>
-      <h2 class="amazon-title">OneLife <span class="gold">Amazon</span> Brand Store</h2>
-      <p class="amazon-body">Built a full Amazon Brand Store experience for OneLife — showcasing the product portfolio with a cohesive brand narrative, curated collections, and A+ content pages that convert browsers into buyers.</p>
-      <div class="amazon-results">
-        <div class="amazon-result-item">
-          <div class="amazon-result-num">3x</div>
-          <div class="amazon-result-label">Store Traffic Growth</div>
-        </div>
-        <div class="amazon-result-item">
-          <div class="amazon-result-num">40%</div>
-          <div class="amazon-result-label">Conversion Uplift</div>
-        </div>
-        <div class="amazon-result-item">
-          <div class="amazon-result-num">A+</div>
-          <div class="amazon-result-label">Content Rating</div>
-        </div>
-        <div class="amazon-result-item">
-          <div class="amazon-result-num">100%</div>
-          <div class="amazon-result-label">Brand Compliance</div>
-        </div>
-      </div>
-      <a href="https://www.amazon.in/stores/OneLife/page/6EDAF642-1877-4AF9-B0CE-A9476C9520D1" target="_blank" class="btn-gold" style="margin-top:8px;">
-        <span>View Amazon Store →</span>
-      </a>
-    </div>
-    <div class="amazon-visual reveal reveal-delay-2">
-      <div class="amazon-highlight-card">
-        <div class="amazon-store-icon">🛒</div>
-        <div class="amazon-highlight-title">OneLife Brand Store</div>
-        <div class="amazon-highlight-sub">A premium curated storefront on Amazon.in — full brand experience with organized collections, rich A+ content, and optimized navigation designed for maximum dwell time and conversions.</div>
-        <a href="https://www.amazon.in/stores/OneLife/page/6EDAF642-1877-4AF9-B0CE-A9476C9520D1" target="_blank" class="btn-gold" style="width:100%;justify-content:center;">
-          <span>Open Live Store ↗</span>
-        </a>
-      </div>
-      <div style="display:flex;gap:16px;margin-top:20px;">
-        <div style="flex:1;border:var(--border-gold);background:var(--black-3);padding:20px;border-radius:var(--radius);text-align:center;">
-          <div style="font-size:24px;margin-bottom:8px;">🏪</div>
-          <div style="font-size:12px;color:var(--gold);font-weight:600;letter-spacing:0.1em;">Brand Store</div>
-        </div>
-        <div style="flex:1;border:var(--border-gold);background:var(--black-3);padding:20px;border-radius:var(--radius);text-align:center;">
-          <div style="font-size:24px;margin-bottom:8px;">📝</div>
-          <div style="font-size:12px;color:var(--gold);font-weight:600;letter-spacing:0.1em;">A+ Content</div>
-        </div>
-        <div style="flex:1;border:var(--border-gold);background:var(--black-3);padding:20px;border-radius:var(--radius);text-align:center;">
-          <div style="font-size:24px;margin-bottom:8px;">📊</div>
-          <div style="font-size:12px;color:var(--gold);font-weight:600;letter-spacing:0.1em;">Analytics</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+            // Chart.js Setup (Animated on Scroll)
+            const ctx = document.getElementById('growthChart').getContext('2d');
+            let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(212, 175, 55, 0.6)');   
+            gradient.addColorStop(1, 'rgba(212, 175, 55, 0.0)');
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-label reveal">About</div>
-  <div class="about-layout">
-    <div class="reveal">
-      <h2 class="about-title">The Strategist<br/>Behind the <span class="gold serif">Numbers</span></h2>
-      <p class="about-body">I'm Jenish Kamli — an E-Commerce Growth Architect specializing in building and scaling brands across India's top marketplaces. With deep platform expertise and a data-driven mindset, I turn product listings into growth engines.</p>
-      <ul class="about-list">
-        <li>Expert in Amazon, Flipkart, Meesho & Quick Commerce platforms</li>
-        <li>Full-stack marketplace operations — listing to logistics</li>
-        <li>Data-driven growth strategy with measurable ROI</li>
-        <li>Brand compliance, packaging, and GS1 specialist</li>
-        <li>30+ Crore impressions delivered across client brands</li>
-      </ul>
-      <div style="margin-top:40px; display:flex; gap:16px; flex-wrap:wrap;">
-        <a href="https://www.linkedin.com/in/jenish-kamli-47b787253" target="_blank" class="btn-linkedin">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          LinkedIn
-        </a>
-        <a href="https://wa.me/917567250343" target="_blank" class="btn-whatsapp">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          WhatsApp
-        </a>
-      </div>
-    </div>
-    <div class="about-visual reveal reveal-delay-2">
-      <div class="about-frame-deco2"></div>
-      <div class="about-frame-deco"></div>
-      <div class="about-frame">
-        <div style="text-align:center;">
-          <div style="font-size:72px;margin-bottom:8px;">👤</div>
-          <div style="font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--gold);">Jenish Kamli</div>
-          <div style="font-size:12px;color:var(--white-dim);margin-top:4px;">E-Commerce Growth Architect</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+            let chartInitialized = false;
+            ScrollTrigger.create({
+                trigger: ".chart-container",
+                start: "top 80%",
+                onEnter: () => {
+                    if(chartInitialized) return;
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['March', 'April', 'May', 'June', 'July'],
+                            datasets: [{
+                                label: 'Growth (Lakhs)',
+                                data: [2.8, 6.7, 13.2, 18.4, 20.2],
+                                borderColor: '#D4AF37',
+                                backgroundColor: gradient,
+                                borderWidth: 3,
+                                pointBackgroundColor: '#030303',
+                                pointBorderColor: '#D4AF37',
+                                pointBorderWidth: 2,
+                                pointRadius: 6,
+                                pointHoverRadius: 8,
+                                fill: true,
+                                tension: 0.4
+                            }]
+                        },
+                        options: {
+                            responsive: true, maintainAspectRatio: false,
+                            animation: { duration: 2000, easing: 'easeOutQuart' },
+                            plugins: {
+                                legend: { display: false },
+                                tooltip: {
+                                    backgroundColor: '#111114', titleColor: '#F3E5AB', bodyColor: '#fff',
+                                    borderColor: '#D4AF37', borderWidth: 1, padding: 12, displayColors: false,
+                                    titleFont: { family: 'Unbounded' }, bodyFont: { family: 'Outfit', size: 14 }
+                                }
+                            },
+                            scales: {
+                                x: { grid: { color: 'rgba(212, 175, 55, 0.05)' }, ticks: { color: '#8A8A93', font: { family: 'Unbounded', size: 10 } } },
+                                y: { grid: { color: 'rgba(212, 175, 55, 0.05)' }, ticks: { color: '#8A8A93', font: { family: 'Outfit' } } }
+                            }
+                        }
+                    });
+                    chartInitialized = true;
+                }
+            });
 
-<!-- TESTIMONIALS -->
-<section id="testimonials" style="background:var(--black-2);">
-  <div class="section-label reveal">Social Proof</div>
-  <h2 class="testimonials-title reveal">What <span class="gold">Clients</span> Say</h2>
-  <div class="testimonials-grid">
-    <div class="testi-card reveal">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">Jenish transformed our Flipkart presence completely. Impressions went from near zero to lakhs in just a few months. Exceptional strategic mind with deep platform knowledge.</p>
-      <div class="testi-author">
-        <div class="testi-avatar">🧑</div>
-        <div>
-          <div class="testi-name">Brand Owner</div>
-          <div class="testi-role">FMCG Category, Flipkart</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card reveal reveal-delay-1">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">The Amazon Brand Store he built for us drives consistent traffic. A+ content was exactly what we envisioned and the store converts at rates we never expected.</p>
-      <div class="testi-author">
-        <div class="testi-avatar">👩</div>
-        <div>
-          <div class="testi-name">Marketing Head</div>
-          <div class="testi-role">OneLife Brand, Amazon</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card reveal reveal-delay-2">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">GS1 setup was seamless, FBF integration was flawless, and the growth he delivered exceeded every KPI we set. A true marketplace specialist.</p>
-      <div class="testi-author">
-        <div class="testi-avatar">🧑</div>
-        <div>
-          <div class="testi-name">Operations Director</div>
-          <div class="testi-role">D2C Brand, Multi-Platform</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+            // AI CHATBOT LOGIC (Strict Context)
+            const chatToggle = document.getElementById('chatToggle');
+            const chatBox = document.getElementById('chatBox');
+            const chatInput = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const chatBody = document.getElementById('chatBody');
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-label reveal">Connect</div>
-  <div class="contact-layout">
-    <div class="reveal">
-      <h2 class="contact-title">Let's Build<br/>Something <span class="gold">Great</span></h2>
-      <p class="contact-sub">Ready to scale your brand to the next level? Reach out through any channel below. Response within 24 hours.</p>
-      <div class="contact-channels">
-        <a href="mailto:jenishkamli@gmail.com" class="contact-channel" style="text-decoration:none;color:inherit;">
-          <div class="contact-channel-icon">✉️</div>
-          <div class="contact-channel-info">
-            <div class="contact-channel-label">Email</div>
-            <div class="contact-channel-value">jenishkamli@gmail.com</div>
-          </div>
-          <div style="color:var(--gold);opacity:0.5;">→</div>
-        </a>
-        <a href="https://wa.me/917567250343" target="_blank" class="contact-channel" style="text-decoration:none;color:inherit;">
-          <div class="contact-channel-icon">📱</div>
-          <div class="contact-channel-info">
-            <div class="contact-channel-label">WhatsApp</div>
-            <div class="contact-channel-value">+91 75672 50343</div>
-          </div>
-          <div style="color:var(--gold);opacity:0.5;">→</div>
-        </a>
-        <a href="https://www.linkedin.com/in/jenish-kamli-47b787253" target="_blank" class="contact-channel" style="text-decoration:none;color:inherit;">
-          <div class="contact-channel-icon">💼</div>
-          <div class="contact-channel-info">
-            <div class="contact-channel-label">LinkedIn</div>
-            <div class="contact-channel-value">jenish-kamli-47b787253</div>
-          </div>
-          <div style="color:var(--gold);opacity:0.5;">→</div>
-        </a>
-      </div>
-      <div class="social-buttons" style="margin-top:32px;">
-        <a href="https://www.linkedin.com/in/jenish-kamli-47b787253" target="_blank" class="btn-linkedin">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          Connect on LinkedIn
-        </a>
-        <a href="https://wa.me/917567250343" target="_blank" class="btn-whatsapp">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          Chat on WhatsApp
-        </a>
-      </div>
-    </div>
-    <div class="reveal reveal-delay-2">
-      <form class="contact-form" onsubmit="return false;">
-        <div class="form-group">
-          <label class="form-label">Your Name</label>
-          <input type="text" class="form-input" placeholder="Ravi Sharma" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email Address</label>
-          <input type="email" class="form-input" placeholder="ravi@brand.com" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Platform / Service</label>
-          <input type="text" class="form-input" placeholder="Amazon FBA, Flipkart Growth..." />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Message</label>
-          <textarea class="form-textarea" rows="4" placeholder="Tell me about your brand and goals..."></textarea>
-        </div>
-        <button type="submit" class="btn-gold" style="width:100%;justify-content:center;padding:18px;">
-          <span>Send Message →</span>
-        </button>
-      </form>
-    </div>
-  </div>
-</section>
+            chatToggle.addEventListener('click', () => chatBox.classList.toggle('active'));
 
-<!-- FOOTER -->
-<div class="gold-divider"></div>
-<footer>
-  <div class="footer-logo">Jenish Kamli</div>
-  <div class="footer-copy">© 2024 Jenish Kamli · E-Commerce Growth Architect</div>
-  <div class="footer-links">
-    <a href="https://www.linkedin.com/in/jenish-kamli-47b787253" target="_blank">LinkedIn</a>
-    <a href="https://wa.me/917567250343" target="_blank">WhatsApp</a>
-    <a href="https://www.amazon.in/stores/OneLife/page/6EDAF642-1877-4AF9-B0CE-A9476C9520D1" target="_blank">Amazon Store</a>
-  </div>
-</footer>
+            function addMessage(text, sender) {
+                const msg = document.createElement('div');
+                msg.className = `msg ${sender}`;
+                msg.innerHTML = text;
+                chatBody.appendChild(msg);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
 
-<!-- FLOATING WHATSAPP -->
-<a href="https://wa.me/917567250343" target="_blank" class="float-whatsapp" title="Chat on WhatsApp">
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-  <span class="float-whatsapp-tooltip">Chat on WhatsApp</span>
-</a>
+            function showTyping() {
+                const typingId = 'typing-' + Date.now();
+                const typingHTML = `<div class="msg bot typing" id="${typingId}"><span></span><span></span><span></span></div>`;
+                chatBody.insertAdjacentHTML('beforeend', typingHTML);
+                chatBody.scrollTop = chatBody.scrollHeight;
+                return typingId;
+            }
 
-<!-- AI CHAT WIDGET -->
-<div id="chat-widget">
-  <div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-      <div class="chat-avatar">JK</div>
-      <div class="chat-info">
-        <div class="chat-name">Jenish's AI Assistant</div>
-        <div class="chat-status">Online Now</div>
-      </div>
-      <button class="chat-close" onclick="toggleChat()" aria-label="Close">✕</button>
-    </div>
-    <div class="chat-messages" id="chatMessages">
-      <div class="msg msg-bot">
-        <div class="msg-bubble">👋 Hello! I'm Jenish's AI assistant. Ask me about growth strategy, Amazon optimization, or how to hire Jenish for your brand.</div>
-      </div>
-    </div>
-    <div class="chat-suggestions">
-      <button class="chat-suggestion" onclick="askSuggestion('growth')">📈 Growth</button>
-      <button class="chat-suggestion" onclick="askSuggestion('amazon')">🛒 Amazon</button>
-      <button class="chat-suggestion" onclick="askSuggestion('hire')">💼 Hire</button>
-      <button class="chat-suggestion" onclick="askSuggestion('platforms')">🏪 Platforms</button>
-    </div>
-    <div class="chat-input-row">
-      <input class="chat-input" id="chatInput" type="text" placeholder="Ask anything..." onkeydown="if(event.key==='Enter') sendChat()" />
-      <button class="chat-send" onclick="sendChat()">➤</button>
-    </div>
-  </div>
-  <button class="chat-toggle" onclick="toggleChat()" aria-label="Open chat">
-    <span id="chatToggleIcon">💬</span>
-    <span class="chat-toggle-dot"></span>
-  </button>
-</div>
+            function removeTyping(id) {
+                const el = document.getElementById(id);
+                if(el) el.remove();
+            }
 
-<script>
-// ── CURSOR ──────────────────────────────────────────────
-const dot = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
-function animateRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animateRing); }
-animateRing();
+            function processResponse(query) {
+                const q = query.toLowerCase();
+                const typingId = showTyping();
+                
+                // Human feel delay
+                setTimeout(() => {
+                    removeTyping(typingId);
+                    
+                    let response = "";
+                    
+                    if(q.includes('growth')) {
+                        response = "Jenish scaled Flipkart impressions from 2.8L to 20L+ using SEO, catalog optimization, and performance strategy 📈";
+                    } else if(q.includes('services')) {
+                        response = "He offers marketplace management, SEO optimization, ads scaling, FBA/FBF setup, and complete e-commerce growth solutions 💼";
+                    } else if(q.includes('amazon')) {
+                        response = "Jenish helps optimize Amazon listings, run PPC ads, and build brand stores for higher conversions 🚀";
+                    } else if(q.includes('hire') || q.includes('contact') || q.includes('whatsapp')) {
+                        response = "You can collaborate directly via WhatsApp for faster response 👇\n<a href='https://wa.me/917567250343' target='_blank'>https://wa.me/917567250343</a>";
+                    } else {
+                        // Strict Out Of Context Fallback
+                        response = "I'm here to help with e-commerce growth and Jenish’s services 🚀\nFor anything else, feel free to connect directly on WhatsApp.\n\n👉 Chat on WhatsApp: <a href='https://wa.me/917567250343' target='_blank'>https://wa.me/917567250343</a>";
+                    }
+                    
+                    addMessage(response, 'bot');
+                }, 1000 + Math.random() * 800);
+            }
 
-// ── SCROLL REVEAL ────────────────────────────────────────
-const revealEls = document.querySelectorAll('.reveal');
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-revealEls.forEach(el => obs.observe(el));
+            function handleChat() {
+                const text = chatInput.value.trim();
+                if(text) {
+                    addMessage(text, 'user');
+                    chatInput.value = '';
+                    processResponse(text);
+                }
+            }
 
-// ── ANIMATED COUNTERS ────────────────────────────────────
-function animateCounter(el) {
-  const target = parseFloat(el.dataset.count);
-  const suffix = el.dataset.suffix || '';
-  const duration = 2000;
-  const start = performance.now();
-  const isDecimal = target % 1 !== 0;
-  function update(now) {
-    const progress = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    const current = target * eased;
-    el.textContent = (isDecimal ? current.toFixed(1) : Math.floor(current)) + suffix;
-    if (progress < 1) requestAnimationFrame(update);
-    else el.textContent = (isDecimal ? target.toFixed(1) : target) + suffix;
-  }
-  requestAnimationFrame(update);
-}
+            sendBtn.addEventListener('click', handleChat);
+            chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleChat(); });
 
-const counterObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting && !e.target.dataset.counted) {
-      e.target.dataset.counted = '1';
-      animateCounter(e.target);
-    }
-  });
-}, { threshold: 0.5 });
-
-document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
-
-// ── GROWTH CHART ──────────────────────────────────────────
-const ctx = document.getElementById('growthChart');
-if (ctx) {
-  const goldColor = '#C9A84C';
-  const goldFade = 'rgba(201,168,76,0.08)';
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['March', 'April', 'May', 'June', 'July'],
-      datasets: [{
-        label: 'Monthly Impressions (L)',
-        data: [2.8, 6.7, 13.2, 18.4, 20.2],
-        borderColor: goldColor,
-        backgroundColor: goldFade,
-        borderWidth: 2,
-        pointBackgroundColor: goldColor,
-        pointBorderColor: '#080808',
-        pointBorderWidth: 2,
-        pointRadius: 6,
-        pointHoverRadius: 9,
-        tension: 0.4,
-        fill: true,
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      interaction: { intersect: false, mode: 'index' },
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#181818',
-          borderColor: 'rgba(201,168,76,0.3)',
-          borderWidth: 1,
-          titleColor: '#C9A84C',
-          bodyColor: 'rgba(245,240,232,0.7)',
-          padding: 14,
-          titleFont: { family: 'Unbounded', size: 12 },
-          bodyFont: { family: 'Outfit', size: 13 },
-          callbacks: { label: ctx => ` ${ctx.raw}L Impressions` }
-        }
-      },
-      scales: {
-        x: {
-          grid: { color: 'rgba(201,168,76,0.06)' },
-          ticks: { color: 'rgba(245,240,232,0.4)', font: { family: 'Outfit', size: 12 } },
-          border: { color: 'rgba(201,168,76,0.15)' }
-        },
-        y: {
-          grid: { color: 'rgba(201,168,76,0.06)' },
-          ticks: { color: 'rgba(245,240,232,0.4)', font: { family: 'Outfit', size: 12 }, callback: v => v + 'L' },
-          border: { color: 'rgba(201,168,76,0.15)' }
-        }
-      },
-      animation: { duration: 1800, easing: 'easeInOutQuart' }
-    }
-  });
-}
-
-// ── CHAT WIDGET ──────────────────────────────────────────
-let chatOpen = false;
-
-function toggleChat() {
-  chatOpen = !chatOpen;
-  const win = document.getElementById('chatWindow');
-  const icon = document.getElementById('chatToggleIcon');
-  win.classList.toggle('open', chatOpen);
-  icon.textContent = chatOpen ? '✕' : '💬';
-}
-
-const chatResponses = {
-  growth: "📈 <strong>Flipkart Growth Story:</strong> Starting at just 2.8L impressions in March, I scaled the brand to 20.2L by July — a 620% jump in 5 months. Strategy: keyword saturation, ad structure overhaul, and listing score maximization.",
-  amazon: "🛒 <strong>Amazon Listing Optimization:</strong> I work on title engineering, backend keyword mapping, bullet point conversion copy, and A+ content. Combined with targeted PPC, this typically delivers 2–4x organic visibility uplift.",
-  hire: "💼 <strong>Ready to work together?</strong><br>📧 jenishkamli@gmail.com<br>📱 <a href='https://wa.me/917567250343' target='_blank' style='color:var(--gold)'>+91 75672 50343 (WhatsApp)</a><br>💼 <a href='https://www.linkedin.com/in/jenish-kamli-47b787253' target='_blank' style='color:var(--gold)'>LinkedIn Profile</a>",
-  platforms: "🏪 <strong>Platforms I Manage:</strong><br>Marketplaces: Amazon, Flipkart, Meesho, JioMart, Myntra, Ajio, Snapdeal<br>Quick Commerce: Blinkit, Zepto, Swiggy Instamart<br>Full-stack management across all.",
-};
-
-function addMessage(text, isUser = false) {
-  const msgs = document.getElementById('chatMessages');
-  const div = document.createElement('div');
-  div.className = `msg ${isUser ? 'msg-user' : 'msg-bot'}`;
-  div.innerHTML = `<div class="msg-bubble">${text}</div>`;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function askSuggestion(key) {
-  const labels = { growth: 'Tell me about growth', amazon: 'Amazon optimization?', hire: 'How to hire Jenish?', platforms: 'What platforms?' };
-  addMessage(labels[key] || key, true);
-  setTimeout(() => addMessage(chatResponses[key] || "Let me check that for you. Reach out directly at <a href='https://wa.me/917567250343' target='_blank' style='color:var(--gold)'>WhatsApp</a> for fastest response!", false), 600);
-}
-
-function sendChat() {
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (!text) return;
-  addMessage(text, true);
-  input.value = '';
-  const lower = text.toLowerCase();
-  let response = "Thanks for reaching out! For the fastest response, ping me on <a href='https://wa.me/917567250343' target='_blank' style='color:var(--gold)'>WhatsApp</a> or <a href='https://www.linkedin.com/in/jenish-kamli-47b787253' target='_blank' style='color:var(--gold)'>LinkedIn</a>.";
-  if (lower.includes('growth') || lower.includes('scale') || lower.includes('impression')) response = chatResponses.growth;
-  else if (lower.includes('amazon') || lower.includes('listing') || lower.includes('seo')) response = chatResponses.amazon;
-  else if (lower.includes('hire') || lower.includes('contact') || lower.includes('work') || lower.includes('price')) response = chatResponses.hire;
-  else if (lower.includes('platform') || lower.includes('flipkart') || lower.includes('meesho')) response = chatResponses.platforms;
-  setTimeout(() => addMessage(response, false), 700);
-}
-
-// ── PARALLAX HERO ────────────────────────────────────────
-window.addEventListener('scroll', () => {
-  const hero = document.getElementById('hero');
-  const grid = hero?.querySelector('.hero-grid');
-  if (grid) grid.style.transform = `translateY(${window.scrollY * 0.15}px)`;
-});
-
-// ── SMOOTH SCROLL FOR NAV LINKS ──────────────────────────
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
-  });
-});
-</script>
+            // Navbar Scroll Effect
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('navbar');
+                if(window.scrollY > 50) {
+                    nav.style.background = 'rgba(3,3,3,0.95)';
+                    nav.style.padding = '1rem 5%';
+                    nav.style.borderBottom = '1px solid rgba(212, 175, 55, 0.1)';
+                } else {
+                    nav.style.background = 'linear-gradient(to bottom, rgba(3,3,3,0.9) 0%, transparent 100%)';
+                    nav.style.padding = '2rem 5%';
+                    nav.style.borderBottom = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
