@@ -1,236 +1,888 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jenish Kamli — Marketplace Growth Specialist</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenish Kamli | E-Commerce & Growth Specialist</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<style>
-:root{
-  --bg:#050810;
-  --text:#fff;
-  --muted:#aaa;
-  --accent:#64b4ff;
-}
+    <style>
+        :root {
+            --bg-dark: #05050A;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(255, 255, 255, 0.15);
+            --text-primary: #FFFFFF;
+            --text-secondary: #A1A1AA;
+            --accent-glow: rgba(138, 43, 226, 0.4);
+            --accent-blue: rgba(0, 195, 255, 0.4);
+        }
 
-body{
-  margin:0;
-  font-family:'DM Sans',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
 
-/* SIMPLE OPTIMIZED UI */
-.container{max-width:1100px;margin:auto;padding:20px}
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-/* HERO */
-.hero{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-}
-.hero h1{
-  font-size:48px;
-  font-family:'Syne',sans-serif;
-}
-.hero span{color:var(--accent)}
-.hero p{color:var(--muted);max-width:500px}
+        /* Animated Ambient Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: #000;
+        }
 
-/* BUTTON */
-.btn{
-  padding:12px 20px;
-  background:var(--accent);
-  color:#000;
-  border:none;
-  border-radius:8px;
-  margin-top:15px;
-  display:inline-block;
-  text-decoration:none;
-}
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out alternate;
+        }
 
-/* SECTION */
-section{padding:80px 0}
+        .orb-1 {
+            width: 50vw; height: 50vw;
+            background: radial-gradient(circle, #4a00e0, transparent);
+            top: -10%; left: -10%;
+        }
 
-/* CARD */
-.card{
-  background:#0d1117;
-  padding:20px;
-  border-radius:12px;
-  margin-top:20px;
-}
+        .orb-2 {
+            width: 40vw; height: 40vw;
+            background: radial-gradient(circle, #00c3ff, transparent);
+            bottom: -10%; right: -10%;
+            animation-delay: -5s;
+        }
 
-/* GRID */
-.grid{
-  display:grid;
-  gap:20px;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-}
+        .orb-3 {
+            width: 30vw; height: 30vw;
+            background: radial-gradient(circle, #ff007f, transparent);
+            top: 40%; left: 40%;
+            animation-delay: -10s;
+        }
 
-/* FOOTER */
-footer{
-  text-align:center;
-  padding:30px;
-  color:#666;
-}
-</style>
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(10vw, 10vh) scale(1.2); }
+        }
+
+        /* Liquid Glass Mixin / Base Class */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 
+                0 24px 48px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        /* Cursor Tracking Glow */
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06), transparent 40%);
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .glass-panel:hover::before {
+            opacity: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 20px; left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1000px;
+            z-index: 1000;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 100px;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: -0.5px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .btn-whatsapp {
+            background: rgba(37, 211, 102, 0.2);
+            border: 1px solid rgba(37, 211, 102, 0.5);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-whatsapp:hover {
+            background: rgba(37, 211, 102, 0.4);
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Sections */
+        section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(to right, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 150px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(255,255,255,0.5);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            transform: scale(1.05);
+        }
+
+        .floating-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            perspective: 1000px;
+        }
+
+        .stat-card {
+            padding: 20px 30px;
+            text-align: center;
+            animation: float-slow 6s ease-in-out infinite alternate;
+        }
+
+        .stat-card:nth-child(2) { animation-delay: -2s; }
+        .stat-card:nth-child(3) { animation-delay: -4s; }
+
+        .stat-card h3 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        
+        .stat-card p {
+            font-size: 0.8rem;
+            margin: 0;
+            color: var(--accent-blue);
+        }
+
+        @keyframes float-slow {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text h2 { margin-bottom: 20px; font-size: 2.5rem; }
+        .about-text p { color: var(--text-secondary); margin-bottom: 16px; font-size: 1.1rem; }
+        
+        .seo-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .tag {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #a1a1aa;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            border: 1px dashed rgba(255,255,255,0.2);
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.05));
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .service-card {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .service-card i {
+            font-size: 2.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 8px;
+        }
+
+        .service-card h3 { font-size: 1.2rem; }
+        .service-card p { color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* Case Studies - Dashboard */
+        .dashboard-ui {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 350px;
+        }
+
+        .dashboard-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .ss-placeholder {
+            height: 150px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border: 1px dashed rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.02);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .ss-placeholder:hover {
+            transform: scale(1.05);
+            background: rgba(255,255,255,0.05);
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .skill-category {
+            padding: 24px;
+        }
+        
+        .skill-category h3 { margin-bottom: 16px; font-size: 1.1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 8px;}
+        
+        .skill-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* Experience */
+        .logo-carousel {
+            overflow: hidden;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        .logo-carousel::before, .logo-carousel::after {
+            content: '';
+            position: absolute;
+            top: 0; width: 100px; height: 100%;
+            z-index: 2;
+        }
+        .logo-carousel::before { left: 0; background: linear-gradient(to right, var(--bg-dark), transparent); }
+        .logo-carousel::after { right: 0; background: linear-gradient(to left, var(--bg-dark), transparent); }
+
+        .logo-track {
+            display: inline-block;
+            animation: scroll-logos 20s linear infinite;
+        }
+
+        .logo-item {
+            display: inline-block;
+            padding: 16px 32px;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        @keyframes scroll-logos {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .exp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .exp-card { padding: 24px; }
+        .exp-card h4 { color: var(--accent-blue); margin-bottom: 4px;}
+        .exp-card h3 { margin-bottom: 12px; }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .contact-card {
+            padding: 40px 24px;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .contact-card i { font-size: 2rem; }
+        .contact-card:hover { transform: translateY(-10px); }
+        .contact-card.wa:hover { box-shadow: 0 10px 30px rgba(37, 211, 102, 0.2); }
+        .contact-card.email:hover { box-shadow: 0 10px 30px rgba(0, 195, 255, 0.2); }
+        .contact-card.call:hover { box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2); }
+
+        .ext-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .ext-link {
+            width: 50px; height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 3rem; }
+            .about-grid, .dashboard-ui, .skills-grid, .services-grid, .exp-grid, .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links { display: none; }
+            .floating-stats { flex-direction: column; }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- HERO -->
-<section class="hero">
-<div class="container">
-<h1>
-Marketplace Growth <br>
-<span>Specialist</span><br>
-for Scalable Brands
-</h1>
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
-<p>
-I help brands grow on Amazon, Flipkart & Quick Commerce platforms using data-driven strategies that turn products into consistent revenue engines.
-</p>
+    <nav class="glass-panel">
+        <a href="#" class="nav-logo">Jenish Kamli</a>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#case-studies">Case Studies</a>
+            <a href="#experience">Experience</a>
+        </div>
+        <a href="https://wa.me/919624736282" target="_blank" class="btn-whatsapp">
+            <i class="fab fa-whatsapp"></i> Chat
+        </a>
+    </nav>
 
-<a href="#contact" class="btn">Hire Me</a>
-</div>
-</section>
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>E-Commerce & Quick Commerce<br>Growth Specialist</h1>
+            <p>Helping brands scale exponentially on Amazon, Flipkart & Quick Commerce platforms through data-driven strategies and performance marketing.</p>
+            
+            <div class="hero-ctas">
+                <a href="#case-studies" class="btn btn-primary">View Dashboard</a>
+                <a href="https://wa.me/919624736282" target="_blank" class="btn btn-secondary">Hire Me</a>
+            </div>
 
-<!-- ABOUT -->
-<section>
-<div class="container">
-<h2>About</h2>
+            <div class="floating-stats">
+                <div class="glass-panel stat-card 3d-tilt">
+                    <h3>₹20L+</h3>
+                    <p>Monthly Sales Peak</p>
+                </div>
+                <div class="glass-panel stat-card 3d-tilt">
+                    <h3>110+</h3>
+                    <p>SKUs Managed</p>
+                </div>
+                <div class="glass-panel stat-card 3d-tilt">
+                    <h3>Multi-Platform</h3>
+                    <p>Omnichannel Growth</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<p>
-I’m a marketplace growth specialist helping brands scale across Amazon, Flipkart, and Quick Commerce platforms.
-</p>
+    <section id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text glass-panel" style="padding: 40px;">
+                    <h2>Architecting Digital Scale</h2>
+                    <p>I am Jenish Kamli, an advanced marketplace strategist. I bridge the gap between product potential and market dominance.</p>
+                    <p>Serving elite clients across India (Surat, Ahmedabad, Mumbai, Delhi, Bangalore) by optimizing supply chains, reducing ACOS, and skyrocketing organic visibility.</p>
+                    <div class="seo-tags">
+                        <span class="tag">India eCommerce Specialist</span>
+                        <span class="tag">Amazon PPC Expert</span>
+                        <span class="tag">Flipkart Growth Expert</span>
+                        <span class="tag">Blinkit Onboarding</span>
+                        <span class="tag">Zepto Strategy</span>
+                    </div>
+                </div>
+                <div class="glass-panel 3d-tilt image-placeholder">
+                    <i class="fas fa-user-astronaut" style="font-size: 4rem; margin-bottom: 10px;"></i>
+                    <br>[ Upload Portrait Image Here ]
+                </div>
+            </div>
+        </div>
+    </section>
 
-<p>
-I have hands-on experience working with consumer electronics and mobile accessories brands, managing 110+ SKUs and generating ₹20L+ monthly GMV.
-</p>
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title">Growth Infrastructure</h2>
+            <div class="services-grid">
+                <div class="glass-panel service-card 3d-tilt">
+                    <i class="fab fa-amazon"></i>
+                    <h3>Amazon & Flipkart Setup</h3>
+                    <p>End-to-end account architecture, FBA routing, and compliance execution for seamless onboarding.</p>
+                </div>
+                <div class="glass-panel service-card 3d-tilt">
+                    <i class="fas fa-search"></i>
+                    <h3>Product Listing SEO</h3>
+                    <p>Algorithm-friendly copywriting, A+ content integration, and high-conversion keyword targeting.</p>
+                </div>
+                <div class="glass-panel service-card 3d-tilt">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Amazon PPC Ads</h3>
+                    <p>Precision bidding, campaign structuring, and negative keyword optimization to crush ACOS.</p>
+                </div>
+                <div class="glass-panel service-card 3d-tilt">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Flipkart Growth</h3>
+                    <p>PLA campaigns, smart ROI tracking, and tier-upgrade strategies to unlock visibility.</p>
+                </div>
+                <div class="glass-panel service-card 3d-tilt">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Quick Commerce</h3>
+                    <p>Blinkit & Zepto dark-store mapping, inventory velocity tracking, and hyperlocal scaling.</p>
+                </div>
+                <div class="glass-panel service-card 3d-tilt">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Performance Marketing</h3>
+                    <p>Data-backed omnichannel budget allocation to maximize ROAS across the digital spectrum.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<p>
-I focus on listing optimization, advertising performance, and scalable growth strategies that improve visibility and conversions.
-</p>
+    <section id="case-studies">
+        <div class="container">
+            <h2 class="section-title">Live Marketplace Performance</h2>
+            <div class="glass-panel dashboard-ui 3d-tilt">
+                <div>
+                    <h3 style="margin-bottom: 20px;">Flipkart Trajectory (Mar - Aug)</h3>
+                    <div class="chart-container">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+                <div class="dashboard-sidebar">
+                    <h3 style="margin-bottom: 10px; font-size: 1rem; color: var(--text-secondary);">Dashboard Evidence</h3>
+                    <div class="glass-panel ss-placeholder 3d-tilt">
+                        [ Flipkart SS Upload 1 ]
+                    </div>
+                    <div class="glass-panel ss-placeholder 3d-tilt">
+                        [ Flipkart SS Upload 2 ]
+                    </div>
+                    <div class="glass-panel ss-placeholder 3d-tilt">
+                        [ Amazon Ads SS Upload ]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<p>
-I also support brands in expanding to Blinkit, Zepto, and Swiggy Instamart.
-</p>
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Technical Arsenal</h2>
+            <div class="skills-grid">
+                <div class="glass-panel skill-category 3d-tilt">
+                    <h3>Marketplace</h3>
+                    <div class="skill-pills">
+                        <span class="tag">Amazon</span><span class="tag">Flipkart</span><span class="tag">Meesho</span>
+                    </div>
+                </div>
+                <div class="glass-panel skill-category 3d-tilt">
+                    <h3>Quick Commerce</h3>
+                    <div class="skill-pills">
+                        <span class="tag">Blinkit</span><span class="tag">Zepto</span><span class="tag">Swiggy Instamart</span>
+                    </div>
+                </div>
+                <div class="glass-panel skill-category 3d-tilt">
+                    <h3>Growth Engine</h3>
+                    <div class="skill-pills">
+                        <span class="tag">SEO</span><span class="tag">CRO</span><span class="tag">A/B Testing</span>
+                    </div>
+                </div>
+                <div class="glass-panel skill-category 3d-tilt">
+                    <h3>Advertising</h3>
+                    <div class="skill-pills">
+                        <span class="tag">Amazon PPC</span><span class="tag">Flipkart PLA</span>
+                    </div>
+                </div>
+                <div class="glass-panel skill-category 3d-tilt">
+                    <h3>Advanced Ops</h3>
+                    <div class="skill-pills">
+                        <span class="tag">FBA</span><span class="tag">A+ Content</span><span class="tag">GS1 Barcoding</span><span class="tag">Brand Registry</span>
+                    </div>
+                </div>
+                <div class="glass-panel skill-category 3d-tilt">
+                    <h3>Software & Tools</h3>
+                    <div class="skill-pills">
+                        <span class="tag">Helium10</span><span class="tag">Seller Central</span><span class="tag">Advanced Excel</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<p>
-Handled GS1 barcode implementation for <strong>:contentReference[oaicite:0]{index=0}</strong>.
-</p>
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title">Ecosystem Experience</h2>
+            
+            <div class="logo-carousel">
+                <div class="logo-track">
+                    <div class="glass-panel logo-item">Amazon</div>
+                    <div class="glass-panel logo-item">Flipkart</div>
+                    <div class="glass-panel logo-item">Meesho</div>
+                    <div class="glass-panel logo-item">Myntra</div>
+                    <div class="glass-panel logo-item">Blinkit</div>
+                    <div class="glass-panel logo-item">Zepto</div>
+                    <div class="glass-panel logo-item">Amazon</div>
+                    <div class="glass-panel logo-item">Flipkart</div>
+                    <div class="glass-panel logo-item">Meesho</div>
+                    <div class="glass-panel logo-item">Myntra</div>
+                    <div class="glass-panel logo-item">Blinkit</div>
+                    <div class="glass-panel logo-item">Zepto</div>
+                </div>
+            </div>
 
-</div>
-</section>
+            <div class="exp-grid">
+                <div class="glass-panel exp-card 3d-tilt">
+                    <h4>Current / Recent</h4>
+                    <h3>OneLife Electronics India Pvt Ltd</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Managed holistic marketplace operations, scaling revenue and optimizing supply chain logistics.</p>
+                </div>
+                <div class="glass-panel exp-card 3d-tilt">
+                    <h4>Brand Portfolio</h4>
+                    <h3>Lux Enterprise & TV Enterprise</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Executed high-velocity listing optimizations and PPC campaigns to secure top-page rankings.</p>
+                </div>
+                <div class="glass-panel exp-card 3d-tilt">
+                    <h4>Brand Portfolio</h4>
+                    <h3>Consolidate Hygiene Pvt Ltd</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Drove category expansion and B2B/B2C hybrid strategies across dominant platforms.</p>
+                </div>
+                <div class="glass-panel exp-card 3d-tilt">
+                    <h4>Brand Portfolio</h4>
+                    <h3>Hiya Enterprise</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Streamlined operations and implemented data-centric inventory forecasting to prevent stockouts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- SERVICES -->
-<section>
-<div class="container">
-<h2>Services</h2>
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Initiate Protocol</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 40px;">Currently available for freelance consulting and high-impact project work.</p>
+            
+            <div class="contact-grid">
+                <a href="https://wa.me/919624736282" target="_blank" class="glass-panel contact-card wa 3d-tilt">
+                    <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+                    <h3>WhatsApp</h3>
+                    <p>+91 96247 36282</p>
+                </a>
+                <a href="mailto:contact@example.com" class="glass-panel contact-card email 3d-tilt">
+                    <i class="fas fa-envelope" style="color: #00c3ff;"></i>
+                    <h3>Email</h3>
+                    <p>Send a secure transmission</p>
+                </a>
+                <a href="tel:+919624736282" class="glass-panel contact-card call 3d-tilt">
+                    <i class="fas fa-phone-alt" style="color: #8A2BE2;"></i>
+                    <h3>Direct Line</h3>
+                    <p>Voice Comm</p>
+                </a>
+            </div>
 
-<div class="grid">
+            <div class="ext-links">
+                <a href="https://www.linkedin.com/in/jenish-kamli-47b787253" target="_blank" class="glass-panel ext-link 3d-tilt">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://www.amazon.in/stores/OneLife/page/6EDAF642-1877-4AF9-B0CE-A9476C9520D1" target="_blank" class="glass-panel ext-link 3d-tilt">
+                    <i class="fab fa-amazon"></i>
+                </a>
+            </div>
+        </div>
+    </section>
 
-<div class="card">
-<h3>Marketplace Setup</h3>
-<p>Complete Amazon & Flipkart onboarding and setup.</p>
-</div>
+    <footer style="text-align: center; padding: 40px; color: var(--text-secondary); border-top: 1px solid var(--glass-border);">
+        <p>&copy; 2026 Jenish Kamli. Liquid Glass Vision UI.</p>
+    </footer>
 
-<div class="card">
-<h3>Listing SEO</h3>
-<p>Keyword-rich listings to boost ranking and conversions.</p>
-</div>
+    <script>
+        // 1. 3D Tilt Effect & Cursor Light Tracker (Vision Pro / Liquid Glass Effect)
+        document.querySelectorAll('.3d-tilt').forEach(el => {
+            el.addEventListener('mousemove', e => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Set CSS variables for the radial glow
+                el.style.setProperty('--mouse-x', `${x}px`);
+                el.style.setProperty('--mouse-y', `${y}px`);
 
-<div class="card">
-<h3>Amazon PPC</h3>
-<p>Ad campaigns optimized for ROI and scaling.</p>
-</div>
+                // Calculate tilt angles
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -4; // Max 4 deg
+                const rotateY = ((x - centerX) / centerX) * 4;
 
-<div class="card">
-<h3>Flipkart Growth</h3>
-<p>Catalog optimization and Smart ROI strategy.</p>
-</div>
+                el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
 
-<div class="card">
-<h3>Quick Commerce</h3>
-<p>Blinkit, Zepto, Instamart onboarding and scaling.</p>
-</div>
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
+            });
+        });
 
-<div class="card">
-<h3>Performance Marketing</h3>
-<p>Data-driven strategies for maximum growth.</p>
-</div>
+        // 2. Chart.js Implementation for Dashboard
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        
+        // Gradient for Sales Line
+        const gradientSales = ctx.createLinearGradient(0, 0, 0, 400);
+        gradientSales.addColorStop(0, 'rgba(0, 195, 255, 0.5)');
+        gradientSales.addColorStop(1, 'rgba(0, 195, 255, 0.0)');
 
-</div>
-</div>
-</section>
-
-<!-- PROJECT -->
-<section>
-<div class="container">
-<h2>Project</h2>
-
-<div class="card">
-<p>
-Developed and optimized a high-converting Amazon Brand Store with improved UX and conversion.
-</p>
-
-<a href="https://www.amazon.in/stores/OneLife/page/6EDAF642-1877-4AF9-B0CE-A9476C9520D1" class="btn" target="_blank">
-View Brand Store
-</a>
-</div>
-
-</div>
-</section>
-
-<!-- CASE STUDY -->
-<section>
-<div class="container">
-<h2>Case Study</h2>
-
-<div class="card">
-<ul>
-<li>₹2.8L → ₹20.2L growth in 5 months</li>
-<li>110+ SKUs managed</li>
-<li>Improved ads & conversions</li>
-<li>Expanded to quick commerce</li>
-</ul>
-</div>
-
-</div>
-</section>
-
-<!-- TESTIMONIAL -->
-<section>
-<div class="container">
-<h2>Testimonial</h2>
-
-<div class="card">
-<p>
-"Jenish helped us scale our brand across Amazon and Flipkart with a data-driven approach.
-Sales and conversions improved significantly."
-</p>
-
-<p><strong>— Brand Partner</strong></p>
-</div>
-
-</div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-<div class="container">
-<h2>Contact</h2>
-
-<p>Ready to grow your brand? Let’s connect.</p>
-
-<a href="https://wa.me/919624736282" class="btn">WhatsApp</a>
-</div>
-</section>
-
-<footer>
-© 2024 Jenish Kamli · Marketplace Growth Specialist
-</footer>
-
+        const performanceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['March', 'April', 'May', 'June', 'July', 'August'],
+                datasets: [
+                    {
+                        label: 'Sales (₹ Lakhs)',
+                        data: [2.8, 6.7, 13.2, 18.4, 20.2, 12.9],
+                        borderColor: '#00c3ff',
+                        backgroundColor: gradientSales,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#00c3ff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        fill: true,
+                        tension: 0.4 // Smooth curves
+                    },
+                    {
+                        label: 'Ad Spend (₹ Lakhs)',
+                        data: [0, 0, 3.29, 6.35, 5.83, 3.7],
+                        type: 'bar',
+                        backgroundColor: 'rgba(138, 43, 226, 0.6)',
+                        borderRadius: 8,
+                        barPercentage: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                color: '#A1A1AA',
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    legend: {
+                        labels: { color: '#fff', font: { family: 'Inter' } }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0,0,0,0.8)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: 'rgba(255,255,255,0.1)',
+                        borderWidth: 1,
+                        padding: 12,
+                        boxPadding: 6
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#A1A1AA' }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#A1A1AA' }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
