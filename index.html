@@ -1,888 +1,833 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jenish Kamli | E-Commerce & Growth Specialist</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        :root {
-            --bg-dark: #05050A;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-highlight: rgba(255, 255, 255, 0.15);
-            --text-primary: #FFFFFF;
-            --text-secondary: #A1A1AA;
-            --accent-glow: rgba(138, 43, 226, 0.4);
-            --accent-blue: rgba(0, 195, 255, 0.4);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* Animated Ambient Background */
-        .ambient-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-            background: #000;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.6;
-            animation: float 20s infinite ease-in-out alternate;
-        }
-
-        .orb-1 {
-            width: 50vw; height: 50vw;
-            background: radial-gradient(circle, #4a00e0, transparent);
-            top: -10%; left: -10%;
-        }
-
-        .orb-2 {
-            width: 40vw; height: 40vw;
-            background: radial-gradient(circle, #00c3ff, transparent);
-            bottom: -10%; right: -10%;
-            animation-delay: -5s;
-        }
-
-        .orb-3 {
-            width: 30vw; height: 30vw;
-            background: radial-gradient(circle, #ff007f, transparent);
-            top: 40%; left: 40%;
-            animation-delay: -10s;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(10vw, 10vh) scale(1.2); }
-        }
-
-        /* Liquid Glass Mixin / Base Class */
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(40px) saturate(180%);
-            -webkit-backdrop-filter: blur(40px) saturate(180%);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: 
-                0 24px 48px rgba(0, 0, 0, 0.4),
-                inset 0 1px 1px rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
-            will-change: transform;
-        }
-
-        /* Cursor Tracking Glow */
-        .glass-panel::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06), transparent 40%);
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .glass-panel:hover::before {
-            opacity: 1;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* Navbar */
-        nav {
-            position: fixed;
-            top: 20px; left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 1000px;
-            z-index: 1000;
-            padding: 12px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 100px;
-        }
-
-        .nav-logo {
-            font-weight: 700;
-            font-size: 1.2rem;
-            letter-spacing: -0.5px;
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 24px;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #fff;
-        }
-
-        .btn-whatsapp {
-            background: rgba(37, 211, 102, 0.2);
-            border: 1px solid rgba(37, 211, 102, 0.5);
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 100px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-whatsapp:hover {
-            background: rgba(37, 211, 102, 0.4);
-            box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
-            transform: scale(1.05);
-        }
-
-        /* Sections */
-        section {
-            padding: 120px 0;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 60px;
-            background: linear-gradient(to right, #fff, #a1a1aa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding-top: 150px;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -1px;
-            margin-bottom: 24px;
-            background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 40px;
-        }
-
-        .hero-ctas {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            margin-bottom: 60px;
-        }
-
-        .btn {
-            padding: 14px 28px;
-            border-radius: 100px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary {
-            background: #fff;
-            color: #000;
-            box-shadow: 0 0 30px rgba(255,255,255,0.3);
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(255,255,255,0.5);
-        }
-
-        .btn-secondary {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            color: #fff;
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.1);
-            transform: scale(1.05);
-        }
-
-        .floating-stats {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            perspective: 1000px;
-        }
-
-        .stat-card {
-            padding: 20px 30px;
-            text-align: center;
-            animation: float-slow 6s ease-in-out infinite alternate;
-        }
-
-        .stat-card:nth-child(2) { animation-delay: -2s; }
-        .stat-card:nth-child(3) { animation-delay: -4s; }
-
-        .stat-card h3 {
-            font-size: 1.8rem;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-        
-        .stat-card p {
-            font-size: 0.8rem;
-            margin: 0;
-            color: var(--accent-blue);
-        }
-
-        @keyframes float-slow {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-15px); }
-        }
-
-        /* About Section */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .about-text h2 { margin-bottom: 20px; font-size: 2.5rem; }
-        .about-text p { color: var(--text-secondary); margin-bottom: 16px; font-size: 1.1rem; }
-        
-        .seo-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 24px;
-        }
-
-        .tag {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            color: #a1a1aa;
-        }
-
-        .image-placeholder {
-            width: 100%;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            border: 1px dashed rgba(255,255,255,0.2);
-            border-radius: 24px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.05));
-        }
-
-        /* Services */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .service-card {
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .service-card i {
-            font-size: 2.5rem;
-            color: var(--accent-blue);
-            margin-bottom: 8px;
-        }
-
-        .service-card h3 { font-size: 1.2rem; }
-        .service-card p { color: var(--text-secondary); font-size: 0.9rem; }
-
-        /* Case Studies - Dashboard */
-        .dashboard-ui {
-            padding: 40px;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-        }
-
-        .chart-container {
-            width: 100%;
-            height: 350px;
-        }
-
-        .dashboard-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .ss-placeholder {
-            height: 150px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            border: 1px dashed rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.02);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .ss-placeholder:hover {
-            transform: scale(1.05);
-            background: rgba(255,255,255,0.05);
-            box-shadow: 0 0 20px rgba(255,255,255,0.1);
-        }
-
-        /* Skills */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .skill-category {
-            padding: 24px;
-        }
-        
-        .skill-category h3 { margin-bottom: 16px; font-size: 1.1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 8px;}
-        
-        .skill-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        /* Experience */
-        .logo-carousel {
-            overflow: hidden;
-            padding: 20px 0;
-            margin-bottom: 40px;
-            white-space: nowrap;
-            position: relative;
-        }
-        
-        .logo-carousel::before, .logo-carousel::after {
-            content: '';
-            position: absolute;
-            top: 0; width: 100px; height: 100%;
-            z-index: 2;
-        }
-        .logo-carousel::before { left: 0; background: linear-gradient(to right, var(--bg-dark), transparent); }
-        .logo-carousel::after { right: 0; background: linear-gradient(to left, var(--bg-dark), transparent); }
-
-        .logo-track {
-            display: inline-block;
-            animation: scroll-logos 20s linear infinite;
-        }
-
-        .logo-item {
-            display: inline-block;
-            padding: 16px 32px;
-            margin: 0 10px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        @keyframes scroll-logos {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .exp-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-
-        .exp-card { padding: 24px; }
-        .exp-card h4 { color: var(--accent-blue); margin-bottom: 4px;}
-        .exp-card h3 { margin-bottom: 12px; }
-
-        /* Contact */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        .contact-card {
-            padding: 40px 24px;
-            text-align: center;
-            text-decoration: none;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .contact-card i { font-size: 2rem; }
-        .contact-card:hover { transform: translateY(-10px); }
-        .contact-card.wa:hover { box-shadow: 0 10px 30px rgba(37, 211, 102, 0.2); }
-        .contact-card.email:hover { box-shadow: 0 10px 30px rgba(0, 195, 255, 0.2); }
-        .contact-card.call:hover { box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2); }
-
-        .ext-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        
-        .ext-link {
-            width: 50px; height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            color: #fff;
-            font-size: 1.5rem;
-            text-decoration: none;
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .hero h1 { font-size: 3rem; }
-            .about-grid, .dashboard-ui, .skills-grid, .services-grid, .exp-grid, .contact-grid {
-                grid-template-columns: 1fr;
-            }
-            .nav-links { display: none; }
-            .floating-stats { flex-direction: column; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jenish Kamli — E-Commerce & Marketplace Growth Specialist</title>
+<meta name="description" content="Jenish Kamli — India's premium E-Commerce & Marketplace Growth Specialist. Amazon PPC expert, Flipkart growth specialist, Quick Commerce (Blinkit/Zepto) onboarding.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gb:rgba(255,255,255,.06);
+  --gbd:rgba(255,255,255,.14);
+  --gs:rgba(255,255,255,.22);
+  --ab:#64b4ff;
+  --ap:#a064ff;
+  --ac:#00dcff;
+  --ag:#00e676;
+  --tp:rgba(255,255,255,.96);
+  --ts:rgba(255,255,255,.6);
+  --tm:rgba(255,255,255,.38);
+  --bg:#050810;
+  --rx:24px;
+  --r2:32px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tp);overflow-x:hidden}
+
+/* ── BUBBLE CURSOR (desktop only) ── */
+@media(hover:hover)and(pointer:fine){
+  body{cursor:none}
+  #cb{
+    position:fixed;width:18px;height:18px;
+    border-radius:50%;pointer-events:none;z-index:9999;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle at 35% 35%,rgba(255,255,255,.9) 0%,rgba(100,180,255,.6) 40%,rgba(100,180,255,.1) 100%);
+    box-shadow:0 0 8px rgba(100,180,255,.5),inset 0 1px 2px rgba(255,255,255,.8);
+    transition:width .2s,height .2s,opacity .2s;
+    mix-blend-mode:normal;
+  }
+  #cb.hov{width:32px;height:32px;opacity:.7}
+  #cg{
+    position:fixed;width:320px;height:320px;border-radius:50%;
+    pointer-events:none;z-index:9990;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle,rgba(100,180,255,.1) 0%,rgba(160,100,255,.06) 40%,transparent 70%);
+    transition:transform .45s cubic-bezier(.23,1,.32,1);
+  }
+  #ct{
+    position:fixed;width:60px;height:60px;border-radius:50%;
+    pointer-events:none;z-index:9995;
+    transform:translate(-50%,-50%);
+    border:1px solid rgba(100,180,255,.3);
+    transition:transform .12s ease,width .2s,height .2s,opacity .2s,border-color .2s;
+    opacity:.6;
+  }
+  #ct.hov{width:80px;height:80px;border-color:rgba(100,180,255,.6);opacity:.4}
+}
+
+/* ── AMBIENT BG ── */
+.bg-amb{
+  position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%,rgba(60,60,160,.5) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 80%,rgba(100,30,160,.45) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 40% at 60% 30%,rgba(0,80,160,.3) 0%,transparent 50%),
+    #050810;
+  will-change:transform;
+}
+#pc{position:fixed;inset:0;z-index:1;pointer-events:none}
+
+/* ── LAYOUT ── */
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+section{position:relative;z-index:2;padding:100px 0}
+
+/* ── NAVBAR ── */
+nav{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  z-index:1000;width:calc(100% - 48px);max-width:1160px;
+}
+.ni{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 24px;
+  background:rgba(10,12,30,.6);
+  backdrop-filter:blur(28px) saturate(180%);
+  border:1px solid var(--gbd);border-radius:20px;
+  box-shadow:0 8px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.1);
+  position:relative;overflow:hidden;
+}
+.ni::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);
+}
+.nl{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff;text-decoration:none}
+.nl span{color:var(--ab)}
+.nm{display:flex;gap:6px;list-style:none}
+.nm a{
+  color:var(--ts);text-decoration:none;font-size:13.5px;font-weight:500;
+  padding:7px 14px;border-radius:10px;transition:all .25s ease;
+}
+.nm a:hover,.nm a.act{color:#fff;background:rgba(255,255,255,.08)}
+.nc{
+  display:flex;align-items:center;gap:10px;text-decoration:none;
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  color:#fff;font-weight:600;font-size:13px;padding:9px 18px;
+  border-radius:12px;transition:all .25s ease;
+  box-shadow:0 4px 16px rgba(37,211,102,.35);
+}
+.nc:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(37,211,102,.5)}
+
+/* ── GLASS CARD ── */
+.gc{
+  background:var(--gb);
+  backdrop-filter:blur(24px) saturate(160%);
+  border:1px solid var(--gbd);border-radius:var(--rx);
+  position:relative;overflow:hidden;
+  transition:transform .35s cubic-bezier(.23,1,.32,1),box-shadow .35s ease,border-color .3s ease;
+}
+.gc::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gs),transparent);
+}
+.gc::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,transparent 60%);
+  pointer-events:none;opacity:0;transition:opacity .3s;
+}
+.gc:hover::after{opacity:1}
+.gc:hover{
+  border-color:rgba(255,255,255,.22);
+  box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.06);
+}
+
+/* ── LABELS / TITLES ── */
+.lbl{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--ac);margin-bottom:12px}
+.ttl{font-family:'Syne',sans-serif;font-size:clamp(32px,4vw,52px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:16px}
+.sub{font-size:17px;color:var(--ts);line-height:1.65;max-width:540px}
+
+/* ── HERO ── */
+#home{min-height:100vh;display:flex;align-items:center;padding-top:120px}
+.hi{display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:center;width:100%}
+.hbg{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(100,180,255,.1);border:1px solid rgba(100,180,255,.25);
+  border-radius:100px;padding:7px 16px 7px 10px;
+  font-size:12px;font-weight:500;color:var(--ab);margin-bottom:28px;
+}
+.hbd{width:6px;height:6px;border-radius:50%;background:var(--ag);box-shadow:0 0 8px var(--ag);animation:pd 2s infinite}
+@keyframes pd{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+.ht{font-family:'Syne',sans-serif;font-size:clamp(38px,5vw,68px);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:22px}
+.ht .hi2{background:linear-gradient(135deg,var(--ab),var(--ac));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hs{font-size:18px;color:var(--ts);line-height:1.65;max-width:500px;margin-bottom:40px;font-weight:300}
+.hc{display:flex;gap:12px;flex-wrap:wrap}
+
+/* ── BUTTONS ── */
+.bp,.bg2,.bw{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;font-weight:600;font-size:14.5px;
+  text-decoration:none;border-radius:14px;border:none;
+  transition:all .3s cubic-bezier(.23,1,.32,1);
+  position:relative;overflow:hidden;
+}
+.bp{background:linear-gradient(135deg,#64b4ff,#4090e8);color:#fff;box-shadow:0 8px 28px rgba(100,180,255,.4)}
+.bp:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(100,180,255,.55)}
+.bg2{background:rgba(255,255,255,.07);color:#fff;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(12px)}
+.bg2:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+.bw{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;box-shadow:0 8px 24px rgba(37,211,102,.35)}
+.bw:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(37,211,102,.5)}
+.rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.3);transform:scale(0);animation:ra .55s ease-out forwards;pointer-events:none}
+@keyframes ra{to{transform:scale(4);opacity:0}}
+
+/* ── HERO STATS ── */
+.hst{display:flex;flex-direction:column;gap:14px}
+.sc{padding:22px 26px;display:flex;align-items:center;gap:18px;animation:fc 4s ease-in-out infinite}
+.sc:nth-child(2){animation-delay:1.2s}
+.sc:nth-child(3){animation-delay:2.4s}
+@keyframes fc{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.si{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.si.bl{background:rgba(100,180,255,.15)}
+.si.pu{background:rgba(160,100,255,.15)}
+.si.gr{background:rgba(0,230,118,.12)}
+.sv{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;line-height:1;letter-spacing:-.5px}
+.sl{font-size:13px;color:var(--tm);margin-top:3px}
+
+/* ── ABOUT ── */
+.ag2{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start}
+.ai{padding:6px;border-radius:28px}
+.aw{
+  border-radius:22px;overflow:hidden;aspect-ratio:4/5;
+  background:linear-gradient(135deg,rgba(100,180,255,.08),rgba(160,100,255,.08));
+  display:flex;align-items:center;justify-content:center;position:relative;
+}
+.ap2{font-size:80px;user-select:none;filter:drop-shadow(0 0 30px rgba(100,180,255,.4))}
+.cc{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.ch{padding:6px 14px;background:rgba(100,180,255,.1);border:1px solid rgba(100,180,255,.2);border-radius:100px;font-size:12px;color:var(--ab);font-weight:500}
+.ac2{padding:30px}
+.ac2 p{color:var(--ts);line-height:1.75;margin-bottom:16px;font-size:15.5px}
+.at{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.tag{padding:6px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:100px;font-size:12px;color:var(--ts)}
+
+/* ── SERVICES ── */
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.svc{padding:32px 28px}
+.svc:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 24px 60px rgba(0,0,0,.4),var(--cg,none)}
+.svc h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:10px;letter-spacing:-.3px}
+.svc p{font-size:13.5px;color:var(--ts);line-height:1.65}
+.sic{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:20px}
+.sh{position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),transparent);transition:left .6s ease}
+.svc:hover .sh{left:140%}
+
+/* ── DASHBOARD ── */
+.dh{display:flex;align-items:center;justify-content:space-between;margin-bottom:30px}
+.lb{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.25);
+  padding:8px 16px;border-radius:100px;font-size:12px;font-weight:600;color:var(--ag);
+}
+.ld{width:7px;height:7px;border-radius:50%;background:var(--ag);box-shadow:0 0 10px var(--ag);animation:pd 1.5s infinite}
+.cg3{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;margin-bottom:20px}
+.cc2{padding:28px}
+.ct{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px}
+.cs{font-size:12px;color:var(--tm);margin-bottom:24px}
+.mr{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.mt{padding:20px 22px;text-align:center}
+.mv{
+  font-family:'Syne',sans-serif;font-size:24px;font-weight:800;letter-spacing:-.5px;
+  background:linear-gradient(135deg,var(--ab),var(--ac));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.ml{font-size:12px;color:var(--tm);margin-top:4px}
+
+/* ── SKILLS ── */
+.skgd{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.skc{padding:28px}
+.skh{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.ski{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.skh h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700}
+.spp{display:flex;flex-wrap:wrap;gap:8px}
+.sp{
+  padding:5px 13px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);border-radius:100px;
+  font-size:12px;color:var(--ts);transition:all .2s;
+}
+.sp:hover{background:rgba(100,180,255,.1);border-color:rgba(100,180,255,.25);color:var(--ab)}
+
+/* ── EXPERIENCE ── */
+.pt{overflow:hidden;margin-bottom:40px;padding:2px 0}
+.ptr{display:flex;gap:16px;animation:mq 22s linear infinite;width:max-content}
+.ptr:hover{animation-play-state:paused}
+@keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.pc2{
+  display:flex;align-items:center;gap:10px;padding:12px 22px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;white-space:nowrap;font-size:13.5px;font-weight:500;
+  transition:all .3s;flex-shrink:0;
+}
+.pc2:hover{background:rgba(255,255,255,.1);transform:translateY(-3px)}
+.pe{font-size:18px}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.ec{padding:28px}
+.ecp{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:4px}
+.er{font-size:13px;color:var(--ab);font-weight:500;margin-bottom:14px}
+.ep{list-style:none}
+.ep li{font-size:13.5px;color:var(--ts);padding:5px 0 5px 18px;position:relative;line-height:1.55}
+.ep li::before{content:'';position:absolute;left:0;top:12px;width:6px;height:6px;border-radius:50%;background:var(--ac);opacity:.7}
+
+/* ── CONTACT ── */
+.cog{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:30px}
+.coc{
+  padding:36px 28px;text-align:center;
+  text-decoration:none;color:inherit;display:block;
+}
+.coc:hover{transform:translateY(-8px)}
+.coi{width:64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px}
+.coc h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:6px}
+.coc p{font-size:13.5px;color:var(--ts)}
+.ab2{
+  padding:20px 28px;display:flex;align-items:center;
+  justify-content:center;gap:12px;text-align:center;
+}
+.ab2 span{font-size:14px;color:var(--ts)}
+.avd{width:8px;height:8px;border-radius:50%;background:var(--ag);box-shadow:0 0 12px var(--ag);animation:pd 2s infinite}
+.sl2{display:flex;justify-content:center;gap:14px;margin-top:30px}
+.slk{
+  display:flex;align-items:center;gap:8px;padding:12px 20px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;color:var(--ts);text-decoration:none;font-size:13px;font-weight:500;
+  transition:all .3s;
+}
+.slk:hover{background:rgba(100,180,255,.1);border-color:rgba(100,180,255,.25);color:var(--ab);transform:translateY(-2px)}
+
+/* ── FOOTER ── */
+footer{position:relative;z-index:2;text-align:center;padding:40px 24px;border-top:1px solid rgba(255,255,255,.06);color:var(--tm);font-size:13px}
+
+/* ── REVEAL ── */
+.rev{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.23,1,.32,1),transform .7s cubic-bezier(.23,1,.32,1)}
+.rev.vis{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hi{grid-template-columns:1fr}
+  .hst{flex-direction:row;overflow-x:auto}
+  .sc{min-width:200px}
+  .ag2{grid-template-columns:1fr}
+  .sg{grid-template-columns:1fr 1fr}
+  .cg3{grid-template-columns:1fr}
+  .mr{grid-template-columns:repeat(2,1fr)}
+  .skgd{grid-template-columns:1fr 1fr}
+  .eg{grid-template-columns:1fr}
+  .cog{grid-template-columns:1fr}
+  .nm{display:none}
+  nav{top:12px;width:calc(100% - 24px)}
+}
+@media(max-width:600px){
+  .sg,.skgd{grid-template-columns:1fr}
+  .mr{grid-template-columns:1fr 1fr}
+}
+</style>
 </head>
 <body>
 
-    <div class="ambient-bg">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+<!-- BUBBLE CURSOR (only rendered on non-touch devices via JS) -->
+<div id="cb"></div>
+<div id="ct"></div>
+<div id="cg"></div>
+
+<div class="bg-amb" id="bgAmb"></div>
+<canvas id="pc"></canvas>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="ni">
+    <a href="#home" class="nl">Jenish<span>.</span></a>
+    <ul class="nm">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#casestudy">Case Studies</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="https://wa.me/919624736282" target="_blank" class="nc">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.123 1.528 5.855L.057 23.97l6.255-1.439A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.856 0-3.597-.5-5.1-1.367l-.363-.217-3.712.853.881-3.617-.238-.374A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="wrap">
+    <div class="hi">
+      <div class="rev">
+        <div class="hbg"><span class="hbd"></span>Available for New Projects</div>
+        <h1 class="ht">E-Commerce &<br><span class="hi2">Quick Commerce</span><br>Growth Specialist</h1>
+        <p class="hs">Helping brands scale on Amazon, Flipkart & Quick Commerce platforms with data-driven strategies that turn listings into high-performance revenue engines.</p>
+        <div class="hc">
+          <a href="#casestudy" class="bp">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            View Work
+          </a>
+          <a href="#contact" class="bg2">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Hire Me
+          </a>
+          <a href="https://wa.me/919624736282" target="_blank" class="bw">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.123 1.528 5.855L.057 23.97l6.255-1.439A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.856 0-3.597-.5-5.1-1.367l-.363-.217-3.712.853.881-3.617-.238-.374A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+      <div class="hst rev" style="transition-delay:.2s">
+        <div class="gc sc">
+          <div class="si gr">💰</div>
+          <div>
+            <div class="sv" style="background:linear-gradient(135deg,#00e676,#00b248);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">₹6L+</div>
+            <div class="sl">Monthly Sales Generated</div>
+          </div>
+        </div>
+        <div class="gc sc">
+          <div class="si bl">📦</div>
+          <div>
+            <div class="sv" style="background:linear-gradient(135deg,#64b4ff,#00dcff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">110+</div>
+            <div class="sl">SKUs Actively Managed</div>
+          </div>
+        </div>
+        <div class="gc sc">
+          <div class="si pu">🚀</div>
+          <div>
+            <div class="sv" style="background:linear-gradient(135deg,#a064ff,#ff64d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">5+</div>
+            <div class="sl">Multi-Platform Growth</div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <nav class="glass-panel">
-        <a href="#" class="nav-logo">Jenish Kamli</a>
-        <div class="nav-links">
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#case-studies">Case Studies</a>
-            <a href="#experience">Experience</a>
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:60px" class="rev">
+      <div class="lbl">About Me</div>
+      <h2 class="ttl">India's E-Commerce<br>Growth Partner</h2>
+    </div>
+    <div class="ag2">
+      <div class="gc ai rev">
+        <div class="aw">
+          <div class="ap2">👨‍💻</div>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:50%;background:linear-gradient(to top,rgba(5,8,16,.9),transparent);border-radius:0 0 22px 22px"></div>
+          <div style="position:absolute;bottom:20px;left:20px;right:20px">
+            <div class="lbl" style="margin-bottom:6px">Based in Surat, Gujarat</div>
+            <div class="cc">
+              <span class="ch">Surat</span><span class="ch">Ahmedabad</span><span class="ch">Mumbai</span><span class="ch">Delhi</span><span class="ch">Bangalore</span>
+            </div>
+          </div>
         </div>
-        <a href="https://wa.me/919624736282" target="_blank" class="btn-whatsapp">
-            <i class="fab fa-whatsapp"></i> Chat
-        </a>
-    </nav>
-
-    <section class="hero" id="home">
-        <div class="container hero-content">
-            <h1>E-Commerce & Quick Commerce<br>Growth Specialist</h1>
-            <p>Helping brands scale exponentially on Amazon, Flipkart & Quick Commerce platforms through data-driven strategies and performance marketing.</p>
-            
-            <div class="hero-ctas">
-                <a href="#case-studies" class="btn btn-primary">View Dashboard</a>
-                <a href="https://wa.me/919624736282" target="_blank" class="btn btn-secondary">Hire Me</a>
-            </div>
-
-            <div class="floating-stats">
-                <div class="glass-panel stat-card 3d-tilt">
-                    <h3>₹20L+</h3>
-                    <p>Monthly Sales Peak</p>
-                </div>
-                <div class="glass-panel stat-card 3d-tilt">
-                    <h3>110+</h3>
-                    <p>SKUs Managed</p>
-                </div>
-                <div class="glass-panel stat-card 3d-tilt">
-                    <h3>Multi-Platform</h3>
-                    <p>Omnichannel Growth</p>
-                </div>
-            </div>
+      </div>
+      <div class="gc ac2 rev" style="transition-delay:.15s">
+        <div class="lbl">E-Commerce Specialist · Amazon PPC Expert</div>
+        <h3 style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:18px">Jenish Kamli</h3>
+        <p>A results-driven <strong>Amazon & Flipkart marketplace growth specialist</strong> with hands-on experience scaling brands across India's most competitive e-commerce platforms. Certified in Amazon PPC advertising and Flipkart performance marketing.</p>
+        <p>Specialized in <strong>Quick Commerce onboarding</strong> (Blinkit, Zepto, Swiggy Instamart), helping FMCG & consumer brands establish a fast-delivery presence. Expert in GS1 barcode compliance, A+ content creation, and Amazon Brand Store design.</p>
+        <p>From managing <strong>110+ active SKUs</strong> to driving ₹20L+ monthly GMV, every strategy is backed by data — from Helium 10 keyword research to real-time analytics dashboards.</p>
+        <div class="at">
+          <span class="tag">Amazon SEO</span><span class="tag">Amazon PPC</span><span class="tag">Flipkart Ads</span>
+          <span class="tag">Quick Commerce</span><span class="tag">A+ Content</span><span class="tag">Brand Store</span>
+          <span class="tag">GS1 / Barcode</span><span class="tag">Helium 10</span><span class="tag">FBA</span><span class="tag">CRO</span>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-text glass-panel" style="padding: 40px;">
-                    <h2>Architecting Digital Scale</h2>
-                    <p>I am Jenish Kamli, an advanced marketplace strategist. I bridge the gap between product potential and market dominance.</p>
-                    <p>Serving elite clients across India (Surat, Ahmedabad, Mumbai, Delhi, Bangalore) by optimizing supply chains, reducing ACOS, and skyrocketing organic visibility.</p>
-                    <div class="seo-tags">
-                        <span class="tag">India eCommerce Specialist</span>
-                        <span class="tag">Amazon PPC Expert</span>
-                        <span class="tag">Flipkart Growth Expert</span>
-                        <span class="tag">Blinkit Onboarding</span>
-                        <span class="tag">Zepto Strategy</span>
-                    </div>
-                </div>
-                <div class="glass-panel 3d-tilt image-placeholder">
-                    <i class="fas fa-user-astronaut" style="font-size: 4rem; margin-bottom: 10px;"></i>
-                    <br>[ Upload Portrait Image Here ]
-                </div>
-            </div>
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:60px" class="rev">
+      <div class="lbl">What I Do</div>
+      <h2 class="ttl">Growth Services</h2>
+      <p class="sub" style="margin:0 auto">End-to-end marketplace management — from listing creation to ad performance optimization.</p>
+    </div>
+    <div class="sg">
+      <div class="gc svc rev" style="--cg:0 0 40px rgba(100,180,255,.15)">
+        <div class="sh"></div>
+        <div class="sic" style="background:rgba(100,180,255,.15)">🛒</div>
+        <h3>Amazon & Flipkart Setup</h3>
+        <p>Full seller account setup, category approval, brand registry, and onboarding on Amazon & Flipkart marketplaces.</p>
+      </div>
+      <div class="gc svc rev" style="transition-delay:.08s;--cg:0 0 40px rgba(160,100,255,.15)">
+        <div class="sh"></div>
+        <div class="sic" style="background:rgba(160,100,255,.15)">🔍</div>
+        <h3>Product Listing SEO</h3>
+        <p>Keyword research with Helium 10, backend search terms, bullet points and title optimization to maximize organic rank.</p>
+      </div>
+      <div class="gc svc rev" style="transition-delay:.16s;--cg:0 0 40px rgba(0,220,255,.15)">
+        <div class="sh"></div>
+        <div class="sic" style="background:rgba(0,220,255,.12)">📈</div>
+        <h3>Amazon PPC Ads</h3>
+        <p>Campaign structure design, bid optimization, ACOS management, and sponsored brand/display ad management.</p>
+      </div>
+      <div class="gc svc rev" style="transition-delay:.08s;--cg:0 0 40px rgba(255,200,50,.12)">
+        <div class="sh"></div>
+        <div class="sic" style="background:rgba(255,200,50,.1)">⚡</div>
+        <h3>Flipkart Growth</h3>
+        <p>Flipkart seller hub optimization, Smart ROI ads, Flipkart Plus inventory strategy, and catalog health management.</p>
+      </div>
+      <div class="gc svc rev" style="transition-delay:.16s;--cg:0 0 40px rgba(0,230,118,.12)">
+        <div class="sh"></div>
+        <div class="sic" style="background:rgba(0,230,118,.12)">🟢</div>
+        <h3>Quick Commerce</h3>
+        <p>Blinkit, Zepto & Swiggy Instamart onboarding, catalog creation, dark store distribution strategy and SKU performance tracking.</p>
+      </div>
+      <div class="gc svc rev" style="transition-delay:.24s;--cg:0 0 40px rgba(255,100,180,.12)">
+        <div class="sh"></div>
+        <div class="sic" style="background:rgba(255,100,180,.1)">🎯</div>
+        <h3>Performance Marketing</h3>
+        <p>Cross-platform performance strategy, ROI-focused ad spend allocation, and monthly analytics reporting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section id="casestudy">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:40px" class="rev">
+      <div class="lbl">Case Study</div>
+      <h2 class="ttl">Live Marketplace<br>Performance</h2>
+    </div>
+    <div class="gc rev" style="padding:32px;margin-bottom:20px">
+      <div class="dh">
+        <div>
+          <div class="ct" style="font-size:17px">Flipkart Revenue Growth</div>
+          <div class="cs">March — August 2024 · OneLife Electronics</div>
         </div>
-    </section>
+        <div class="lb"><span class="ld"></span>Live Data</div>
+      </div>
+      <canvas id="lineChart" height="220"></canvas>
+    </div>
+    <div class="cg3 rev" style="transition-delay:.1s">
+      <div class="gc cc2">
+        <div class="ct">Sales vs Advertising Spend</div>
+        <div class="cs">Monthly GMV breakdown (₹ Lakhs)</div>
+        <canvas id="barChart" height="240"></canvas>
+      </div>
+      <div class="gc cc2">
+        <div class="ct">ROI Performance</div>
+        <div class="cs">Advertising efficiency metrics</div>
+        <canvas id="roiChart" height="240"></canvas>
+      </div>
+    </div>
+    <div class="mr" style="margin-top:20px">
+      <div class="gc mt rev"><div class="mv">₹20.2L</div><div class="ml">Peak Monthly Sales (Jul)</div></div>
+      <div class="gc mt rev" style="transition-delay:.08s"><div class="mv">6.1x</div><div class="ml">Peak Sales Growth (Mar→Jul)</div></div>
+      <div class="gc mt rev" style="transition-delay:.16s"><div class="mv">₹6.35L</div><div class="ml">Peak Ad Revenue (Jun)</div></div>
+      <div class="gc mt rev" style="transition-delay:.24s"><div class="mv">110+</div><div class="ml">SKUs Managed</div></div>
+    </div>
+  </div>
+</section>
 
-    <section id="services">
-        <div class="container">
-            <h2 class="section-title">Growth Infrastructure</h2>
-            <div class="services-grid">
-                <div class="glass-panel service-card 3d-tilt">
-                    <i class="fab fa-amazon"></i>
-                    <h3>Amazon & Flipkart Setup</h3>
-                    <p>End-to-end account architecture, FBA routing, and compliance execution for seamless onboarding.</p>
-                </div>
-                <div class="glass-panel service-card 3d-tilt">
-                    <i class="fas fa-search"></i>
-                    <h3>Product Listing SEO</h3>
-                    <p>Algorithm-friendly copywriting, A+ content integration, and high-conversion keyword targeting.</p>
-                </div>
-                <div class="glass-panel service-card 3d-tilt">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>Amazon PPC Ads</h3>
-                    <p>Precision bidding, campaign structuring, and negative keyword optimization to crush ACOS.</p>
-                </div>
-                <div class="glass-panel service-card 3d-tilt">
-                    <i class="fas fa-rocket"></i>
-                    <h3>Flipkart Growth</h3>
-                    <p>PLA campaigns, smart ROI tracking, and tier-upgrade strategies to unlock visibility.</p>
-                </div>
-                <div class="glass-panel service-card 3d-tilt">
-                    <i class="fas fa-bolt"></i>
-                    <h3>Quick Commerce</h3>
-                    <p>Blinkit & Zepto dark-store mapping, inventory velocity tracking, and hyperlocal scaling.</p>
-                </div>
-                <div class="glass-panel service-card 3d-tilt">
-                    <i class="fas fa-bullseye"></i>
-                    <h3>Performance Marketing</h3>
-                    <p>Data-backed omnichannel budget allocation to maximize ROAS across the digital spectrum.</p>
-                </div>
-            </div>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:60px" class="rev">
+      <div class="lbl">Expertise</div>
+      <h2 class="ttl">Skills & Tools</h2>
+    </div>
+    <div class="skgd">
+      <div class="gc skc rev">
+        <div class="skh"><div class="ski" style="background:rgba(255,150,50,.12)">🛍️</div><h3>Marketplace</h3></div>
+        <div class="spp"><span class="sp">Amazon.in</span><span class="sp">Flipkart</span><span class="sp">Meesho</span><span class="sp">Myntra</span><span class="sp">JioMart</span></div>
+      </div>
+      <div class="gc skc rev" style="transition-delay:.08s">
+        <div class="skh"><div class="ski" style="background:rgba(100,180,255,.12)">📊</div><h3>Growth & SEO</h3></div>
+        <div class="spp"><span class="sp">Listing SEO</span><span class="sp">Keyword Research</span><span class="sp">CRO</span><span class="sp">Organic Ranking</span></div>
+      </div>
+      <div class="gc skc rev" style="transition-delay:.16s">
+        <div class="skh"><div class="ski" style="background:rgba(160,100,255,.12)">🎯</div><h3>Advertising</h3></div>
+        <div class="spp"><span class="sp">Amazon PPC</span><span class="sp">Sponsored Products</span><span class="sp">Flipkart Ads</span><span class="sp">ACOS Optimization</span></div>
+      </div>
+      <div class="gc skc rev" style="transition-delay:.08s">
+        <div class="skh"><div class="ski" style="background:rgba(0,230,118,.1)">⚙️</div><h3>Operations</h3></div>
+        <div class="spp"><span class="sp">Inventory Management</span><span class="sp">FBA Logistics</span><span class="sp">Returns Handling</span><span class="sp">Account Health</span></div>
+      </div>
+      <div class="gc skc rev" style="transition-delay:.16s">
+        <div class="skh"><div class="ski" style="background:rgba(0,220,255,.1)">⭐</div><h3>Advanced</h3></div>
+        <div class="spp"><span class="sp">A+ Content</span><span class="sp">Brand Store</span><span class="sp">GS1 / Barcode</span><span class="sp">Quick Commerce</span></div>
+      </div>
+      <div class="gc skc rev" style="transition-delay:.24s">
+        <div class="skh"><div class="ski" style="background:rgba(255,100,180,.1)">🛠️</div><h3>Tools</h3></div>
+        <div class="spp"><span class="sp">Helium 10</span><span class="sp">Seller Central</span><span class="sp">Excel / Sheets</span><span class="sp">Analytics</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:50px" class="rev">
+      <div class="lbl">Experience</div>
+      <h2 class="ttl">Platforms & Companies</h2>
+    </div>
+    <div class="pt rev" style="margin-bottom:50px">
+      <div class="ptr">
+        <div class="pc2"><span class="pe">📦</span>Amazon</div>
+        <div class="pc2"><span class="pe">🛍️</span>Flipkart</div>
+        <div class="pc2"><span class="pe">🟡</span>Meesho</div>
+        <div class="pc2"><span class="pe">👗</span>Myntra</div>
+        <div class="pc2"><span class="pe">🟢</span>Blinkit</div>
+        <div class="pc2"><span class="pe">🔵</span>Zepto</div>
+        <div class="pc2"><span class="pe">🧡</span>Swiggy Instamart</div>
+        <div class="pc2"><span class="pe">🏢</span>JioMart</div>
+        <div class="pc2"><span class="pe">📦</span>Amazon</div>
+        <div class="pc2"><span class="pe">🛍️</span>Flipkart</div>
+        <div class="pc2"><span class="pe">🟡</span>Meesho</div>
+        <div class="pc2"><span class="pe">👗</span>Myntra</div>
+        <div class="pc2"><span class="pe">🟢</span>Blinkit</div>
+        <div class="pc2"><span class="pe">🔵</span>Zepto</div>
+        <div class="pc2"><span class="pe">🧡</span>Swiggy Instamart</div>
+        <div class="pc2"><span class="pe">🏢</span>JioMart</div>
+      </div>
+    </div>
+    <div class="eg">
+      <div class="gc ec rev">
+        <div class="ecp">OneLife Electronics India Pvt Ltd</div>
+        <div class="er">Marketplace Growth Manager · Amazon & Flipkart</div>
+        <ul class="ep">
+          <li>Scaled Flipkart GMV from ₹2.8L to ₹20.2L/month in 5 months</li>
+          <li>Managed 110+ SKUs across Amazon, Flipkart, Meesho, Myntra</li>
+          <li>Built and optimized Amazon Brand Store with A+ content</li>
+          <li>Led Amazon PPC campaigns achieving target ACOS</li>
+          <li>Onboarded brand on Blinkit & Zepto quick commerce</li>
+        </ul>
+      </div>
+      <div class="gc ec rev" style="transition-delay:.1s">
+        <div class="ecp">Lux Enterprise</div>
+        <div class="er">E-Commerce Specialist</div>
+        <ul class="ep">
+          <li>Complete Amazon & Flipkart account setup and management</li>
+          <li>Product listing optimization with keyword-rich content</li>
+          <li>Managed advertising campaigns for seasonal campaigns</li>
+          <li>Improved organic rankings for top 20 SKUs</li>
+        </ul>
+      </div>
+      <div class="gc ec rev" style="transition-delay:.1s">
+        <div class="ecp">TV Enterprise</div>
+        <div class="er">Marketplace Operations Lead</div>
+        <ul class="ep">
+          <li>Multi-channel marketplace account management</li>
+          <li>Catalog creation and health maintenance</li>
+          <li>Logistics coordination for FBA & self-fulfilled orders</li>
+          <li>Returns & performance metrics management</li>
+        </ul>
+      </div>
+      <div class="gc ec rev" style="transition-delay:.2s">
+        <div class="ecp">Consolidate Hygiene Pvt Ltd · Hiya Enterprise</div>
+        <div class="er">E-Commerce Growth Consultant</div>
+        <ul class="ep">
+          <li>Quick Commerce category onboarding (Blinkit, Zepto)</li>
+          <li>GS1 barcode registration & compliance for FMCG products</li>
+          <li>Flipkart FMCG category performance optimization</li>
+          <li>Inventory & pricing strategy for fast-moving categories</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:60px" class="rev">
+      <div class="lbl">Let's Connect</div>
+      <h2 class="ttl">Get In Touch</h2>
+      <p class="sub" style="margin:0 auto">Ready to scale your brand on India's top marketplaces? Let's talk.</p>
+    </div>
+    <div class="cog">
+      <a href="https://wa.me/919624736282" target="_blank" class="gc coc rev">
+        <div class="coi" style="background:rgba(37,211,102,.12)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.123 1.528 5.855L.057 23.97l6.255-1.439A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.856 0-3.597-.5-5.1-1.367l-.363-.217-3.712.853.881-3.617-.238-.374A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
         </div>
-    </section>
-
-    <section id="case-studies">
-        <div class="container">
-            <h2 class="section-title">Live Marketplace Performance</h2>
-            <div class="glass-panel dashboard-ui 3d-tilt">
-                <div>
-                    <h3 style="margin-bottom: 20px;">Flipkart Trajectory (Mar - Aug)</h3>
-                    <div class="chart-container">
-                        <canvas id="performanceChart"></canvas>
-                    </div>
-                </div>
-                <div class="dashboard-sidebar">
-                    <h3 style="margin-bottom: 10px; font-size: 1rem; color: var(--text-secondary);">Dashboard Evidence</h3>
-                    <div class="glass-panel ss-placeholder 3d-tilt">
-                        [ Flipkart SS Upload 1 ]
-                    </div>
-                    <div class="glass-panel ss-placeholder 3d-tilt">
-                        [ Flipkart SS Upload 2 ]
-                    </div>
-                    <div class="glass-panel ss-placeholder 3d-tilt">
-                        [ Amazon Ads SS Upload ]
-                    </div>
-                </div>
-            </div>
+        <h3>WhatsApp</h3>
+        <p>+91 96247 36282</p>
+        <p style="margin-top:6px;font-size:12px;color:var(--ag);font-weight:500">Tap to chat →</p>
+      </a>
+      <a href="mailto:jenishkamli@gmail.com" class="gc coc rev" style="transition-delay:.1s">
+        <div class="coi" style="background:rgba(100,180,255,.12)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#64b4ff" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
         </div>
-    </section>
-
-    <section id="skills">
-        <div class="container">
-            <h2 class="section-title">Technical Arsenal</h2>
-            <div class="skills-grid">
-                <div class="glass-panel skill-category 3d-tilt">
-                    <h3>Marketplace</h3>
-                    <div class="skill-pills">
-                        <span class="tag">Amazon</span><span class="tag">Flipkart</span><span class="tag">Meesho</span>
-                    </div>
-                </div>
-                <div class="glass-panel skill-category 3d-tilt">
-                    <h3>Quick Commerce</h3>
-                    <div class="skill-pills">
-                        <span class="tag">Blinkit</span><span class="tag">Zepto</span><span class="tag">Swiggy Instamart</span>
-                    </div>
-                </div>
-                <div class="glass-panel skill-category 3d-tilt">
-                    <h3>Growth Engine</h3>
-                    <div class="skill-pills">
-                        <span class="tag">SEO</span><span class="tag">CRO</span><span class="tag">A/B Testing</span>
-                    </div>
-                </div>
-                <div class="glass-panel skill-category 3d-tilt">
-                    <h3>Advertising</h3>
-                    <div class="skill-pills">
-                        <span class="tag">Amazon PPC</span><span class="tag">Flipkart PLA</span>
-                    </div>
-                </div>
-                <div class="glass-panel skill-category 3d-tilt">
-                    <h3>Advanced Ops</h3>
-                    <div class="skill-pills">
-                        <span class="tag">FBA</span><span class="tag">A+ Content</span><span class="tag">GS1 Barcoding</span><span class="tag">Brand Registry</span>
-                    </div>
-                </div>
-                <div class="glass-panel skill-category 3d-tilt">
-                    <h3>Software & Tools</h3>
-                    <div class="skill-pills">
-                        <span class="tag">Helium10</span><span class="tag">Seller Central</span><span class="tag">Advanced Excel</span>
-                    </div>
-                </div>
-            </div>
+        <h3>Email</h3>
+        <p>jenishkamli@gmail.com</p>
+        <p style="margin-top:6px;font-size:12px;color:var(--ab);font-weight:500">Send a message →</p>
+      </a>
+      <a href="tel:+919624736282" class="gc coc rev" style="transition-delay:.2s">
+        <div class="coi" style="background:rgba(160,100,255,.12)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a064ff" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.57 3.41a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.88-.88a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         </div>
-    </section>
+        <h3>Call</h3>
+        <p>+91 96247 36282</p>
+        <p style="margin-top:6px;font-size:12px;color:var(--ap);font-weight:500">Schedule a call →</p>
+      </a>
+    </div>
+    <div class="gc ab2 rev">
+      <span class="avd"></span>
+      <span>Currently available for freelance projects & brand partnerships</span>
+    </div>
+    <div class="sl2 rev">
+      <a href="https://www.linkedin.com/in/jenish-kamli-47b787253" target="_blank" class="slk">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn Profile
+      </a>
+      <a href="https://www.amazon.in/stores/OneLife/page/6EDAF642-1877-4AF9-B0CE-A9476C9520D1" target="_blank" class="slk">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.42.07 2.38.74 3.2.8 1.21-.24 2.38-.93 3.7-.84 1.58.12 2.76.72 3.54 1.9-3.25 1.94-2.48 5.9.48 7.06-.58 1.5-1.32 3-2.92 3.96zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+        Amazon Brand Store
+      </a>
+    </div>
+  </div>
+</section>
 
-    <section id="experience">
-        <div class="container">
-            <h2 class="section-title">Ecosystem Experience</h2>
-            
-            <div class="logo-carousel">
-                <div class="logo-track">
-                    <div class="glass-panel logo-item">Amazon</div>
-                    <div class="glass-panel logo-item">Flipkart</div>
-                    <div class="glass-panel logo-item">Meesho</div>
-                    <div class="glass-panel logo-item">Myntra</div>
-                    <div class="glass-panel logo-item">Blinkit</div>
-                    <div class="glass-panel logo-item">Zepto</div>
-                    <div class="glass-panel logo-item">Amazon</div>
-                    <div class="glass-panel logo-item">Flipkart</div>
-                    <div class="glass-panel logo-item">Meesho</div>
-                    <div class="glass-panel logo-item">Myntra</div>
-                    <div class="glass-panel logo-item">Blinkit</div>
-                    <div class="glass-panel logo-item">Zepto</div>
-                </div>
-            </div>
+<footer>
+  <p>© 2024 Jenish Kamli · E-Commerce & Marketplace Growth Specialist · Surat, India</p>
+</footer>
 
-            <div class="exp-grid">
-                <div class="glass-panel exp-card 3d-tilt">
-                    <h4>Current / Recent</h4>
-                    <h3>OneLife Electronics India Pvt Ltd</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Managed holistic marketplace operations, scaling revenue and optimizing supply chain logistics.</p>
-                </div>
-                <div class="glass-panel exp-card 3d-tilt">
-                    <h4>Brand Portfolio</h4>
-                    <h3>Lux Enterprise & TV Enterprise</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Executed high-velocity listing optimizations and PPC campaigns to secure top-page rankings.</p>
-                </div>
-                <div class="glass-panel exp-card 3d-tilt">
-                    <h4>Brand Portfolio</h4>
-                    <h3>Consolidate Hygiene Pvt Ltd</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Drove category expansion and B2B/B2C hybrid strategies across dominant platforms.</p>
-                </div>
-                <div class="glass-panel exp-card 3d-tilt">
-                    <h4>Brand Portfolio</h4>
-                    <h3>Hiya Enterprise</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Streamlined operations and implemented data-centric inventory forecasting to prevent stockouts.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+/* ─── DETECT TOUCH / MOBILE ─── */
+const isTouch = window.matchMedia('(hover:none),(pointer:coarse)').matches;
+const cb = document.getElementById('cb');
+const ct = document.getElementById('ct');
+const cg = document.getElementById('cg');
 
-    <section id="contact">
-        <div class="container">
-            <h2 class="section-title">Initiate Protocol</h2>
-            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 40px;">Currently available for freelance consulting and high-impact project work.</p>
-            
-            <div class="contact-grid">
-                <a href="https://wa.me/919624736282" target="_blank" class="glass-panel contact-card wa 3d-tilt">
-                    <i class="fab fa-whatsapp" style="color: #25D366;"></i>
-                    <h3>WhatsApp</h3>
-                    <p>+91 96247 36282</p>
-                </a>
-                <a href="mailto:contact@example.com" class="glass-panel contact-card email 3d-tilt">
-                    <i class="fas fa-envelope" style="color: #00c3ff;"></i>
-                    <h3>Email</h3>
-                    <p>Send a secure transmission</p>
-                </a>
-                <a href="tel:+919624736282" class="glass-panel contact-card call 3d-tilt">
-                    <i class="fas fa-phone-alt" style="color: #8A2BE2;"></i>
-                    <h3>Direct Line</h3>
-                    <p>Voice Comm</p>
-                </a>
-            </div>
+if(isTouch){
+  cb.style.display='none';
+  ct.style.display='none';
+  cg.style.display='none';
+} else {
+  /* ─── ANIMATED BUBBLE CURSOR ─── */
+  let mx=0,my=0,bx=0,by=0,tx=0,ty=0,gx=0,gy=0;
 
-            <div class="ext-links">
-                <a href="https://www.linkedin.com/in/jenish-kamli-47b787253" target="_blank" class="glass-panel ext-link 3d-tilt">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="https://www.amazon.in/stores/OneLife/page/6EDAF642-1877-4AF9-B0CE-A9476C9520D1" target="_blank" class="glass-panel ext-link 3d-tilt">
-                    <i class="fab fa-amazon"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX; my=e.clientY;
+    cb.style.left=mx+'px';
+    cb.style.top=my+'px';
+  });
 
-    <footer style="text-align: center; padding: 40px; color: var(--text-secondary); border-top: 1px solid var(--glass-border);">
-        <p>&copy; 2026 Jenish Kamli. Liquid Glass Vision UI.</p>
-    </footer>
+  function animCursor(){
+    /* trailing ring */
+    tx+=(mx-tx)*.15; ty+=(my-ty)*.15;
+    ct.style.left=tx+'px'; ct.style.top=ty+'px';
+    /* slow ambient glow */
+    gx+=(mx-gx)*.06; gy+=(my-gy)*.06;
+    cg.style.left=gx+'px'; cg.style.top=gy+'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
 
-    <script>
-        // 1. 3D Tilt Effect & Cursor Light Tracker (Vision Pro / Liquid Glass Effect)
-        document.querySelectorAll('.3d-tilt').forEach(el => {
-            el.addEventListener('mousemove', e => {
-                const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Set CSS variables for the radial glow
-                el.style.setProperty('--mouse-x', `${x}px`);
-                el.style.setProperty('--mouse-y', `${y}px`);
+  document.querySelectorAll('a,button,.gc,.sp,.pc2').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cb.classList.add('hov');ct.classList.add('hov')});
+    el.addEventListener('mouseleave',()=>{cb.classList.remove('hov');ct.classList.remove('hov')});
+  });
+}
 
-                // Calculate tilt angles
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -4; // Max 4 deg
-                const rotateY = ((x - centerX) / centerX) * 4;
+/* ─── PARTICLES ─── */
+const canvas=document.getElementById('pc');
+const ctx=canvas.getContext('2d');
+let W,H,pts=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize();
+window.addEventListener('resize',resize,{passive:true});
+for(let i=0;i<80;i++){
+  pts.push({x:Math.random()*1920,y:Math.random()*1080,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.5+.3,a:Math.random()*.4+.1});
+}
+function drawPts(){
+  ctx.clearRect(0,0,W,H);
+  pts.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+    if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(100,180,255,${p.a})`;ctx.fill();
+  });
+  requestAnimationFrame(drawPts);
+}
+drawPts();
 
-                el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-            });
+/* ─── 3D TILT ─── */
+document.querySelectorAll('.gc').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    if(isTouch)return;
+    const r=card.getBoundingClientRect();
+    const rx=((e.clientY-r.top)/r.height-.5)*10;
+    const ry=((e.clientX-r.left)/r.width-.5)*-10;
+    card.style.transform=`perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+  },{passive:true});
+  card.addEventListener('mouseleave',()=>{card.style.transform='';},{passive:true});
+});
 
-            el.addEventListener('mouseleave', () => {
-                el.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
-            });
-        });
+/* ─── RIPPLE ─── */
+document.querySelectorAll('.bp,.bg2,.bw,.nc').forEach(btn=>{
+  btn.addEventListener('click',function(e){
+    const r=this.getBoundingClientRect();
+    const el=document.createElement('span');
+    el.className='rip';
+    const s=Math.max(r.width,r.height);
+    el.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;
+    this.appendChild(el);
+    setTimeout(()=>el.remove(),600);
+  });
+});
 
-        // 2. Chart.js Implementation for Dashboard
-        const ctx = document.getElementById('performanceChart').getContext('2d');
-        
-        // Gradient for Sales Line
-        const gradientSales = ctx.createLinearGradient(0, 0, 0, 400);
-        gradientSales.addColorStop(0, 'rgba(0, 195, 255, 0.5)');
-        gradientSales.addColorStop(1, 'rgba(0, 195, 255, 0.0)');
+/* ─── SCROLL REVEAL ─── */
+const revEls=document.querySelectorAll('.rev');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});
+},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+revEls.forEach(el=>obs.observe(el));
 
-        const performanceChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['March', 'April', 'May', 'June', 'July', 'August'],
-                datasets: [
-                    {
-                        label: 'Sales (₹ Lakhs)',
-                        data: [2.8, 6.7, 13.2, 18.4, 20.2, 12.9],
-                        borderColor: '#00c3ff',
-                        backgroundColor: gradientSales,
-                        borderWidth: 3,
-                        pointBackgroundColor: '#fff',
-                        pointBorderColor: '#00c3ff',
-                        pointBorderWidth: 2,
-                        pointRadius: 5,
-                        fill: true,
-                        tension: 0.4 // Smooth curves
-                    },
-                    {
-                        label: 'Ad Spend (₹ Lakhs)',
-                        data: [0, 0, 3.29, 6.35, 5.83, 3.7],
-                        type: 'bar',
-                        backgroundColor: 'rgba(138, 43, 226, 0.6)',
-                        borderRadius: 8,
-                        barPercentage: 0.4
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                color: '#A1A1AA',
-                interaction: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                plugins: {
-                    legend: {
-                        labels: { color: '#fff', font: { family: 'Inter' } }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0,0,0,0.8)',
-                        titleColor: '#fff',
-                        bodyColor: '#fff',
-                        borderColor: 'rgba(255,255,255,0.1)',
-                        borderWidth: 1,
-                        padding: 12,
-                        boxPadding: 6
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: { color: 'rgba(255,255,255,0.05)' },
-                        ticks: { color: '#A1A1AA' }
-                    },
-                    y: {
-                        grid: { color: 'rgba(255,255,255,0.05)' },
-                        ticks: { color: '#A1A1AA' }
-                    }
-                }
-            }
-        });
-    </script>
+/* ─── ACTIVE NAV ─── */
+const secs=document.querySelectorAll('section');
+const navAs=document.querySelectorAll('.nm a');
+let lastSec='';
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});
+  if(cur===lastSec)return;
+  lastSec=cur;
+  navAs.forEach(a=>{
+    const isAct=a.getAttribute('href')==='#'+cur;
+    a.style.color=isAct?'#fff':'';
+    a.style.background=isAct?'rgba(255,255,255,.08)':'';
+  });
+},{passive:true});
+
+/* ─── PARALLAX ─── */
+const bgAmb=document.getElementById('bgAmb');
+window.addEventListener('scroll',()=>{
+  bgAmb.style.transform=`translateY(${window.scrollY*.3}px)`;
+},{passive:true});
+
+/* ─── CHARTS ─── */
+const months=['Mar','Apr','May','Jun','Jul','Aug'];
+const sales=[2.8,6.7,13.2,18.4,20.2,12.9];
+const adSpend=[0,0,3.29,6.35,5.83,3.7];
+const gc2='rgba(255,255,255,.07)';
+const tc='rgba(255,255,255,.4)';
+Chart.defaults.font.family="'DM Sans',sans-serif";
+const tip={backgroundColor:'rgba(10,14,30,.9)',borderColor:'rgba(100,180,255,.3)',borderWidth:1,titleColor:'#64b4ff',bodyColor:'rgba(255,255,255,.8)'};
+
+new Chart(document.getElementById('lineChart'),{
+  type:'line',
+  data:{labels:months,datasets:[{label:'Total GMV (₹L)',data:sales,borderColor:'#64b4ff',backgroundColor:'rgba(100,180,255,.1)',borderWidth:2.5,pointBackgroundColor:'#64b4ff',pointBorderColor:'#050810',pointBorderWidth:2,pointRadius:5,fill:true,tension:.4}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...tip,callbacks:{label:c=>` ₹${c.raw}L`}}},scales:{x:{grid:{color:gc2},ticks:{color:tc}},y:{grid:{color:gc2},ticks:{color:tc,callback:v=>'₹'+v+'L'}}}}
+});
+
+new Chart(document.getElementById('barChart'),{
+  type:'bar',
+  data:{labels:months,datasets:[{label:'GMV (₹L)',data:sales,backgroundColor:'rgba(100,180,255,.7)',borderRadius:6},{label:'Ad Revenue (₹L)',data:adSpend,backgroundColor:'rgba(160,100,255,.7)',borderRadius:6}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{color:'rgba(255,255,255,.6)',boxWidth:10,font:{size:11}}},tooltip:tip},scales:{x:{grid:{color:gc2},ticks:{color:tc}},y:{grid:{color:gc2},ticks:{color:tc,callback:v=>'₹'+v+'L'}}}}
+});
+
+new Chart(document.getElementById('roiChart'),{
+  type:'doughnut',
+  data:{labels:['GMV','Ad Spend','Organic'],datasets:[{data:[20.2,6.35,13.85],backgroundColor:['rgba(100,180,255,.8)','rgba(160,100,255,.8)','rgba(0,220,255,.8)'],borderColor:'transparent',hoverOffset:8}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'rgba(255,255,255,.6)',boxWidth:10,font:{size:11},padding:16}},tooltip:tip}}
+});
+</script>
 </body>
 </html>
