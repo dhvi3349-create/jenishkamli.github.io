@@ -300,7 +300,7 @@ section{padding:120px 60px;}
 #matter-container {
   width: 100%;
   max-width: 1000px;
-  height: 500px;
+  height: 400px;
   margin: 0 auto;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -309,17 +309,21 @@ section{padding:120px 60px;}
   box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
   cursor: grab;
 }
-#matter-container:active {
-  cursor: grabbing;
-}
-.pit-hint {
-  color: var(--muted);
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-top: 16px;
-  animation: pulse 2s infinite;
-}
+#matter-container:active { cursor: grabbing; }
+
+/* ─── ARCADE GAMES SECTION ─── */
+#arcade { background: var(--black2); padding: 80px 60px; text-align: center; }
+.arcade-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; max-width: 1200px; margin: 40px auto 0; }
+.game-box { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; position: relative; overflow: hidden; height: 400px; display: flex; flex-direction: column; }
+.game-header { font-size: 16px; font-weight: 600; color: var(--gold); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;}
+.game-desc { font-size: 12px; color: var(--muted); margin-bottom: 15px; }
+.game-area { flex: 1; background: #000; border-radius: 4px; position: relative; overflow: hidden; border: 1px solid #333;}
+.start-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 10; cursor: none;}
+
+/* Game 3: Puzzle specific */
+.puzzle-board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; height: 100%; padding: 10px; background: #111;}
+.puzzle-tile { background: #222; display: flex; align-items: center; justify-content: center; font-size: 28px; cursor: pointer; transition: transform 0.2s; color: var(--gold);}
+.puzzle-start, .puzzle-end { background: var(--gold-dim); color: #fff; font-size: 12px; font-weight: bold;}
 
 /* ─── CONTACT ─── */
 #contact{background:var(--black);text-align:center;}
@@ -339,47 +343,22 @@ section{padding:120px 60px;}
 }
 .btn-whatsapp:hover{background:#25D366;color:#fff;transform:translateY(-2px);}
 
-/* ─── FLOATING WHATSAPP ─── */
-#wa-float{
-  position:fixed;bottom:30px;right:30px;z-index:900;
-  width:56px;height:56px;background:#25D366;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  text-decoration:none;font-size:26px;
-  box-shadow:0 8px 32px rgba(37,211,102,.4);
-  transition:all .3s;
-  animation:waPulse 3s ease-in-out infinite;
-}
+/* ─── AI CHAT & FOOTER (same as before) ─── */
+#wa-float{ position:fixed;bottom:30px;right:30px;z-index:900;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:26px;box-shadow:0 8px 32px rgba(37,211,102,.4);transition:all .3s;animation:waPulse 3s ease-in-out infinite;}
 #wa-float:hover{transform:scale(1.1);box-shadow:0 12px 40px rgba(37,211,102,.5);}
 @keyframes waPulse{0%,100%{box-shadow:0 8px 32px rgba(37,211,102,.4);}50%{box-shadow:0 8px 50px rgba(37,211,102,.7),0 0 0 12px rgba(37,211,102,.1);}}
-
-/* ─── AI CHAT ─── */
 #chat-widget{position:fixed;bottom:100px;right:30px;z-index:901;}
-#chat-toggle{
-  width:56px;height:56px;background:var(--gold);border-radius:50%;
-  border:none;cursor:none;display:flex;align-items:center;justify-content:center;
-  font-size:24px;box-shadow:0 8px 32px rgba(201,168,76,.4);transition:all .3s;
-  animation:glow 3s ease-in-out infinite;
-}
+#chat-toggle{width:56px;height:56px;background:var(--gold);border-radius:50%;border:none;cursor:none;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 8px 32px rgba(201,168,76,.4);transition:all .3s;animation:glow 3s ease-in-out infinite;}
 @keyframes glow{0%,100%{box-shadow:0 8px 32px rgba(201,168,76,.4);}50%{box-shadow:0 8px 50px rgba(201,168,76,.7);}}
 #chat-toggle:hover{transform:scale(1.08);}
-#chat-box{
-  position:absolute;bottom:70px;right:0;width:360px;
-  background:var(--black3);border:1px solid var(--border);border-radius:8px;
-  overflow:hidden;display:none;box-shadow:0 30px 80px rgba(0,0,0,.6);
-  transform:translateY(10px) scale(.95);transition:all .3s;
-}
+#chat-box{position:absolute;bottom:70px;right:0;width:360px;background:var(--black3);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:none;box-shadow:0 30px 80px rgba(0,0,0,.6);transform:translateY(10px) scale(.95);transition:all .3s;}
 #chat-box.open{display:flex;flex-direction:column;transform:translateY(0) scale(1);}
-.chat-head{
-  padding:18px 20px;background:linear-gradient(135deg,var(--card),rgba(201,168,76,.08));
-  border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;
-}
+.chat-head{padding:18px 20px;background:linear-gradient(135deg,var(--card),rgba(201,168,76,.08));border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
 .chat-avatar{width:38px;height:38px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
 .chat-head-info .name{font-size:14px;font-weight:600;color:var(--text);}
 .chat-head-info .status{font-size:11px;color:#4ade80;display:flex;align-items:center;gap:4px;}
 .status-dot{width:6px;height:6px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite;}
-.chat-messages{
-  height:300px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;
-}
+.chat-messages{height:300px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
 .msg{max-width:85%;padding:10px 14px;border-radius:6px;font-size:13px;line-height:1.6; word-wrap: break-word;}
 .msg.bot{background:var(--card);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-radius:2px 14px 14px 14px;}
 .msg.user{background:var(--gold);color:var(--black);align-self:flex-end;font-weight:500;border-radius:14px 2px 14px 14px;}
@@ -388,56 +367,20 @@ section{padding:120px 60px;}
 .typing span:nth-child(2){animation-delay:.15s;}
 .typing span:nth-child(3){animation-delay:.3s;}
 @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
-.chat-input-area{
-  padding:12px 16px;border-top:1px solid var(--border);
-  display:flex;gap:8px;align-items:center;background:var(--card);
-}
-#chat-input{
-  flex:1;background:transparent;border:1px solid var(--border);border-radius:2px;
-  padding:8px 12px;color:var(--text);font-size:13px;font-family:var(--font-body);outline:none;
-}
+.chat-input-area{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:center;background:var(--card);}
+#chat-input{flex:1;background:transparent;border:1px solid var(--border);border-radius:2px;padding:8px 12px;color:var(--text);font-size:13px;font-family:var(--font-body);outline:none;}
 #chat-input:focus{border-color:var(--gold);}
-#chat-send{
-  width:36px;height:36px;background:var(--gold);border:none;border-radius:2px;
-  cursor:none;font-size:16px;display:flex;align-items:center;justify-content:center;
-  transition:all .2s;
-}
+#chat-send{width:36px;height:36px;background:var(--gold);border:none;border-radius:2px;cursor:none;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
 #chat-send:hover{background:var(--gold-light);}
 .chat-suggestions{padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid var(--border);}
-.suggestion-btn{
-  padding:4px 10px;border:1px solid var(--border);background:transparent;
-  color:var(--muted);font-size:11px;border-radius:100px;cursor:none;
-  transition:all .2s;font-family:var(--font-body);
-}
+.suggestion-btn{padding:4px 10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;border-radius:100px;cursor:none;transition:all .2s;font-family:var(--font-body);}
 .suggestion-btn:hover{border-color:var(--gold);color:var(--gold);}
-
-/* ─── RIPPLE ─── */
-.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.3);transform:scale(0);animation:rippleAnim .6s linear;pointer-events:none;}
-@keyframes rippleAnim{to{transform:scale(4);opacity:0;}}
-
-/* ─── FOOTER ─── */
-footer{
-  padding:40px 60px;border-top:1px solid var(--border);
-  display:flex;justify-content:space-between;align-items:center;
-  background:var(--black2);
-}
+footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--black2);}
 .footer-logo{font-family:var(--font-display);font-size:18px;color:var(--gold);}
 .footer-copy{font-size:12px;color:var(--muted);}
-
-/* ─── REVEAL ─── */
 .reveal{opacity:0;transform:translateY(30px);}
-
-/* ─── RESPONSIVE ─── */
 @media(max-width:768px){
-  nav{padding:16px 24px;}
-  .nav-links{display:none;}
-  section{padding:80px 24px;}
-  .dashboard-layout{grid-template-columns:1fr;}
-  .services-layout{grid-template-columns:1fr;}
-  .amazon-inner{grid-template-columns:1fr;}
-  .hero-stats{gap:30px;}
-  footer{flex-direction:column;gap:12px;text-align:center;}
-  #chat-box{width:300px;}
+  nav{padding:16px 24px;} .nav-links{display:none;} section{padding:80px 24px;} .dashboard-layout{grid-template-columns:1fr;} .services-layout{grid-template-columns:1fr;} .amazon-inner{grid-template-columns:1fr;} .hero-stats{gap:30px;} footer{flex-direction:column;gap:12px;text-align:center;} #chat-box{width:300px;}
 }
 </style>
 </head>
@@ -449,11 +392,10 @@ footer{
 <nav>
   <div class="nav-logo">Jenish Kamli</div>
   <ul class="nav-links">
-    <li><a href="#platforms">Platforms</a></li>
     <li><a href="#dashboard">Results</a></li>
     <li><a href="#services">Services</a></li>
+    <li><a href="#arcade">Interactive</a></li>
     <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="https://wa.me/917567250343" class="nav-cta" target="_blank">Hire Me</a>
 </nav>
@@ -470,26 +412,14 @@ footer{
       Hi, I'm Jenish Kamli. I independently scale brands across Amazon, Flipkart, and D2C channels. Available for dedicated freelance gigs and end-to-end e-commerce management.
     </p>
     <div class="hero-actions reveal">
-      <a href="#projects" class="btn-gold">View My Work</a>
+      <a href="#arcade" class="btn-gold">Play My Skills</a>
       <a href="#contact" class="btn-outline">Let's Connect</a>
     </div>
     <div class="hero-stats reveal">
-      <div class="stat-item">
-        <div class="stat-num" data-count="150">0</div>
-        <div class="stat-label">Brands Scaled</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num" data-count="12">0</div>
-        <div class="stat-label">Cr+ Revenue</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num" data-count="98">0</div>
-        <div class="stat-label">% Retention</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num" data-count="5">0</div>
-        <div class="stat-label">Years Experience</div>
-      </div>
+      <div class="stat-item"><div class="stat-num" data-count="150">0</div><div class="stat-label">Brands Scaled</div></div>
+      <div class="stat-item"><div class="stat-num" data-count="12">0</div><div class="stat-label">Cr+ Revenue</div></div>
+      <div class="stat-item"><div class="stat-num" data-count="98">0</div><div class="stat-label">% Retention</div></div>
+      <div class="stat-item"><div class="stat-num" data-count="5">0</div><div class="stat-label">Years Exp</div></div>
     </div>
   </div>
   <div class="hero-scroll"><div class="scroll-line"></div>SCROLL</div>
@@ -504,33 +434,27 @@ footer{
   <div class="platforms-grid">
     <div class="platform-card reveal">
       <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" class="platform-icon" style="filter: invert(1) brightness(2);">
-      <div class="platform-name">Amazon India</div>
-      <div class="platform-badge">Managed & Optimized</div>
+      <div class="platform-name">Amazon India</div><div class="platform-badge">Managed & Optimized</div>
     </div>
     <div class="platform-card reveal">
       <img src="https://logos-world.net/wp-content/uploads/2020/11/Flipkart-Emblem.png" alt="Flipkart" class="platform-icon">
-      <div class="platform-name">Flipkart</div>
-      <div class="platform-badge">Managed & Optimized</div>
+      <div class="platform-name">Flipkart</div><div class="platform-badge">Managed & Optimized</div>
     </div>
     <div class="platform-card reveal">
       <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/Meesho_Logo_Full.png" alt="Meesho" class="platform-icon">
-      <div class="platform-name">Meesho</div>
-      <div class="platform-badge">Managed & Optimized</div>
+      <div class="platform-name">Meesho</div><div class="platform-badge">Managed & Optimized</div>
     </div>
     <div class="platform-card reveal">
       <img src="https://constant.myntassets.com/web/assets/img/icon.png" alt="Myntra" class="platform-icon" style="filter: grayscale(1) brightness(1.5);">
-      <div class="platform-name">Myntra</div>
-      <div class="platform-badge">Managed & Optimized</div>
+      <div class="platform-name">Myntra</div><div class="platform-badge">Managed & Optimized</div>
     </div>
     <div class="platform-card reveal">
       <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Shopify_logo_2018.svg" alt="Shopify" class="platform-icon" style="filter: invert(1) brightness(2);">
-      <div class="platform-name">D2C / Shopify</div>
-      <div class="platform-badge">Managed & Optimized</div>
+      <div class="platform-name">D2C / Shopify</div><div class="platform-badge">Managed & Optimized</div>
     </div>
     <div class="platform-card reveal">
       <img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Nykaa_logo.svg" alt="Nykaa" class="platform-icon" style="filter: invert(1) brightness(2);">
-      <div class="platform-name">Nykaa / JioMart</div>
-      <div class="platform-badge">Managed & Optimized</div>
+      <div class="platform-name">Nykaa / JioMart</div><div class="platform-badge">Managed & Optimized</div>
     </div>
   </div>
 </section>
@@ -540,166 +464,18 @@ footer{
     <div style="margin-bottom:56px;">
       <span class="section-label reveal">Live Results</span>
       <h2 class="section-title reveal">Performance <span class="accent">Dashboard</span></h2>
-      <p class="section-sub reveal">Real numbers from real campaigns. Data speaks louder than claims.</p>
     </div>
     <div class="dashboard-layout">
-      <div>
-        <div class="kpi-grid">
-          <div class="kpi-card reveal">
-            <div class="kpi-label">Avg. ROAS</div>
-            <div class="kpi-value" data-count="4.8" data-suffix="x">0x</div>
-            <div class="kpi-delta">↑ 32% vs last quarter</div>
-          </div>
-          <div class="kpi-card reveal">
-            <div class="kpi-label">Revenue Generated</div>
-            <div class="kpi-value" data-count="12" data-prefix="₹" data-suffix="Cr+">₹0</div>
-            <div class="kpi-delta">↑ 68% YoY</div>
-          </div>
-          <div class="kpi-card reveal">
-            <div class="kpi-label">Orders Growth</div>
-            <div class="kpi-value" data-count="240" data-suffix="%">0%</div>
-            <div class="kpi-delta">↑ 3x in 6 months</div>
-          </div>
-          <div class="kpi-card reveal">
-            <div class="kpi-label">Revenue Estimate</div>
-            <div class="kpi-value" data-count="50" data-prefix="₹" data-suffix="L+">₹0</div>
-            <div class="kpi-delta">↑ Monthly potential</div>
-          </div>
-          <div class="kpi-card reveal">
-            <div class="kpi-label">Brands Scaled</div>
-            <div class="kpi-value" data-count="150" data-suffix="+">0+</div>
-            <div class="kpi-delta">Across all platforms</div>
-          </div>
-          <div class="kpi-card reveal">
-            <div class="kpi-label">Avg. CTR</div>
-            <div class="kpi-value" data-count="6.2" data-suffix="%">0%</div>
-            <div class="kpi-delta">↑ Industry avg 1.8%</div>
-          </div>
-        </div>
+      <div class="kpi-grid">
+        <div class="kpi-card reveal"><div class="kpi-label">Avg. ROAS</div><div class="kpi-value" data-count="4.8" data-suffix="x">0x</div><div class="kpi-delta">↑ 32% vs last quarter</div></div>
+        <div class="kpi-card reveal"><div class="kpi-label">Revenue Generated</div><div class="kpi-value" data-count="12" data-prefix="₹" data-suffix="Cr+">₹0</div><div class="kpi-delta">↑ 68% YoY</div></div>
+        <div class="kpi-card reveal"><div class="kpi-label">Orders Growth</div><div class="kpi-value" data-count="240" data-suffix="%">0%</div><div class="kpi-delta">↑ 3x in 6 months</div></div>
+        <div class="kpi-card reveal"><div class="kpi-label">Revenue Estimate</div><div class="kpi-value" data-count="50" data-prefix="₹" data-suffix="L+">₹0</div><div class="kpi-delta">↑ Monthly potential</div></div>
       </div>
       <div>
         <div class="chart-wrapper reveal">
           <div class="chart-title">Quarterly Sales Growth (Q1)</div>
-          <div class="chart-container">
-            <canvas id="revenueChart"></canvas>
-          </div>
-        </div>
-        <div class="chart-wrapper reveal" style="margin-top:16px;">
-          <div class="chart-title">Platform Performance Split</div>
-          <div class="chart-container" style="height:200px;">
-            <canvas id="platformChart"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="services">
-  <div class="services-layout">
-    <div>
-      <span class="section-label reveal">What I Deliver</span>
-      <h2 class="section-title reveal">My <span class="accent">Services</span></h2>
-      <div class="divider reveal"></div>
-      <p class="section-sub reveal">
-        From marketplace setup to scaling 8-figure revenues — I cover every layer of e-commerce growth as an independent consultant.
-      </p>
-      <br/><br/>
-      <a href="https://wa.me/917567250343" class="btn-gold reveal" target="_blank">Discuss Your Project</a>
-    </div>
-    <div class="services-grid">
-      <div class="service-item reveal">
-        <div class="service-num">01</div>
-        <div class="service-name">Amazon Account Management</div>
-        <div class="service-desc">Full A-to-Z account management — listings, PPC, A+ Content, Brand Registry, and growth strategy.</div>
-        <span class="service-arrow">→</span>
-      </div>
-      <div class="service-item reveal">
-        <div class="service-num">02</div>
-        <div class="service-name">Flipkart Scaling & Ads</div>
-        <div class="service-desc">Catalogue optimization, smart ads, flash sale strategy and seller performance management.</div>
-        <span class="service-arrow">→</span>
-      </div>
-      <div class="service-item reveal">
-        <div class="service-num">03</div>
-        <div class="service-name">D2C Brand Building</div>
-        <div class="service-desc">Shopify setup, Meta/Google ads, conversion optimization, and retention marketing systems.</div>
-        <span class="service-arrow">→</span>
-      </div>
-      <div class="service-item reveal">
-        <div class="service-num">04</div>
-        <div class="service-name">Performance Marketing</div>
-        <div class="service-desc">PPC management across platforms targeting &lt;15% ACoS with maximum visibility ROI.</div>
-        <span class="service-arrow">→</span>
-      </div>
-      <div class="service-item reveal">
-        <div class="service-num">05</div>
-        <div class="service-name">Video & Graphic Assets</div>
-        <div class="service-desc">Using Adobe Premiere Pro to create high-converting video ads and rich graphics for your listings.</div>
-        <span class="service-arrow">→</span>
-      </div>
-      <div class="service-item reveal">
-        <div class="service-num">06</div>
-        <div class="service-name">Freelance Consulting</div>
-        <div class="service-desc">Monthly strategy retainer with full analytics review, competitor tracking, and actionable roadmaps.</div>
-        <span class="service-arrow">→</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="amazon">
-  <div class="amazon-inner">
-    <div>
-      <span class="section-label reveal">Deep Dive</span>
-      <h2 class="section-title reveal">Amazon <span class="accent">Excellence</span></h2>
-      <div class="divider reveal"></div>
-      <p class="section-sub reveal" style="margin-bottom:24px;">
-        I have managed Amazon accounts end-to-end, helping brands achieve top rankings, win the Buy Box, and dominate their category with precise PPC and catalogue strategy.
-      </p>
-      <p class="section-sub reveal">
-        From Brand Registry setup to A+ Content, Sponsored Ads to FBA optimization — every touchpoint is engineered for maximum conversion.
-      </p>
-      <div class="amazon-tags reveal" style="margin-top:32px;">
-        <span class="tag">PPC Campaigns</span>
-        <span class="tag">A+ Content</span>
-        <span class="tag">Brand Registry</span>
-        <span class="tag">FBA Setup</span>
-        <span class="tag">SEO Listings</span>
-        <span class="tag">Buy Box</span>
-        <span class="tag">Lightning Deals</span>
-        <span class="tag">Vine Reviews</span>
-      </div>
-    </div>
-    <div class="amazon-visual reveal">
-      <div class="amazon-metrics">
-        <div class="amazon-metric">
-          <span class="metric-icon">📈</span>
-          <div>
-            <div class="metric-num" data-count="4.8" data-suffix="x">0x</div>
-            <div class="metric-label">Avg. Return on Ad Spend</div>
-          </div>
-        </div>
-        <div class="amazon-metric">
-          <span class="metric-icon">🎯</span>
-          <div>
-            <div class="metric-num" data-count="12" data-suffix="%">0%</div>
-            <div class="metric-label">Average ACoS Achieved</div>
-          </div>
-        </div>
-        <div class="amazon-metric">
-          <span class="metric-icon">⭐</span>
-          <div>
-            <div class="metric-num" data-count="50" data-suffix="+">0+</div>
-            <div class="metric-label">Amazon Brands Managed</div>
-          </div>
-        </div>
-        <div class="amazon-metric">
-          <span class="metric-icon">🏆</span>
-          <div>
-            <div class="metric-num" data-count="95" data-suffix="%">0%</div>
-            <div class="metric-label">Buy Box Win Rate</div>
-          </div>
+          <div class="chart-container" style="height:200px;"><canvas id="revenueChart"></canvas></div>
         </div>
       </div>
     </div>
@@ -711,28 +487,80 @@ footer{
   <h2 class="section-title reveal">My <span class="accent">Tech Stack</span></h2>
   <div class="divider reveal" style="margin:24px auto;"></div>
   <p class="section-sub reveal" style="margin:0 auto 40px;">Grab, drag, and throw the skills around. Physics engine powered by Matter.js.</p>
-  
   <div id="matter-container" class="reveal"></div>
   <div class="pit-hint">Drag objects with your mouse</div>
+</section>
+
+<section id="arcade">
+  <span class="section-label reveal">E-Commerce Arcade</span>
+  <h2 class="section-title reveal">Play My <span class="accent">Strategies</span></h2>
+  <p class="section-sub reveal" style="margin:0 auto;">I approach e-commerce challenges with a gamer's mindset. Try them out.</p>
+
+  <div class="arcade-grid">
+    
+    <div class="game-box reveal">
+      <div class="game-header">The ACoS Slasher</div>
+      <div class="game-desc">Slice Green (High ROAS). Avoid Red (High ACoS).</div>
+      <div class="game-area">
+        <div class="start-overlay" id="slasher-start" onclick="startSlasher()">
+          <button class="btn-gold" style="padding: 10px 20px; font-size: 11px;">Start Game</button>
+        </div>
+        <canvas id="slasher-canvas" width="300" height="280"></canvas>
+      </div>
+      <div style="margin-top:10px; font-size:12px; color:var(--gold);">Score: <span id="slasher-score">0</span></div>
+    </div>
+
+    <div class="game-box reveal">
+      <div class="game-header">Fulfillment Run</div>
+      <div class="game-desc">Click/Tap to jump. Avoid 'Returns' & 'Algo Updates'.</div>
+      <div class="game-area">
+        <div class="start-overlay" id="runner-start" onclick="startRunner()">
+          <button class="btn-gold" style="padding: 10px 20px; font-size: 11px;">Start Game</button>
+        </div>
+        <canvas id="runner-canvas" width="300" height="280"></canvas>
+      </div>
+      <div style="margin-top:10px; font-size:12px; color:var(--gold);">Distance: <span id="runner-score">0</span>m</div>
+    </div>
+
+    <div class="game-box reveal">
+      <div class="game-header">Conversion Funnel</div>
+      <div class="game-desc">Click pipes to route 'Traffic' to 'Sales'.</div>
+      <div class="game-area" style="padding: 10px;">
+        <div class="puzzle-board" id="puzzle-board">
+          </div>
+      </div>
+      <div style="margin-top:10px;">
+        <button class="btn-outline" style="padding: 5px 15px; font-size:10px;" onclick="checkPuzzle()">Send Traffic</button>
+        <span id="puzzle-status" style="font-size:12px; margin-left:10px; color:var(--gold);"></span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="services">
+  <div class="services-layout">
+    <div>
+      <span class="section-label reveal">What I Deliver</span>
+      <h2 class="section-title reveal">My <span class="accent">Services</span></h2>
+      <a href="https://wa.me/917567250343" class="btn-gold reveal" target="_blank">Discuss Your Project</a>
+    </div>
+    <div class="services-grid">
+      <div class="service-item reveal"><div class="service-name">Amazon / Flipkart Management</div><div class="service-desc">Full A-to-Z account management, PPC, and catalogue strategy.</div></div>
+      <div class="service-item reveal"><div class="service-name">D2C Brand Building</div><div class="service-desc">Shopify setup, Meta/Google ads, and retention systems.</div></div>
+      <div class="service-item reveal"><div class="service-name">Video & Graphic Assets</div><div class="service-desc">High-converting video ads (Premiere Pro) & rich graphics.</div></div>
+    </div>
+  </div>
 </section>
 
 <section id="contact">
   <div class="contact-inner">
     <span class="section-label reveal">Let's Work</span>
     <h2 class="section-title reveal">Ready to <span class="accent">Scale?</span></h2>
-    <div class="divider reveal" style="margin:24px auto;"></div>
-    <p class="section-sub reveal" style="margin:0 auto;">
-      Whether you need a dedicated freelancer to manage your e-commerce channels or are looking to fill a full-time Growth Manager role — let's connect. 
-    </p>
     <div class="contact-actions">
       <div class="contact-row reveal">
-        <a href="https://www.linkedin.com/in/jenish-kamli-47b787253" class="btn-linkedin" target="_blank">
-          <span>💼</span> LinkedIn
-        </a>
-        <a href="https://wa.me/917567250343" class="btn-whatsapp" target="_blank">
-          <span>💬</span> WhatsApp
-        </a>
-        <a href="https://wa.me/917567250343" class="btn-gold reveal" target="_blank">Hire Me</a>
+        <a href="https://www.linkedin.com/in/jenish-kamli-47b787253" class="btn-linkedin" target="_blank"><span>💼</span> LinkedIn</a>
+        <a href="https://wa.me/917567250343" class="btn-whatsapp" target="_blank"><span>💬</span> WhatsApp</a>
       </div>
     </div>
   </div>
@@ -752,17 +580,11 @@ footer{
       <div class="chat-avatar">🤖</div>
       <div class="chat-head-info">
         <div class="name">Jenish's AI</div>
-        <div class="status"><span class="status-dot"></span> Online — Freelance E-Com Expert</div>
+        <div class="status"><span class="status-dot"></span> Online</div>
       </div>
     </div>
     <div class="chat-messages" id="chat-messages">
-      <div class="msg bot">👋 Namaste! Main Jenish ka AI assistant hoon. E-commerce growth, Amazon ads, freelance projects ya job opportunities ke baare mein kuch bhi puchiye!</div>
-    </div>
-    <div class="chat-suggestions">
-      <button class="suggestion-btn" onclick="sendSuggestion('Who is Jenish?')">About Jenish</button>
-      <button class="suggestion-btn" onclick="sendSuggestion('Are you available for freelance?')">Freelance</button>
-      <button class="suggestion-btn" onclick="sendSuggestion('What services do you offer?')">Services</button>
-      <button class="suggestion-btn" onclick="sendSuggestion('I want to hire you')">Hire Jenish</button>
+      <div class="msg bot">👋 Namaste! Ask me about e-commerce growth, freelance projects, or my game high scores!</div>
     </div>
     <div class="chat-input-area">
       <input type="text" id="chat-input" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendChat()"/>
@@ -772,375 +594,201 @@ footer{
 </div>
 
 <script>
-// ── CURSOR ──
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursor-ring');
+// ── GENERAL SCRIPTS (Cursor, GSAP, Charts, AI Chat) ──
+const cursor = document.getElementById('cursor'); const ring = document.getElementById('cursor-ring');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cursor.style.left=mx+'px';cursor.style.top=my+'px';
-});
-(function animRing(){
-  rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
-  ring.style.left=rx+'px';ring.style.top=ry+'px';
-  requestAnimationFrame(animRing);
-})();
-document.querySelectorAll('a,button,.platform-card,.project-card,.service-item').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{
-    cursor.style.width='16px';cursor.style.height='16px';
-    ring.style.width='50px';ring.style.height='50px';ring.style.borderColor='rgba(201,168,76,.8)';
-  });
-  el.addEventListener('mouseleave',()=>{
-    cursor.style.width='10px';cursor.style.height='10px';
-    ring.style.width='36px';ring.style.height='36px';ring.style.borderColor='rgba(201,168,76,.5)';
-  });
-});
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
 
-// ── GSAP ──
 gsap.registerPlugin(ScrollTrigger);
+document.querySelectorAll('.reveal').forEach((el,i)=>{gsap.fromTo(el,{opacity:0,y:40},{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'},delay:(i%4)*0.08});});
 
-// Hero parallax
-gsap.to('.hero-grid',{yPercent:-20,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
-gsap.to('.hero-inner',{yPercent:15,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
-
-// Reveal animations
-document.querySelectorAll('.reveal').forEach((el,i)=>{
-  gsap.fromTo(el,
-    {opacity:0,y:40},
-    {opacity:1,y:0,duration:.9,ease:'power3.out',
-      scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'},
-      delay:(i%4)*0.08
-    }
-  );
-});
-
-// Count-up
-function animateCount(el){
-  const target=parseFloat(el.dataset.count);
-  const prefix=el.dataset.prefix||'';
-  const suffix=el.dataset.suffix||'';
-  const dec=target%1!==0?1:0;
-  let current=0;
-  const step=target/60;
-  const interval=setInterval(()=>{
-    current=Math.min(current+step,target);
-    el.textContent=prefix+(dec?current.toFixed(1):Math.floor(current))+suffix;
-    if(current>=target)clearInterval(interval);
-  },16);
-}
 const countEls=document.querySelectorAll('[data-count]');
-const countObserver=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){animateCount(e.target);countObserver.unobserve(e.target);}});
-},{threshold:.3});
+const countObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){
+  const target=parseFloat(e.target.dataset.count); const prefix=e.target.dataset.prefix||''; const suffix=e.target.dataset.suffix||'';
+  let cur=0; const step=target/60; const int=setInterval(()=>{cur=Math.min(cur+step,target); e.target.textContent=prefix+(target%1!==0?cur.toFixed(1):Math.floor(cur))+suffix; if(cur>=target)clearInterval(int);},16);
+  countObserver.unobserve(e.target);}});},{threshold:.3});
 countEls.forEach(el=>countObserver.observe(el));
 
-// ── CHARTS ──
 let chartsInit=false;
-const chartObserver=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting&&!chartsInit){chartsInit=true;initCharts();}
-  });
-},{threshold:.2});
+const chartObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&!chartsInit){chartsInit=true;initCharts();}});},{threshold:.2});
 chartObserver.observe(document.getElementById('dashboard'));
-
 function initCharts(){
-  const gold='#C9A84C',goldDim='rgba(201,168,76,0.12)',white='rgba(240,237,230,0.6)';
-
-  // INTEGRATED NEW CHART DATA HERE
+  const gold='#C9A84C', white='rgba(240,237,230,0.6)';
   const rCtx=document.getElementById('revenueChart').getContext('2d');
-  const grad=rCtx.createLinearGradient(0,0,0,300);
-  grad.addColorStop(0,'rgba(201,168,76,0.3)');grad.addColorStop(1,'rgba(201,168,76,0)');
-  new Chart(rCtx,{
-    type:'line',
-    data:{
-      labels:['Jan','Feb','Mar'],
-      datasets:[{
-        label:'Sales Growth (₹)',
-        data:[2500,85000,635000],
-        borderColor:gold,backgroundColor:grad,borderWidth:2,
-        pointBackgroundColor:gold,pointRadius:4,pointHoverRadius:7,
-        fill:true,tension:.4
-      }]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false}},
-      scales:{
-        x:{grid:{color:'rgba(201,168,76,0.06)'},ticks:{color:white,font:{size:11}}},
-        y:{grid:{color:'rgba(201,168,76,0.06)'},ticks:{color:white,font:{size:11}}}
-      },
-      animation:{duration:1800,easing:'easeInOutQuart'}
-    }
-  });
-
-  // Platform chart 
-  const pCtx=document.getElementById('platformChart').getContext('2d');
-  new Chart(pCtx,{
-    type:'doughnut',
-    data:{
-      labels:['Amazon','Flipkart','Meesho','D2C','Others'],
-      datasets:[{
-        data:[38,28,18,12,4],
-        backgroundColor:['#C9A84C','#8A6B2A','rgba(201,168,76,0.6)','rgba(201,168,76,0.35)','rgba(201,168,76,0.15)'],
-        borderColor:'#141414',borderWidth:2
-      }]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:white,font:{size:11},boxWidth:12}}},
-      animation:{duration:1500,easing:'easeInOutQuart'}
-    }
-  });
+  new Chart(rCtx,{type:'line',data:{labels:['Jan','Feb','Mar'],datasets:[{label:'Sales Growth (₹)',data:[2500,85000,635000],borderColor:gold,borderWidth:2,pointBackgroundColor:gold,tension:.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:white}},y:{ticks:{color:white}}}}});
 }
 
-// ── RIPPLE ──
-document.querySelectorAll('.btn-gold,.btn-outline,.btn-linkedin,.btn-whatsapp,.nav-cta').forEach(btn=>{
-  btn.addEventListener('click',function(e){
-    const r=document.createElement('span');
-    r.classList.add('ripple');
-    const rect=this.getBoundingClientRect();
-    const size=Math.max(rect.width,rect.height);
-    r.style.cssText=`width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px;`;
-    this.style.position='relative';this.style.overflow='hidden';
-    this.appendChild(r);setTimeout(()=>r.remove(),600);
-  });
-});
+function toggleChat(){document.getElementById('chat-box').classList.toggle('open');}
+function sendChat(){
+  const input=document.getElementById('chat-input'); const text=input.value.trim(); if(!text)return; input.value='';
+  const msgs=document.getElementById('chat-messages');
+  msgs.innerHTML+=`<div class="msg user">${text}</div>`; msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(()=>{
+    let reply="I'm the AI Assistant. For freelance work, WhatsApp Jenish: https://wa.me/917567250343";
+    if(/freelance|hire|job/.test(text.toLowerCase())) reply="I'm open to freelance projects and full-time e-commerce roles. Let's connect!";
+    if(/amazon|flipkart/.test(text.toLowerCase())) reply="I manage full-cycle Amazon & Flipkart accounts, targeting <15% ACoS.";
+    msgs.innerHTML+=`<div class="msg bot">${reply}</div>`; msgs.scrollTop=msgs.scrollHeight;
+  },1000);
+}
 
-// ── MAGNETIC BUTTONS ──
-document.querySelectorAll('.btn-gold,.nav-cta').forEach(btn=>{
-  btn.addEventListener('mousemove',function(e){
-    const rect=this.getBoundingClientRect();
-    const x=(e.clientX-rect.left-rect.width/2)*0.15;
-    const y=(e.clientY-rect.top-rect.height/2)*0.15;
-    this.style.transform=`translate(${x}px,${y}px)`;
-  });
-  btn.addEventListener('mouseleave',function(){
-    this.style.transform='';
-  });
-});
-
-// ── MATTER.JS PHYSICS SKILL PIT ──
+// ── 1. MATTER.JS PHYSICS PIT ──
 function initPhysics() {
   const container = document.getElementById('matter-container');
-  const Engine = Matter.Engine,
-        Render = Matter.Render,
-        Runner = Matter.Runner,
-        MouseConstraint = Matter.MouseConstraint,
-        Mouse = Matter.Mouse,
-        Composite = Matter.Composite,
-        Bodies = Matter.Bodies,
-        Events = Matter.Events;
-
-  const engine = Engine.create();
-  const world = engine.world;
-
-  const render = Render.create({
-      element: container,
-      engine: engine,
-      options: {
-          width: container.clientWidth,
-          height: container.clientHeight,
-          wireframes: false,
-          background: 'transparent'
-      }
+  const {Engine, Render, Runner, MouseConstraint, Mouse, Composite, Bodies, Events} = Matter;
+  const engine = Engine.create(), world = engine.world;
+  const render = Render.create({element: container, engine: engine, options: {width: container.clientWidth, height: container.clientHeight, wireframes: false, background: 'transparent'}});
+  Render.run(render); Runner.run(Runner.create(), engine);
+  const cw = container.clientWidth, ch = container.clientHeight, th = 60;
+  Composite.add(world, [Bodies.rectangle(cw/2, ch+th/2, cw*2, th, {isStatic:true}), Bodies.rectangle(-th/2, ch/2, th, ch*2, {isStatic:true}), Bodies.rectangle(cw+th/2, ch/2, th, ch*2, {isStatic:true})]);
+  const skills = [{t:"Amazon", c:"#FF9900", r:55}, {t:"Flipkart", c:"#047BD5", r:50}, {t:"Shopify", c:"#95BF47", r:50}, {t:"PPC", c:"#C9A84C", r:40}, {t:"Growth Expert", c:"#141414", r:65, s:"#C9A84C"}];
+  const bodies = skills.map((s,i) => {
+    let b = Bodies.circle(Math.random()*(cw-100)+50, -100-(i*80), s.r, {restitution:0.9, render:{fillStyle:s.c, strokeStyle:s.s||s.c, lineWidth:3}});
+    b.sData = s; return b;
   });
-
-  Render.run(render);
-  const runner = Runner.create();
-  Runner.run(runner, engine);
-
-  // Walls & Floor
-  const cw = container.clientWidth;
-  const ch = container.clientHeight;
-  const thickness = 60;
-  const ground = Bodies.rectangle(cw/2, ch+thickness/2, cw*2, thickness, { isStatic: true });
-  const leftWall = Bodies.rectangle(-thickness/2, ch/2, thickness, ch*2, { isStatic: true });
-  const rightWall = Bodies.rectangle(cw+thickness/2, ch/2, thickness, ch*2, { isStatic: true });
-  
-  Composite.add(world, [ground, leftWall, rightWall]);
-
-  // Skill Balls Array
-  const skills = [
-    { text: "Amazon", color: "#FF9900", r: 55 },
-    { text: "Flipkart", color: "#047BD5", r: 50 },
-    { text: "Meesho", color: "#F43397", r: 45 },
-    { text: "Shopify", color: "#95BF47", r: 50 },
-    { text: "PPC", color: "#C9A84C", r: 40 },
-    { text: "SEO", color: "#8A6B2A", r: 35 },
-    { text: "Growth Expert", color: "#141414", r: 65, stroke: "#C9A84C" },
-    { text: "Video Editing", color: "#E8C97A", r: 55, textColor: "#000" },
-    { text: "Premiere Pro", color: "#9999FF", r: 50 },
-    { text: "D2C", color: "#4ade80", r: 40, textColor: "#000" }
-  ];
-
-  const skillBodies = [];
-
-  skills.forEach((skill, i) => {
-    const x = Math.random() * (cw - 100) + 50;
-    const y = -100 - (i * 80); // Drop them one by one
-    const body = Bodies.circle(x, y, skill.r, {
-      restitution: 0.9, // Bounciness
-      friction: 0.005,
-      render: {
-        fillStyle: skill.color,
-        strokeStyle: skill.stroke || skill.color,
-        lineWidth: 3
-      }
-    });
-    body.skillData = skill; // Attach data for rendering text
-    skillBodies.push(body);
-  });
-
-  Composite.add(world, skillBodies);
-
-  // Add mouse control
+  Composite.add(world, bodies);
   const mouse = Mouse.create(render.canvas);
-  const mouseConstraint = MouseConstraint.create(engine, {
-      mouse: mouse,
-      constraint: {
-          stiffness: 0.2,
-          render: { visible: false }
+  Composite.add(world, MouseConstraint.create(engine, {mouse: mouse, constraint:{stiffness:0.2, render:{visible:false}}}));
+  render.mouse = mouse;
+  Events.on(render, 'afterRender', () => {
+    const ctx = render.context; ctx.font = "bold 13px 'DM Sans'"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    bodies.forEach(b => { ctx.fillStyle = "#FFF"; ctx.fillText(b.sData.t, b.position.x, b.position.y); });
+  });
+}
+let pitObs = new IntersectionObserver((e) => {if(e[0].isIntersecting){initPhysics(); pitObs.disconnect();}});
+pitObs.observe(document.getElementById('physics-pit'));
+
+
+// ── 2. ARCADE: ACoS SLASHER ──
+let slasherRunning = false;
+function startSlasher() {
+  document.getElementById('slasher-start').style.display = 'none';
+  if(slasherRunning) return; slasherRunning = true;
+  const cvs = document.getElementById('slasher-canvas'); const ctx = cvs.getContext('2d');
+  let targets = [], score = 0, mouse = {x:0, y:0, down:false}, trail = [];
+  
+  cvs.addEventListener('mousedown', e=>{mouse.down=true; trail=[];});
+  cvs.addEventListener('mouseup', e=>{mouse.down=false; trail=[];});
+  cvs.addEventListener('mousemove', e=>{
+    const rect=cvs.getBoundingClientRect(); mouse.x=e.clientX-rect.left; mouse.y=e.clientY-rect.top;
+    if(mouse.down){ trail.push({x:mouse.x, y:mouse.y}); if(trail.length>5) trail.shift(); checkSlice(); }
+  });
+
+  function checkSlice(){
+    if(trail.length<2) return;
+    const p1 = trail[trail.length-1], p2 = trail[trail.length-2];
+    targets.forEach(t=>{
+      if(!t.active) return;
+      // Simple distance check from line to circle center
+      let dist = Math.hypot(t.x-mouse.x, t.y-mouse.y);
+      if(dist < t.r){
+        t.active = false;
+        if(t.good) score += 10; else score -= 20;
+        document.getElementById('slasher-score').innerText = score;
       }
-  });
-  Composite.add(world, mouseConstraint);
-  render.mouse = mouse; // Sync mouse
-
-  // Draw custom text on top of bodies
-  Events.on(render, 'afterRender', function() {
-    const context = render.context;
-    context.font = "bold 13px 'DM Sans', sans-serif";
-    context.textAlign = "center";
-    context.textBaseline = "middle";
-
-    skillBodies.forEach(body => {
-      const pos = body.position;
-      context.fillStyle = body.skillData.textColor || "#FFF";
-      context.fillText(body.skillData.text, pos.x, pos.y);
     });
-  });
-
-  // Handle window resize
-  window.addEventListener('resize', () => {
-    render.bounds.max.x = container.clientWidth;
-    render.bounds.max.y = container.clientHeight;
-    render.options.width = container.clientWidth;
-    render.options.height = container.clientHeight;
-    render.canvas.width = container.clientWidth;
-    render.canvas.height = container.clientHeight;
-    Matter.Body.setPosition(ground, {x: container.clientWidth/2, y: container.clientHeight+thickness/2});
-    Matter.Body.setPosition(rightWall, {x: container.clientWidth+thickness/2, y: container.clientHeight/2});
-  });
-}
-
-// Initialize physics only when it scrolls into view to save performance
-let physicsInit = false;
-const pitObserver = new IntersectionObserver((entries) => {
-  if (entries[0].isIntersecting && !physicsInit) {
-    physicsInit = true;
-    initPhysics();
   }
-}, { threshold: 0.2 });
-pitObserver.observe(document.getElementById('physics-pit'));
 
-
-// ── ADVANCED AI CHAT SYSTEM ──
-function toggleChat(){
-  const box=document.getElementById('chat-box');
-  box.classList.toggle('open');
+  function loop(){
+    if(Math.random()<0.02) {
+      let isGood = Math.random()>0.4;
+      targets.push({x: Math.random()*200+50, y: cvs.height+20, vx: (Math.random()-0.5)*2, vy: -(Math.random()*3+4), r: 25, good: isGood, text: isGood?"ROAS":"ACoS", active:true});
+    }
+    ctx.clearRect(0,0,cvs.width,cvs.height);
+    targets.forEach(t=>{
+      if(!t.active) return;
+      t.x+=t.vx; t.y+=t.vy; t.vy+=0.1; // gravity
+      ctx.beginPath(); ctx.arc(t.x, t.y, t.r, 0, Math.PI*2);
+      ctx.fillStyle = t.good ? '#4ade80' : '#ef4444'; ctx.fill();
+      ctx.fillStyle = '#000'; ctx.font="10px Arial"; ctx.textAlign="center"; ctx.fillText(t.text, t.x, t.y+3);
+    });
+    targets = targets.filter(t=> t.y < cvs.height+50 && t.active);
+    
+    // Draw trail
+    if(mouse.down && trail.length>1){
+      ctx.beginPath(); ctx.moveTo(trail[0].x, trail[0].y);
+      for(let i=1; i<trail.length; i++) ctx.lineTo(trail[i].x, trail[i].y);
+      ctx.strokeStyle = '#FFF'; ctx.lineWidth = 3; ctx.stroke();
+    }
+    if(slasherRunning) requestAnimationFrame(loop);
+  }
+  loop();
 }
 
-function getAdvancedReply(msg){
-  const m = msg.toLowerCase();
+// ── 3. ARCADE: FULFILLMENT RUN ──
+let runnerRunning = false;
+function startRunner(){
+  document.getElementById('runner-start').style.display = 'none';
+  if(runnerRunning) return; runnerRunning = true;
+  const cvs = document.getElementById('runner-canvas'); const ctx = cvs.getContext('2d');
+  let p = {x:30, y:200, w:20, h:20, vy:0, jump:false}, obs = [], score = 0;
   
-  // Jenish / Freelance Identity
-  if(/(who is jenish|about you|your name)/.test(m)) {
-    return "I am Jenish Kamli, an independent E-commerce Growth Manager based in Umargaon, Gujarat. I help brands scale to ₹Crore+ revenues and am open to freelance projects as well as full-time roles.";
+  function doJump(){ if(!p.jump){ p.vy = -8; p.jump=true; } }
+  cvs.addEventListener('mousedown', doJump);
+  window.addEventListener('keydown', e=>{if(e.code==='Space') doJump();});
+
+  function loop(){
+    ctx.clearRect(0,0,cvs.width,cvs.height);
+    // ground
+    ctx.fillStyle='#333'; ctx.fillRect(0,220,cvs.width,cvs.height-220);
+    
+    // player
+    p.vy += 0.4; p.y += p.vy;
+    if(p.y > 200) { p.y = 200; p.jump=false; p.vy=0; }
+    ctx.fillStyle='#C9A84C'; ctx.fillRect(p.x, p.y, p.w, p.h);
+
+    // obstacles
+    if(Math.random()<0.015 && (obs.length==0 || obs[obs.length-1].x < 150)){
+      obs.push({x: cvs.width, y: 190, w: 15, h: 30});
+    }
+    
+    let hit = false;
+    obs.forEach(o=>{
+      o.x -= 4;
+      ctx.fillStyle='#ef4444'; ctx.fillRect(o.x, o.y, o.w, o.h);
+      if(p.x < o.x+o.w && p.x+p.w > o.x && p.y < o.y+o.h && p.y+p.h > o.y) hit = true;
+    });
+    obs = obs.filter(o=>o.x > -20);
+    
+    if(!hit){
+      score++; document.getElementById('runner-score').innerText = Math.floor(score/10);
+      if(runnerRunning) requestAnimationFrame(loop);
+    } else {
+      ctx.fillStyle='#FFF'; ctx.fillText("CRASHED! Click to restart.", 80, 100);
+      runnerRunning = false;
+      document.getElementById('runner-start').style.display = 'flex';
+      document.getElementById('runner-start').innerHTML = `<button class="btn-gold" style="padding: 10px 20px; font-size: 11px;">Restart</button>`;
+    }
   }
-  if(/(freelance|job|role|agency|company|core digitals)/.test(m)) {
-    return "I work as an independent freelance expert and consultant, not an agency. I am fully available for dedicated freelance projects, account management, and full-time e-commerce growth roles.";
-  }
-  if(/(location|where are you|umargaon|odisha|basudevpur)/.test(m)) {
-    return "I am based in Umargaon, Gujarat, but I also have strong connections to Basudevpur in Bhadrak, Odisha. I work remotely with clients and companies nationwide!";
-  }
-  
-  // Platform Strategies
-  if(/(flipkart|smart ads|bbd)/.test(m)) {
-    return "🏪 On Flipkart, I focus on Smart Ads, catalogue quality, and flash sale prep. For example, I recently helped a fashion brand 3x their orders in 6 months using strategic BBD (Big Billion Day) preparation.";
-  }
-  if(/(amazon|ppc|buy box|acos)/.test(m)) {
-    return "🛒 Amazon is my strongest platform. I handle Brand Registry, Sponsored Products, FBA setup, and Buy Box optimization. I consistently maintain an average ACoS of under 12% and hit around 4.8x ROAS for my clients.";
-  }
-  if(/(meesho)/.test(m)) {
-    return "📦 Meesho is great for volume in the value segment. I optimize catalogues, refine pricing strategies, and run effective Meesho Ads to scale quickly.";
-  }
-  
-  // Creative / Tech Skills
-  if(/(video|premiere pro|editing|youtube|lost phone|ek sitara)/.test(m)) {
-    return "🎬 Yes, I'm highly experienced in Adobe Premiere Pro! I use it to create high-converting video ads for e-commerce. I also do creative storytelling and have worked on YouTube series like 'The Lost Phone' and channel 'Ek Sitara'.";
-  }
-  if(/(game|gaming|minecraft|gta)/.test(m)) {
-    return "🎮 Haha, when I'm not scaling e-commerce brands, I love gaming! I play Minecraft and GTA V, and I'm on Xbox Game Pass. It keeps the strategic and creative parts of my brain sharp!";
-  }
-  
-  // Business / Hire
-  if(/(hire|work with|contact|price|cost|consultation)/.test(m)) {
-    return "🔥 I'd love to work with you! Whether you need a dedicated freelancer or are looking to fill a full-time Growth Manager role, let's discuss your brand's potential over a quick call. 👉 https://wa.me/917567250343";
-  }
-  if(/(service|what do you do|offer)/.test(m)) {
-    return "💼 My Freelance Services:\n1. Amazon/Flipkart/Meesho Mgmt\n2. D2C & Shopify Scaling\n3. Performance Marketing (Ads)\n4. Video Editing & Graphics\n5. Complete Growth Strategy";
-  }
-  if(/(roas|return|sales|result)/.test(m)) {
-    return "📊 I focus heavily on profitability. My average client sees a 4.8x ROAS and significant YoY growth. Check out the 'Performance Dashboard' section above for real data!";
-  }
-  
-  // Fallback
-  return "I'm the AI Assistant for Jenish Kamli. I can tell you about e-commerce growth, platform strategies, or my freelance services! For hiring or project quotes, please WhatsApp Jenish directly: https://wa.me/917567250343";
+  loop();
 }
 
-function appendMsg(text,type){
-  const msgs=document.getElementById('chat-messages');
-  const div=document.createElement('div');
-  div.className='msg '+type;
-  div.textContent=text;
-  msgs.appendChild(div);
-  msgs.scrollTop=msgs.scrollHeight;
-  return div;
+// ── 4. ARCADE: CONVERSION FUNNEL ──
+const pBoard = document.getElementById('puzzle-board');
+const pTypes = ['━', '┃', '┏', '┛', '┗', '┓'];
+let grid = [];
+for(let i=0; i<16; i++){
+  let tile = document.createElement('div');
+  tile.className = 'puzzle-tile';
+  if(i===0) { tile.classList.add('puzzle-start'); tile.innerText="TRAFFIC"; }
+  else if(i===15) { tile.classList.add('puzzle-end'); tile.innerText="SALES"; }
+  else {
+    let tType = pTypes[Math.floor(Math.random()*pTypes.length)];
+    tile.innerText = tType;
+    let rot = [0, 90, 180, 270][Math.floor(Math.random()*4)];
+    tile.style.transform = `rotate(${rot}deg)`;
+    tile.dataset.rot = rot;
+    tile.addEventListener('click', ()=>{
+      let r = (parseInt(tile.dataset.rot) + 90) % 360;
+      tile.dataset.rot = r;
+      tile.style.transform = `rotate(${r}deg)`;
+    });
+  }
+  pBoard.appendChild(tile);
 }
-
-function showTyping(){
-  const msgs=document.getElementById('chat-messages');
-  const div=document.createElement('div');
-  div.className='typing';div.id='typing-ind';
-  div.innerHTML='<span></span><span></span><span></span>';
-  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+function checkPuzzle(){
+  document.getElementById('puzzle-status').innerText = "Traffic flows perfectly! High CVR achieved. 🚀";
 }
-function hideTyping(){const t=document.getElementById('typing-ind');if(t)t.remove();}
-
-function sendChat(){
-  const input=document.getElementById('chat-input');
-  const text=input.value.trim();
-  if(!text)return;
-  input.value='';
-  appendMsg(text,'user');
-  showTyping();
-  const delay=1000 + Math.random()*800;
-  setTimeout(()=>{
-    hideTyping();
-    appendMsg(getAdvancedReply(text),'bot');
-  },delay);
-}
-
-function sendSuggestion(text){
-  document.getElementById('chat-input').value=text;
-  sendChat();
-}
-
-// Nav scroll effect
-window.addEventListener('scroll',()=>{
-  const nav=document.querySelector('nav');
-  if(window.scrollY>60){nav.style.background='rgba(10,10,10,0.97)';}
-  else{nav.style.background='linear-gradient(180deg,rgba(10,10,10,.95) 0%,transparent 100%)';}
-});
 </script>
 </body>
 </html>
