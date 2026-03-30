@@ -1,48 +1,97 @@
-export const portfolioData = {
-  name: "Jenish Kamli",
-  role: "E-commerce & Marketplace Growth Manager",
-  tagline: "Transforming E-commerce Potential into Measurable Profit.",
-  email: "jeniish.kamli@gmail.com",
-  phone: "+91 9624736282",
-  location: "Umargaon, Gujarat",
-  about: "I specialize in end-to-end marketplace management, scaling brands across India's top e-commerce and quick commerce platforms. From listing optimization to aggressive performance marketing, I build strategies that drive visibility and revenue.",
-  
-  skills: [
-    { name: "Listing SEO & Cataloging", category: "Core Strategy" },
-    { name: "PPC & Performance Marketing", category: "Marketing" },
-    { name: "GS1/UPC Implementation", category: "Operations" },
-    { name: "Quick Commerce Setup", category: "Q-Commerce" }
-  ],
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenish Kamli | E-commerce Growth Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { 
+            background-color: #0f172a; 
+            color: #f8fafc; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        }
+        /* Custom Animations */
+        .animate-fade-in { animation: fadeIn 1.5s ease-in-out forwards; opacity: 0; }
+        .delay-1 { animation-delay: 0.3s; }
+        .delay-2 { animation-delay: 0.6s; }
+        .delay-3 { animation-delay: 0.9s; }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        /* Glassmorphism Card Effect */
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            transition: transform 0.3s ease;
+        }
+        .glass-card:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden selection:bg-purple-500 selection:text-white">
 
-  platforms: [
-    "Amazon", "Flipkart", "Meesho", "Myntra", "Ajio", "Tata Cliq", "JioMart", "Blinkit", "Zepto", "Swiggy Instamart"
-  ],
+    <div class="max-w-4xl mx-auto px-6 py-16">
+        
+        <header class="animate-fade-in text-center py-12">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 mb-4">
+                Jenish Kamli
+            </h1>
+            <h2 class="text-2xl font-semibold text-gray-300 mb-6">E-commerce & Marketplace Growth Manager</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+                Transforming E-commerce potential into measurable profit. I specialize in end-to-end marketplace management, scaling brands across India's top platforms like Amazon, Flipkart, Blinkit, and Zepto.
+            </p>
+        </header>
 
-  experience: [
-    {
-      company: "OneLife Electronics India Pvt. Ltd.",
-      role: "E-commerce & Marketplace Growth Manager",
-      duration: "Feb 2025 - Present",
-      description: "Managing a robust portfolio of 100+ SKUs, overseeing daily marketplace operations and long-term growth strategies. Driving continuous optimization to maximize conversion rates and lower customer acquisition costs."
-    },
-    {
-      company: "Core Digitals",
-      role: "Founder & Consultant",
-      duration: "Past Experience",
-      description: "Operating a digital agency focused on delivering high-impact e-commerce growth strategies and graphic design services for brands looking to establish a dominant online presence."
-    }
-  ],
+        <section class="animate-fade-in delay-1 mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass-card p-8 rounded-2xl">
+                <div class="text-4xl mb-4">📈</div>
+                <h3 class="text-xl font-bold text-blue-400 mb-3">Massive Revenue Scaling</h3>
+                <p class="text-gray-300">Successfully skyrocketed monthly e-commerce revenue from <span class="text-white font-bold">₹2.5K to ₹6.35L+</span> through aggressive performance marketing and listing optimization.</p>
+            </div>
+            <div class="glass-card p-8 rounded-2xl">
+                <div class="text-4xl mb-4">🚀</div>
+                <h3 class="text-xl font-bold text-purple-400 mb-3">Visibility Expansion</h3>
+                <p class="text-gray-300">Achieved 3X+ overall growth in product visibility. Scaled Flipkart organic impressions from <span class="text-white font-bold">6.7L to a massive 20.2L</span>.</p>
+            </div>
+        </section>
 
-  projects: [
-    {
-      title: "Massive Revenue Scaling",
-      description: "Successfully skyrocketed monthly e-commerce revenue from ₹2.5K to ₹6.35L+, while maintaining profitable ad spend.",
-      highlight: "Revenue Growth"
-    },
-    {
-      title: "Flipkart Visibility Expansion",
-      description: "Achieved 3X+ overall growth in product visibility. Scaled Flipkart organic impressions from 6.7L to a massive 20.2L.",
-      highlight: "Traffic Scaling"
-    }
-  ]
-};
+        <section class="animate-fade-in delay-2 mt-20">
+            <h3 class="text-3xl font-bold mb-8 flex items-center gap-3">
+                <span class="w-8 h-1 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"></span>
+                Professional Experience
+            </h3>
+            
+            <div class="relative border-l-2 border-gray-700 ml-3 pl-8 pb-10">
+                <div class="absolute w-4 h-4 bg-blue-500 rounded-full -left-[9px] top-1"></div>
+                <h4 class="text-2xl font-bold text-white">OneLife Electronics India Pvt. Ltd.</h4>
+                <p class="text-sm font-semibold text-blue-400 mb-3 mt-1">E-commerce Growth Manager • Feb 2025 - Present</p>
+                <p class="text-gray-300 leading-relaxed">Managing a robust portfolio of 100+ SKUs. Overseeing daily operations, implementing GS1/UPC cataloging, and running high-ROAS PPC campaigns across multiple major marketplaces and Quick Commerce platforms.</p>
+            </div>
+
+            <div class="relative border-l-2 border-transparent ml-3 pl-8">
+                <div class="absolute w-4 h-4 bg-purple-500 rounded-full -left-[9px] top-1"></div>
+                <h4 class="text-2xl font-bold text-white">Core Digitals</h4>
+                <p class="text-sm font-semibold text-purple-400 mb-3 mt-1">Founder & Consultant</p>
+                <p class="text-gray-300 leading-relaxed">Operating a digital agency delivering high-impact e-commerce strategies and premium graphic design services for brands establishing a dominant online presence.</p>
+            </div>
+        </section>
+
+        <footer class="animate-fade-in delay-3 mt-24 text-center glass-card p-10 rounded-3xl">
+            <h3 class="text-3xl font-bold mb-4 text-white">Ready to scale your brand?</h3>
+            <p class="text-gray-400 mb-8">Let's connect and build a tailored growth strategy for your e-commerce business.</p>
+            <div class="flex justify-center gap-4 flex-wrap">
+                <a href="mailto:jeniish.kamli@gmail.com" class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+                    Email Me
+                </a>
+                <a href="https://wa.me/919624736282" target="_blank" class="bg-transparent border border-gray-500 hover:border-purple-400 text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105">
+                    WhatsApp
+                </a>
+            </div>
+        </footer>
+
+    </div>
+</body>
+</html>
